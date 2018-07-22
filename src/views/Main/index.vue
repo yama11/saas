@@ -47,18 +47,19 @@ export default {
 }
 
 .main-content {
-  flex: auto;
   display: flex;
+  flex: auto;
   flex-direction: column;
   padding: 0 2.5em 2em calc(200px + 2em);
   min-height: 100vh;
   overflow-x: hidden;
 }
 
-.main-main {
+.main-body {
   flex: auto;
   border: 1px solid #e6e6e6;
   border-radius: 10px;
   background-color: #fff;
+  padding: 1em 1.5em;
 }
 </style>
