@@ -1,5 +1,5 @@
 import assets from '@/assets';
-import http from '@/utils';
+import { http, rules } from '@/utils';
 
 function checkPermission(key) {
   const permissions = this.$store.state.user.permissions;
@@ -12,6 +12,7 @@ export default {
   install(Vue) {
     Vue.prototype.$http = http;
     Vue.prototype.$assets = assets;
+    Vue.prototype.$rules = rules;
     Vue.prototype.$permissions = checkPermission;
   },
 };
