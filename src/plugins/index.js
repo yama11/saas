@@ -1,4 +1,5 @@
 import assets from '@/assets';
+import http from '@/utils';
 
 function checkPermission(key) {
   const permissions = this.$store.state.user.permissions;
@@ -9,6 +10,7 @@ function checkPermission(key) {
 /* eslint-disable no-param-reassign */
 export default {
   install(Vue) {
+    Vue.prototype.$http = http;
     Vue.prototype.$assets = assets;
     Vue.prototype.$permissions = checkPermission;
   },
