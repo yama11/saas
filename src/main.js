@@ -11,8 +11,8 @@ import router from './router';
 Vue.config.productionTip = false;
 
 Vue.use(ElementUI)
-  .user(componentsRegister)
-  .user(pluginsRegister);
+  .use(componentsRegister)
+  .use(pluginsRegister);
 
 /* eslint-disable no-new */
 new Vue({

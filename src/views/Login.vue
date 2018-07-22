@@ -74,7 +74,15 @@ export default {
 
     submitSucceed({ access_token: token }) {
       this.history = this.updateHistory(this.user);
-      this.$http.setToken(token);
+
+      this.$http.init({
+        baseHeaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      this.$token.set(token);
+
       this.$router.push('/');
     },
 
