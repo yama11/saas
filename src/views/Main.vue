@@ -1,4 +1,8 @@
 <script>
+/**
+ * @overview 主页面容器
+ */
+
 import { mapState } from 'vuex';
 import { modifyPassword } from './components';
 

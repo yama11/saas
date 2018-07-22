@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import * as views from '../views';
+import Main from '@/views/Main';
+import Login from '@/views/Login';
 import MainChildrenRoutes from './main';
 
 Vue.use(Router);
@@ -12,12 +13,12 @@ export default new Router({
     {
       path: '/login',
       name: 'Login',
-      component: views.Login,
+      component: Login,
     },
     {
       path: '/',
       name: 'Main',
-      component: views.Main,
+      component: Main,
       children: MainChildrenRoutes,
     },
   ],
