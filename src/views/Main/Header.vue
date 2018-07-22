@@ -3,10 +3,15 @@
  * @overview 主页面 - 头部
  */
 
+import { mapState } from 'vuex';
 import { passwordModify } from '../components';
 
 export default {
   name: 'MainHeader',
+
+  computed: mapState({
+    userName: state => state.user.user.name,
+  }),
 
   methods: {
     preLogout() {

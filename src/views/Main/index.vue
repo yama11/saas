@@ -3,15 +3,16 @@
  * @overview 主页面容器
  */
 
-import { mapState } from 'vuex';
+import { token } from '@/utils';
+import MainHeader from './Header';
+import MainMenu from './Menu';
 
 export default {
   name: 'Main',
 
-  computed: {
-    ...mapState({
-      userName: state => state.user.user.name,
-    }),
+  components: {
+    MainHeader,
+    MainMenu,
   },
 
   created() {
@@ -19,9 +20,7 @@ export default {
   },
 
   beforeRouteEnter(to, from, next) {
-    const token = localStorage.getItem('token');
-
-    if (!token) {
+    if (!token.get()) {
       window.location.href = '/login';
     } else {
       next();
