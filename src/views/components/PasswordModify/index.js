@@ -2,7 +2,7 @@ import Vue from 'vue';
 import store from '@/store';
 import options from './Main';
 
-class ModifyPassword {
+class PasswordModify {
   vm = null
 
   init = () => {
@@ -18,4 +18,4 @@ class ModifyPassword {
   }
 }
 
-export default new ModifyPassword();
+export default new PasswordModify();

@@ -9,7 +9,7 @@ import { userHistory } from '@/utils';
 import { mapState } from 'vuex';
 
 export default {
-  name: 'ModifyPassword',
+  name: 'PasswordModify',
 
   data() {
     const repassword = this.$rules.repassword;
