@@ -1,9 +1,11 @@
 import AppInputPassword from './AppInputPassword';
 import AppFormAlert from './AppFormAlert';
+import AppSearch from './AppSearch';
 
 const components = {
   AppInputPassword,
   AppFormAlert,
+  AppSearch,
 };
 
 export default (Vue) => {
