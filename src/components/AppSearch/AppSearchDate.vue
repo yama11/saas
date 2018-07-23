@@ -1,6 +1,6 @@
 <template>
   <div class="app-search-date">
-    <div v-if="searchList.length > 0">
+    <div v-if="isArrType">
       <el-select
         v-model="dateType"
         clearable
@@ -9,7 +9,7 @@
         style="margin-left: 1em;"
       >
         <el-option
-          v-for="(type,index) in searchList"
+          v-for="(type,index) in type"
           :key="index"
           :label="type.name"
           :value="type.type"
@@ -49,14 +49,9 @@ export default {
       default: '',
     },
 
-    searchList: {
-      type: Array,
-      default: () => [],
-    },
-
     type: {
-      type: String,
-      default: '',
+      type: [Array, String],
+      default: () => ([]),
     },
 
   },
@@ -72,6 +67,13 @@ export default {
       timeType: `between[${this.type}][]`,
     };
   },
+
+  computed: {
+    isArrType() {
+      return this.type instanceof Array;
+    },
+  },
+
 
   watch: {
     dateType(value) {

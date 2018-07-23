@@ -2,7 +2,7 @@
   <div
     class="app-search-column">
     <el-input
-      v-if="searchColumns.length > 0"
+      v-if="hasSelect"
       v-model="inputValue"
       class="list-header__input"
       placeholder="请输入关键字进行搜索"
@@ -16,7 +16,7 @@
         placeholder="请选择"
       >
         <el-option
-          v-for="column in searchColumns"
+          v-for="column in type"
           :key="column.prop"
           :label="column.label"
           :value="column.prop.replace('.', '_')"
@@ -45,14 +45,9 @@ export default {
       default: '',
     },
 
-    searchList: {
-      type: Array,
-      default: () => [],
-    },
-
     type: {
-      type: String,
-      default: '',
+      type: [Array, String],
+      default: () => ([]),
     },
 
     placeholder: {
@@ -74,11 +69,8 @@ export default {
 
   computed: {
 
-    /**
-     * 需要提供搜索的字段
-     */
-    searchColumns() {
-      return this.searchList.filter(({ search }) => search);
+    hasSelect() {
+      return this.type instanceof Array;
     },
 
     /**
@@ -86,7 +78,7 @@ export default {
      */
     selectWidth() {
       const maxLength = Math.max(
-        ...this.searchColumns.map(({ label }) => label.length),
+        ...this.type.map(({ label }) => label.length),
       );
 
       return `${maxLength + 4}em`;
@@ -121,7 +113,7 @@ export default {
   },
 
   created() {
-    if (!this.type) {
+    if (this.hasSelect) {
       this.getUrlData();
 
       return;
