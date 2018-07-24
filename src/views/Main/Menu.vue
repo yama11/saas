@@ -39,7 +39,7 @@ export default {
         permission: 'user',
         children: [
           {
-            name: '学生列表',
+            name: '学生管理',
             permission: 'user.student',
             index: '/student-list',
           },
