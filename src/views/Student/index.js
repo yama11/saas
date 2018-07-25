@@ -2,6 +2,8 @@ import StudentList from './index.vue';
 import StudentForm from './Form';
 import StudentInfo from './Info';
 import StudentCourse from './Course';
+import CourseHistory from './History';
+import CoursePerformance from './Performance';
 
 export default [
   // 学生管理列表
@@ -33,5 +35,17 @@ export default [
     path: 'course-look/:id',
     name: 'CourseLook',
     component: StudentCourse,
+  },
+  // 上课历史
+  {
+    path: 'course-history/:id',
+    name: 'CourseHistory',
+    component: CourseHistory,
+  },
+  // 学习报告
+  {
+    path: 'course-performance/:id',
+    name: 'CoursePerformance',
+    component: CoursePerformance,
   },
 ];

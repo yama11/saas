@@ -211,18 +211,6 @@ export default {
           this.$rules.required('第一联系人'),
           { ...this.$rules.mobile },
         ],
-        school: [
-          // this.$rules.required('学校', 'number'),
-        ],
-        grade: [
-          // this.$rules.required('年级', 'number'),
-        ],
-        department_id: [
-          this.$rules.required('校区', 'number'),
-        ],
-        study_teacher_id: [
-          this.$rules.required('学管师', 'number'),
-        ],
       },
 
       studentStoreBefore: {
@@ -264,7 +252,7 @@ export default {
           this.studentForm.school = Number(this.studentForm.school);
 
           if (res.qrcode) {
-            QRCode.toDataURL(res.qrcode)
+            QRCode.toDataURL(res.qrcode.toString())
               .then((url) => {
                 this.imgUrl = url;
               });

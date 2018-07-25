@@ -6,13 +6,6 @@
     title="学生管理"
     @create="onCreate"
   >
-    <AppSearchIndex
-      slot="search"
-      :search-arr="[
-        {componentType: 'DateSelect',searchType:'created_at'},
-        {selectValue:columns,componentType: 'ColumnSearch',},
-    ]"/>
-
     <template slot-scope="props">
       <el-table
         :data="props.listData"
@@ -73,9 +66,9 @@ export default {
         { prop: 'integrals', label: '总积分' },
         { prop: 'phone', label: '家长手机号码', search: true },
         { prop: 'school_name', label: '家长姓名' },
-        { prop: 'school_name', label: '学生性别' },
-        { prop: 'school_name', label: '出生年月日' },
-        { prop: 'school_name', label: '生源学校' },
+        { prop: 'sex', label: '学生性别' },
+        { prop: 'year', label: '出生年月日' },
+        { prop: 'school', label: '生源学校' },
         { prop: 'grade_name', label: '年级' },
       ],
       list: {},

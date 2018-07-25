@@ -31,10 +31,6 @@ export default{
 
   },
 
-  created() {
-    this.getOrderInfo();
-  },
-
   methods: {
   },
 };
