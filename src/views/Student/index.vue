@@ -9,7 +9,7 @@
     <template slot-scope="props">
       <el-table
         :data="props.listData"
-        border>
+      >
         <!-- <el-table-column
           label="学生头像">
           <template slot-scope="scope">
