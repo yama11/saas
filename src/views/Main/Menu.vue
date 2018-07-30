@@ -74,26 +74,43 @@ export default {
             permission: 'system.flow',
             index: '/process-list',
           },
+          // {
+          //   name: '角色管理',
+          //   permission: 'system.role',
+          //   index: '/role-list',
+          // },
+          // {
+          //   name: '用户管理',
+          //   permission: 'system.user',
+          //   index: '/user-list',
+          // },
+          // {
+          //   name: '版本管理',
+          //   permission: 'system.package',
+          //   index: '/package-list',
+          // },
+          // 排班上课
           {
-            name: '角色管理',
+            name: '约课班级',
             permission: 'system.role',
             index: '/role-list',
           },
           {
-            name: '用户管理',
+            name: '约课学生',
             permission: 'system.user',
             index: '/user-list',
+          },
+          {
+            name: '上课安排',
+            permission: 'system.package',
+            index: '/package-list',
           },
           {
             name: '培训机构',
             permission: 'system.department',
             index: '/organization',
           },
-          {
-            name: '版本管理',
-            permission: 'system.package',
-            index: '/package-list',
-          },
+
         ],
       },
       {
