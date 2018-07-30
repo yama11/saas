@@ -7,6 +7,7 @@ import Subject from '@/views/Subject';
 import Student from '@/views/Student';
 import Parent from '@/views/Parent';
 import Arrange from '@/views/Arrange';
+import Arrstudent from '@/views/Arrstudent';
 
 const routes = [
   ...Courseware,
@@ -14,6 +15,7 @@ const routes = [
   ...Student,
   ...Parent,
   ...Arrange,
+  ...Arrstudent,
 ];
 
 export default routes;
