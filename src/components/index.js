@@ -6,6 +6,7 @@ import AppForm from './AppForm/Main';
 import AppFormPage from './AppForm/AppFormPage';
 import AppFormDialog from './AppForm/AppFormDialog';
 import AppCropUploader from './AppCropUploader';
+import AppUploader from './AppUploader';
 
 const components = {
   AppInputPassword,
@@ -16,6 +17,7 @@ const components = {
   AppFormPage,
   AppFormDialog,
   AppCropUploader,
+  AppUploader,
 };
 
 export default (Vue) => {
