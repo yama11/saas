@@ -13,12 +13,12 @@ export default {
   data() {
     return {
       user: {
-        username: '',
+        name: '',
         password: '',
       },
 
       rules: {
-        username: [
+        name: [
           this.$rules.required('账号'),
         ],
         password: this.$rules.password(),
@@ -106,7 +106,7 @@ export default {
       const records = this.history.records;
 
       const list = records
-        .filter(item => item.username.includes(val));
+        .filter(item => item.name.includes(val));
 
       callback(list);
     },
@@ -151,14 +151,14 @@ export default {
         @keydown.enter.native="preSubmit"
       >
         <el-form-item
-          prop="username"
+          prop="name"
         >
           <el-autocomplete
-            v-model="user.username"
+            v-model="user.name"
             :fetch-suggestions="getUserRecords"
             :trigger-on-focus="true"
             prefix-icon="iconfont icon-person"
-            value-key="username"
+            value-key="name"
             @select="selectUserRecord"
           />
         </el-form-item>
