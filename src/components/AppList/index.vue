@@ -31,14 +31,14 @@ export default {
 
     // 添加按钮的文案
     createLabel: {
-      type: String,
-      default: null,
+      type: [String, Boolean],
+      default: false,
     },
 
     // 跳转页面按钮的文案
     skipLabel: {
-      type: String,
-      default: null,
+      type: [String, Boolean],
+      default: false,
     },
   },
 
@@ -134,14 +134,18 @@ export default {
           size="small"
           type="primary"
           @click="$emit('create')"
-        >{{ createLabel }}</el-button>
+        >
+          {{ createLabel }}
+        </el-button>
 
         <el-button
           v-if="skipLabel"
           size="small"
           type="primary"
           @click="$emit('skipPage')"
-        >{{ skipLabel }}</el-button>
+        >
+          {{ skipLabel }}
+        </el-button>
       </div>
     </header>
 

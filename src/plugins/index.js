@@ -1,10 +1,13 @@
 import assets from '@/assets';
 import { http, rules, token } from '@/utils';
 
-function checkPermission(key) {
+function checkPermission(key, data) {
   const permissions = this.$store.state.user.permissions;
-  // eslint-disable-next-line
-  return permissions.some(({ route_name }) => route_name === key);
+
+  const bool = permissions
+    .some(({ route_name }) => route_name === key);
+
+  return data === undefined ? bool : (bool && data);
 }
 
 /* eslint-disable no-param-reassign */
