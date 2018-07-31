@@ -57,7 +57,7 @@ export default {
 
     // 表单提交方法 创建&编辑 两种情况
     methodType() {
-      return this.targetID ? 'patch' : 'post';
+      return this.targetID ? 'put' : 'post';
     },
 
     // 表单提交成功的提示信息 创建&编辑 两种情况
