@@ -1,3 +1,5 @@
+import AppCheckBox from './AppCheckBox';
+import AppCheckMap from './AppCheckMap';
 import AppInputPassword from './AppInputPassword';
 import AppFormAlert from './AppFormAlert';
 import AppSearch from './AppSearch';
@@ -9,6 +11,8 @@ import AppCropUploader from './AppCropUploader';
 import AppUploader from './AppUploader';
 
 const components = {
+  AppCheckBox,
+  AppCheckMap,
   AppInputPassword,
   AppFormAlert,
   AppSearch,
