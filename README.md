@@ -1,34 +1,14 @@
 # saas.final.vue - 麦克斯韦后台管理v2.0
 
-## # Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-```
-
-## # 线上地址
-
-```text
-测试版地址：https://oa-v2-admin.caihonggou.com
-```
-
 ## # 原型地址
 
 ```text
-http://ax.gy720.com/houtaiguanli/#g=1&p=%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E
+http://ax.gy720.com/
 
 账号：caihonggou
 密码：chg5995993
+
+项目：admin2.0
 ```
 
 ## # 技术栈说明
@@ -61,10 +41,30 @@ vue + vue-router + vuex + element-ui
         |-- components          // 公用组件
         |-- Subject             // 课程中心 -> 学科管理   -   霍金朝
         |-- courseware          // 课程中心 -> 课时内容   -   霍金朝
+        |-- Subject             // 系统维护 -> 角色管理   -   霍金朝
+        |-- courseware          // 系统维护 -> 用户管理   -   霍金朝
     |-- App.vue         // 根组件
     |-- main.js         // 程序入口
 ......
 ```
+
+## # 模块开发规范
+
+- SFC结构顺序`<script>` -> `<template>` -> `<style>`，在`<style>`头部至少添加**开发者**和**模块介绍**两项信息；
+
+- 模块目录下创建index.js作为路由导出，在@/router/main中引入；
+
+- 在@/view/Main/Menu.vue，中添加菜单（如果后端没有给权限，和后端沟通）；
+
+- 在README.MD的**项目结构说明**的view结构下，按格式添加已完成的模块；
+
+## # GIT代码提交规范
+
+- 调试性代码不允许提交；
+
+- 开发使用的假数据不允许提交；
+
+- 提交代码前在浏览器和编辑器调试信息中确认没有报错信息后才能commit；
 
 ## # 开发文档
 
