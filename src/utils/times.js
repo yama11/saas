@@ -5,14 +5,25 @@
  *
  */
 
-const dateChange = (date) => {
-  if (date !== undefined) {
-    const year = `${date.getFullYear()}-`;
-    const month = `${date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1}-`;
-    const day = (date.getDate() < 10 ? `0${date.getDate()}` : date.getDate());
-    return year + month + day;
+const dateChange = (data, condition) => {
+  if (data === undefined) {
+    return '';
   }
-  return '';
+
+  const date = new Date(data);
+  const year = `${date.getFullYear()}-`;
+  const month = `${date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1}-`;
+  const day = (date.getDate() < 10 ? `0${date.getDate()}` : date.getDate());
+
+  if (condition === 'zero') {
+    return `${year + month + day} 00:00:00`;
+  }
+
+  if (condition === 'full') {
+    return `${year + month + day} 23:59:59`;
+  }
+
+  return year + month + day;
 };
 
 const getTime = (time, other) => {
