@@ -10,27 +10,48 @@ export default {
     menus: [
       {
         name: '课程中心',
-        permission: 'curriculum',
+        permission: 'curriculum_center',
         children: [
           {
-            name: '教材管理',
-            permission: 'curriculum.material',
-            index: '/material-list',
+            name: '学科管理',
+            permission: 'curriculum_center.subject',
+            index: '/subject-list',
           },
           {
-            name: '发布管理',
-            permission: 'curriculum.curriculum',
-            index: '/course-list',
+            name: '课时内容',
+            permission: 'curriculum_center.course',
+            index: '/courseware-list',
           },
           {
-            name: '课程包发布',
-            permission: 'curriculum.packet',
-            index: '/coursePackage-list',
+            name: '课程管理',
+            permission: 'curriculum_center.curriculum',
+            index: '/curriculum-list',
+          },
+        ],
+      },
+      {
+        name: '商品中心',
+        permission: 'shop',
+        children: [
+          {
+            name: '品类管理',
+            permission: 'shop.category',
+            index: '/category-list',
+          },
+          {
+            name: '商品管理',
+            permission: 'shop.merchandise',
+            index: '/product-list',
           },
           {
             name: '订单管理',
-            permission: 'curriculum.order',
+            permission: 'shop.order',
             index: '/order-list',
+          },
+          {
+            name: '优惠券管理',
+            permission: 'shop.coupon',
+            index: '/discount-list',
           },
         ],
       },
@@ -111,38 +132,6 @@ export default {
             index: '/organization',
           },
 
-        ],
-      },
-      {
-        name: '营销中心',
-        permission: 'marketing',
-        children: [
-          {
-            name: '活动管理',
-            permission: 'marketing.activity',
-            index: '/market-list',
-          },
-        ],
-      },
-      {
-        name: '平台维护',
-        permission: 'platform',
-        children: [
-          {
-            name: '课堂表现',
-            permission: 'platform.dimension',
-            index: '/classroom-list',
-          },
-          {
-            name: '家长管理',
-            permission: 'platform.wechatuser',
-            index: '/parent-list',
-          },
-          {
-            name: '游戏管理',
-            permission: 'platform.game',
-            index: '/game-list',
-          },
         ],
       },
     ],
