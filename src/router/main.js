@@ -8,7 +8,7 @@ import Subject from '@/views/Subject';
 import Category from '@/views/Category';
 // import Product from '@/views/Product';
 // import Order from '@/views/Order';
-// import Discount from '@/views/Discount';
+import Discount from '@/views/Discount';
 import Student from '@/views/Student';
 import Parent from '@/views/Parent';
 import Arrange from '@/views/Arrange';
@@ -23,7 +23,7 @@ const routes = [
   ...Category,
   // ...Product,
   // ...Order,
-  // ...Discount,
+  ...Discount,
   ...Student,
   ...Parent,
   ...Arrange,
