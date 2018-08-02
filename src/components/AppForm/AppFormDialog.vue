@@ -10,7 +10,7 @@
 import ElDialog from 'element-ui/packages/dialog';
 import mixin from './mixin';
 
-const { title, ...props } = ElDialog.props;
+const { ...props } = ElDialog.props;
 
 export default {
   name: 'AppFormDialog',
@@ -57,7 +57,7 @@ export default {
 <template>
   <el-dialog
     ref="dialog"
-    :title="title"
+    :title="object"
     :visible="visible"
     v-bind="$props"
     class="app-form-dialog"

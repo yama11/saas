@@ -45,10 +45,10 @@ export default {
   >
     <!-- 表单标题 -->
     <header
-      v-if="title"
+      v-if="object"
       class="app-form-page__header"
     >
-      <h2 class="app-form-page__title">{{ title }}</h2>
+      <h2 class="app-form-page__title">{{ object }}</h2>
     </header>
 
 

@@ -33,10 +33,6 @@ export default {
       default: null,
     },
 
-    fixedTitle: {
-      type: Boolean,
-      default: false,
-    },
   },
 
 
@@ -46,15 +42,6 @@ export default {
       return this.id || this.$route.params.id || null;
     },
 
-    // 表单页标题 创建&编辑 两种情况
-    title() {
-      const temp = this.targetID
-        ? `编辑${this.object}`
-        : `添加${this.object}`;
-
-      return this.fixedTitle ? this.object : temp;
-    },
-
     // 表单提交方法 创建&编辑 两种情况
     methodType() {
       return this.targetID ? 'put' : 'post';
@@ -62,7 +49,7 @@ export default {
 
     // 表单提交成功的提示信息 创建&编辑 两种情况
     succeedMessage() {
-      return `${this.title}成功`;
+      return `${this.object}成功`;
     },
 
     // 提交地址
