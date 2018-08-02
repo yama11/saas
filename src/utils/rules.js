@@ -48,6 +48,13 @@ const Rules = {
     trigger: 'blur',
   },
 
+  // 输入正整数
+  numbers: {
+    pattern: /^[1-9]\d*$/,
+    message: '请输入正整数',
+    trigger: 'blur',
+  },
+
   // 账号验证（支持数字、字母）
   userName: {
     pattern: /^(([a-zA-Z0-9]+\s?)+|[a-zA-Z0-9]*)$/,
@@ -87,6 +94,20 @@ const Rules = {
   introduce: {
     pattern: /^.{10,35}$/,
     message: '请输入10-35个字符',
+    trigger: 'blur',
+  },
+
+  // 商品售价的验证
+  prices: {
+    pattern: /(^[1-9]{1}[0-9]*$)|(^[0-9]*\.[0-9]{2}$)/,
+    message: '请输入正整数或者保留两位小数',
+    trigger: 'blur',
+  },
+
+  // 折扣的验证
+  discount: {
+    pattern: /^(0\.([0-9]){1,2}|1)$/,
+    message: '请输入正确的折扣',
     trigger: 'blur',
   },
 
