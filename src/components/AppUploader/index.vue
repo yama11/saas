@@ -1,6 +1,10 @@
 
 <script>
-
+/**
+ * @overview 文件上传组件
+ *
+ * @author   yehaifeng
+ */
 import Cropper from 'cropperjs';
 import 'cropperjs/dist/cropper.min.css';
 
@@ -9,6 +13,7 @@ export default {
   name: 'AppUploader',
 
   props: {
+
     value: {
       type: String,
       default: '',
@@ -31,7 +36,6 @@ export default {
       preview: null,
       cropDetail: null,
       loading: false,
-
       corpper: '',
     };
   },
@@ -66,6 +70,7 @@ export default {
         reader.readAsDataURL(this.file);
       }
     },
+
     crop({ target }) {
       this.corpper = new Cropper(target, {
 
@@ -95,12 +100,14 @@ export default {
         param.append('chunk', '0');// 断点传输
         param.append('chunks', '1');
         param.append('file', file, file.name);
-        // console.log(param.get('file')); // FormData私有类对象，访问不到，可以通过get判断值是否传进去
+        const fileType = file.name.split('.')[1];
         // 先从自己的服务端拿到token
-        this.$http.get('https://oa-v2-admin-api.caihonggou.com/v1/uptoken')
-          .then((response) => {
-            this.token = response.uptoken;
+        this.$http.get(`/upload/token/${fileType}`)
+          .then((res) => {
+            this.token = res.token;
+            this.key = res.key;
             param.append('token', this.token);
+            param.append('key', this.key);
             this.uploading(param, file);// 然后将参数上传七牛
           });
       });
@@ -109,9 +116,8 @@ export default {
     uploading(param, file) {
       const addr = 'https://oa-statics.caihonggou.com/';
       this.$http.post('http://upload.qiniup.com/', param)
-        .then((response) => {
-          this.preview = addr + response.key;
-
+        .then((res) => {
+          this.preview = addr + res.key;
           this.$message({
             type: 'success',
             message: '头像上传成功！',
@@ -142,10 +148,15 @@ export default {
         message: `文件 ${currentFile.name} 太大，不能超过2M。`,
       });
     },
+
     // 上传错误
     handleError(message) {
-      this.$message.error(message);
+      this.$message({
+        type: 'error',
+        message,
+      });
     },
+
     // 取消上传图片
     cancelUpload() {
       this.$refs.input_id.value = '';
