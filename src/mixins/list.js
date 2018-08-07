@@ -5,6 +5,10 @@
  */
 
 export default {
+  data: () => ({
+    loading: false,
+  }),
+
   methods: {
     /**
      * 确认删除Table中的某一项
@@ -87,6 +91,26 @@ export default {
               type: 'warning',
               confirmButtonClass: 'el-button--danger',
             });
+        });
+    },
+
+    $_listMixin_getList(uri) {
+      this.loading = true;
+
+      const query = Object.keys(this.$route.query)
+        .map(key => `${key}=${this.$route.query[key]}`)
+        .join('&');
+
+      return this.$http.get(`${uri}?${query}`)
+        .then((data) => {
+          this.loading = false;
+
+          return data;
+        })
+        .catch((error) => {
+          this.$message.error('数据请求发生错误');
+
+          throw error;
         });
     },
   },

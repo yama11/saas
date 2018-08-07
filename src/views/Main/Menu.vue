@@ -173,7 +173,15 @@ export default {
      * @param {String} index 菜单项的唯一标识，同时也是点击该菜单项所进入的页面路由
      */
     onSelectMenu(index) {
-      this.$router.push(`${index}?page=1&per_page=10`);
+      const specialList = [
+        '/subject-list',
+      ];
+
+      const path = specialList.includes(index)
+        ? index
+        : `${index}?page=1&per_page=10`;
+
+      this.$router.push(path);
     },
   },
 };
