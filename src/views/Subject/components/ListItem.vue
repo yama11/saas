@@ -17,11 +17,11 @@ export default {
 
   methods: {
     subjectEdit() {
-      this.$emit('delete', this.data.id);
+      this.$emit('edit', this.data.id);
     },
 
     subjectDelete() {
-      this.$emit('edit', this.data.id);
+      this.$emit('delete', this.data.id);
     },
   },
 };
@@ -33,11 +33,11 @@ export default {
     <div class="subject-list-item__control">
       <i
         class="el-icon-edit"
-        @delete="subjectEdit"
+        @click="subjectEdit"
       />
       <i
         class="el-icon-delete"
-        @delete="subjectDelete"
+        @click="subjectDelete"
       />
     </div>
   </div>
