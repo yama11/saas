@@ -1,0 +1,14 @@
+/* * * * * * * * *
+ * 基础样式文件
+ */
+
+.global-main {
+  display: flex;
+  flex-direction: column;
+  padding: 0 2em;
+}
+
+.global-main > h2 {
+  padding: 1em 0;
+  font-size: 1.2rem;
+}
