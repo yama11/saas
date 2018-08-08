@@ -1,10 +1,15 @@
 <script>
-
+/**
+ * @overview  上课安排 - 班级详情
+ *
+ * @author  yehaifeng
+ */
 import { form } from '@/mixins';
 import InfoNote from '../components/InfoNote';
 
 export default{
-  name: 'RoleInfo',
+
+  name: 'ArrangeForm',
 
   components: {
     InfoNote,
@@ -18,13 +23,59 @@ export default{
       data: null,
 
       from: null,
-      tableData: [
-        {
-          dataName: '小小彬',
-          datatime: '2015-12-10',
+
+      // 定义星期
+      toDay: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+
+      calendar: {},
+
+      student: [],
+
+      quit: [],
+
+      change: [],
+
+      freeze: [],
+
+      tableClass: [
+        { label: '学生姓名', prop: 'student_name' },
+        { label: '约课时间',
+          formatter: row =>
+            `${row.create_date.split(' ')[0]}`,
         },
+        { label: '约课课时', prop: 'hour_total' },
+        { label: '课耗数', prop: 'hour_finish' },
       ],
 
+      tableQuit: [
+        { label: '学生姓名', prop: 'student_name' },
+        { label: '退班时间',
+          formatter: row =>
+            `${row.done_date.split(' ')[0]}`,
+        },
+        { label: '课耗数', prop: 'hour_finish' },
+        { label: '退班课时', prop: 'hour_remain' },
+      ],
+
+      tableChange: [
+        { label: '学生姓名', prop: 'student_name' },
+        { label: '转班时间',
+          formatter: row =>
+            `${row.done_date.split(' ')[0]}`,
+        },
+        { label: '课耗数', prop: 'hour_finish' },
+        { label: '剩余课时', prop: 'hour_remain' },
+      ],
+
+      tableFreeze: [
+        { label: '学生姓名', prop: 'student_name' },
+        { label: '冻结时间',
+          formatter: row =>
+            `${row.audit_date.split(' ')[0]}`,
+        },
+        { label: '课耗数', prop: 'hour_finish' },
+        { label: '冻结数', prop: 'hour_remain' },
+      ],
     };
   },
 
@@ -34,28 +85,41 @@ export default{
       if (!this.data) return [];
 
       const {
-        number: Number,
-        description: Description,
-        role_type: roleType,
-        updated_at: updatedAt,
+        curriculum_name: curriculumName,
+        categories_name: categoriesName,
       } = this.data;
+
+      const {
+        schedule_total: scheduleTotal,
+        schedule_finish: scheduleFinish,
+        start_date: startDate,
+        end_date: endDate,
+      } = this.data.scheme;
 
       return [
         {
           label: '课程名称',
-          content: Number,
+          content: curriculumName,
         },
         {
           label: '课时数',
-          content: Description,
+          content: scheduleTotal.toString(),
         },
         {
           label: '品类',
-          content: roleType.toString(),
+          content: categoriesName,
         },
         {
-          label: '上课时间',
-          content: updatedAt,
+          label: '已上课时数',
+          content: scheduleFinish.toString(),
+        },
+        {
+          label: '上课时间段',
+          content:
+            `
+              ${startDate.split(' ')[0]}
+             至${endDate.split(' ')[0]}
+            `,
         },
       ];
     },
@@ -64,33 +128,34 @@ export default{
       if (!this.data) return [];
 
       const {
-        id: Id,
-        data_level: dataLevel,
-        created_at: createdAt,
         name: Name,
-        role_type_name: roleTypeName,
+        department_name: departmentName,
+        code: Code,
+        capacity: Capacity,
+        student_number: studentNumber,
+        class_status_name: classStatusName,
       } = this.data;
 
       return [
         {
           label: '班级名称',
-          content: createdAt,
-        },
-        {
-          label: '机构名称',
-          content: dataLevel.toString(),
-        },
-        {
-          label: '班级编码',
-          content: Id.toString(),
-        },
-        {
-          label: '约课/满课人数',
           content: Name,
         },
         {
+          label: '机构名称',
+          content: departmentName,
+        },
+        {
+          label: '班级编码',
+          content: Code,
+        },
+        {
+          label: '约课/满课人数',
+          content: `${studentNumber}/${Capacity}`,
+        },
+        {
           label: '班级状态',
-          content: roleTypeName,
+          content: classStatusName,
         },
       ];
     },
@@ -103,10 +168,15 @@ export default{
   methods: {
 
     getOrderInfo() {
-      const url = `/role/${this.$route.params.id}`;
+      const url = `/class/show/${this.$route.params.id}`;
       this.$http.get(url)
         .then((body) => {
           this.data = body;
+          this.calendar = body.scheme.calendar;
+          this.student = body.student;
+          this.quit = body.quit;
+          this.change = body.change;
+          this.freeze = body.freeze;
         })
         .catch((err) => {
           this.$message.error(err.message);
@@ -114,7 +184,7 @@ export default{
     },
 
     disreguardRefund() {
-      return this.$router.push('/role-list');
+      return this.$router.push('/arrange-list');
     },
   },
 };
@@ -122,96 +192,113 @@ export default{
 
 
 <template>
-  <div class="package-info">
-    <header class="package-info__header">
-      <h2 class="package-info__title">班级详情</h2>
+  <div class="arrange-info">
+    <header class="arrange-info__header">
+      <h2 class="arrange-info__title">班级详情</h2>
     </header>
     <div
       v-if="data"
-      class="order-info__body"
+      class="arrange-info__body"
 
     >
-      <div class="role-info-head">
+      <div class="arrange-info-head">
         课程信息
       </div>
-      <section class="package-info__buyer">
+      <section class="arrange-info__buyer">
         <InfoNote
           v-for="note in buyer"
           :key="note.label"
+          :formatter ="note.formatter"
           v-bind="note"
         />
       </section>
-      <div class="role-info-head">
+      <div class="arrange-info-head_classtime">
+        <span
+        >上课时间</span>
+        ：
+        <span
+          v-for="(calendar,index) in calendar"
+          :key="index"
+          class="arrange-info-head_classtime_span"
+        >{{ toDay[calendar.day-1] }}{{ calendar.start_time }}~{{ calendar.end_time }}</span>
+      </div>
+      <div class="arrange-info-head">
         班级信息
       </div>
-      <section class="package-info__buyer">
+      <section class="arrange-info__buyer">
         <InfoNote
           v-for="note in curriculum"
           :key="note.label"
           v-bind="note"
         />
       </section>
-      <div class="role-info-foot">
-        <span class="role-info-foot__student">班级学生</span>
+      <div class="arrange-info-foot">
+        <span class="arrange-info-foot__student">班级学生</span>
         <el-table
-          :data="tableData"
-          style="width: 28%"
+          :data="student"
+          style="width: 522px"
           border
         >
           <el-table-column
-            prop="dataName"
-            label="学生姓名"
-            width="130"
-          />
-          <el-table-column
-            prop="datatime"
-            label="约课时间"
-            width="130"
+            v-for="info in tableClass"
+            :key="info.prop"
+            :prop="info.prop"
+            :label="info.label"
+            :formatter="info.formatter"
           />
         </el-table>
       </div>
 
-      <div class="role-info-foot">
-        <span class="role-info-foot__student">调入记录</span>
+      <div class="arrange-info-foot">
+        <span class="arrange-info-foot__student">退班记录</span>
         <el-table
-          :data="tableData"
-          style="width: 28%"
+          :data="quit"
+          style="width:522px"
           border
         >
           <el-table-column
-            prop="dataName"
-            label="学生姓名"
-            width="130"
-          />
-          <el-table-column
-            prop="datatime"
-            label="调入记录"
-            width="130"
+            v-for="info in tableQuit"
+            :key="info.prop"
+            :prop="info.prop"
+            :label="info.label"
+            :formatter="info.formatter"
           />
         </el-table>
       </div>
 
-      <div class="role-info-foot">
-        <span class="role-info-foot__student">调出记录</span>
+      <div class="arrange-info-foot">
+        <span class="arrange-info-foot__student">转出记录</span>
         <el-table
-          :data="tableData"
-          style="width: 28%"
+          :data="change"
+          style="width: 522px"
           border
         >
           <el-table-column
-            prop="dataName"
-            label="学生姓名"
-            width="130"
-          />
-          <el-table-column
-            prop="datatime"
-            label="调出记录"
-            width="130"
+            v-for="info in tableChange"
+            :key="info.prop"
+            :prop="info.prop"
+            :label="info.label"
+            :formatter="info.formatter"
           />
         </el-table>
       </div>
-
-      <div class="package-info__but">
+      <div class="arrange-info-foot">
+        <span class="arrange-info-foot__student">冻结记录</span>
+        <el-table
+          :data="freeze"
+          style="width: 522px"
+          border
+        >
+          <el-table-column
+            v-for="info in tableFreeze"
+            :key="info.prop"
+            :prop="info.prop"
+            :label="info.label"
+            :formatter="info.formatter"
+          />
+        </el-table>
+      </div>
+      <div class="arrange-info__but">
         <el-button
           type="primary"
           @click="disreguardRefund"
@@ -226,37 +313,46 @@ export default{
 
 
 <style lang="postcss">
-.role-info-foot{
+.arrange-info-foot{
   height: 120px;
-  margin-left: 10px;
-  margin-top: 20px;
+  margin: 20px 0 50px 10px;
 }
-.role-info-foot__student{
+.arrange-info-foot__student{
   float: left;
   margin-right: 25px;
 }
-.role-info-head{
+.arrange-info-head{
   font-size: 20px;
   font-weight: 800;
-  background-color:#ccc;
+  background-color:#ffeeee;
   margin-top: 10px;
 }
-.package-info__but{
+.arrange-info__but{
   display: flex;
   justify-content: center;
 }
-.order-info__body{
+.arrange-info-head_classtime{
+    padding-left: 8px;
+    margin: 20px 0 20px;
+}
+.arrange-info__body{
   padding-left: 10px;
 }
-.package-info__buyer{
+.arrange-info__buyer{
     display: flex;
   flex-wrap: wrap;
   padding-left: 10px;
 }
-.package-info__buyer .order-info-note{
+.arrange-info__buyer .order-info-note{
     margin: .5em 0;
     width: 40%;
     padding-top: 15px;
+}
+.arrange-info-head_classtime_span{
+    margin-left: 90px;
+    display: block;
+    padding-bottom: 30px;
+    margin-top: -16px;
 }
 </style>
 

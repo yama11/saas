@@ -1,17 +1,17 @@
-import RoleList from './index.vue';
-import RoleEdit from './Form';
+import ArrangeList from './index.vue';
+import ArrangeForm from './Form';
 
 export default [
-  // 约课班级管理列表
+  // 上课安排列表
   {
-    path: 'role-list',
-    name: 'RoleList',
-    component: RoleList,
+    path: 'arrange-list',
+    name: 'ArrangeList',
+    component: ArrangeList,
   },
-  // 约课班级详情
+  // 上课班级详情
   {
-    path: 'role-edit/:id',
-    name: 'RoleEdit',
-    component: RoleEdit,
+    path: 'arrange-info/:id',
+    name: 'ArrangeForm',
+    component: ArrangeForm,
   },
 ];

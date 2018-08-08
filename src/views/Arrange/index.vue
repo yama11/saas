@@ -1,11 +1,162 @@
+
+<script>
+/**
+ * @overview 上课安排  - 班级列表
+ *
+ * @author yehaifeng
+ */
+import list from '@/mixins/list';
+
+export default {
+
+  name: 'ArrangeList',
+
+  mixins: [list],
+
+  data() {
+    return {
+
+      columns: [
+        { prop: 'code', label: '班级编码' },
+        { prop: 'curriculum_name', label: '课程名称' },
+        { prop: 'schedule_total', label: '课时' },
+        { prop: 'categories_name', label: '品类' },
+        { prop: 'department_name', label: '机构' },
+        { prop: 'name', label: '班级' },
+        { label: '上课时间',
+          formatter: row =>
+            `
+            ${row.start_date}
+            至${row.end_date}
+            `,
+        },
+        { label: '约课/满课人数',
+          formatter: row =>
+            `
+          ${row.student_number}
+          /${row.capacity}
+          `,
+        },
+        { prop: 'class_status_name', label: '状态' },
+        { prop: 'studio_name', label: '直播室' },
+        { prop: 'anchor_name', label: '直播教师' },
+        { prop: 'classroom_name', label: '教室' },
+        { prop: 'audience_name', label: '学管师' },
+      ],
+
+      list: {},
+
+      id: null,
+
+      status: [],
+
+      visible: false,
+
+      formData: {
+        id: null,
+        class_id: null,
+        curriculum_id: null,
+        scheme_id: null,
+        studio_id: null,
+        anchor_id: null,
+        classroom_id: null,
+        audience_id: null,
+      },
+
+      editionInfo: {
+        anchor: [],
+        studio: [],
+      },
+
+      classData: {
+        classrooms: [],
+      },
+
+      manageData: {
+        manage_teachers: [],
+      },
+
+    };
+  },
+
+  computed: {
+    searchArr() {
+      const column = [
+        { prop: 'curriculum_name', label: '课程名称' },
+        { prop: 'department_name', label: '校区' },
+        { prop: 'classroom_name', label: '班级' },
+      ];
+
+      const searchList = [
+        { selectValue: this.status, componentType: 'AppSearchStatus', searchType: 'status' },
+        { componentType: 'AppSearchColumn', searchType: column },
+      ];
+      return searchList;
+    },
+  },
+
+  created() {
+    this.indexBefore();
+  },
+
+  methods: {
+    indexBefore() {
+      this.$http.get('/class/index_before')
+        .then((res) => {
+          this.status = res.status;
+        });
+    },
+
+    editPackage(id) {
+      this.$router.push(`/arrange-info/${id}`);
+    },
+
+    submitEdition(submit) {
+      submit()
+        .then(() => this.$refs.list);
+    },
+
+    setClass(id) {
+      this.id = id;
+
+      this.visible = true;
+
+      this.formData.class_id = this.id;
+
+      this.$http.get(`/class/arrange/${id}`)
+        .then((res) => {
+          this.editionInfo = { ...res };
+          this.formData.curriculum_id = this.editionInfo.rota.curriculum_id;
+          this.formData.scheme_id = this.editionInfo.rota.scheme_id;
+        });
+
+      this.$http.get('/option/classrooms')
+        .then((res) => {
+          this.classData = { ...res };
+        });
+
+      this.$http.get('/option/manage_teachers')
+        .then((res) => {
+          this.manageData = { ...res };
+        });
+    },
+
+  },
+};
+</script>
+
 <template>
   <AppList
+    ref="list"
     :list.sync="list"
     :columns="columns"
-    api="/role"
-    title="约课班级"
-    @create="toCreateUser"
+    api="/class"
+    title="上课安排"
   >
+    <AppSearch
+      slot="search"
+      :search-arr="searchArr"
+    />
     <template slot-scope="props">
       <el-table :data="props.listData">
         <el-table-column
@@ -13,6 +164,7 @@
           :key="column.prop"
           :prop="column.prop"
           :label="column.label"
+          :formatter="column.formatter"
         />
         <el-table-column
           label="操作"
@@ -21,58 +173,97 @@
           <template slot-scope="scope">
             <el-button
               size="small"
-              @click="editRole(scope.row.id)"
+              @click="editPackage(scope.row.id)"
             >查看</el-button>
             <el-button
-              type="danger"
+              type="small"
               size="small"
-              @click="deleteClass(scope.row.id)"
+              @click="setClass(scope.row.id)"
             >
-              开班
+              班级设置
             </el-button>
           </template>
         </el-table-column>
       </el-table>
+
+      <AppFormDialog
+        :visible.sync="visible"
+        :model="formData"
+        :url="'/class/rota/'+formData.class_id"
+        label-width="5em"
+        object="班级设置"
+        width="500px"
+        @on-submit="submitEdition"
+      >
+        <el-form-item
+          label="直播室"
+          prop="studio"
+        >
+          <el-select
+            v-model="formData.studio_id"
+            placeholder="请选择直播室"
+          >
+            <el-option
+              v-for="role in editionInfo.studio"
+              :key="role.id"
+              :label="role.name"
+              :value="role.id"
+            />
+          </el-select>
+        </el-form-item>
+
+        <el-form-item
+          label="直播老师"
+          prop="update_type"
+        >
+          <el-select
+            v-model="formData.anchor_id"
+            placeholder="请选择直播老师"
+          >
+            <el-option
+              v-for="role in editionInfo.anchor"
+              :key="role.id"
+              :label="role.name"
+              :value="role.id"
+            />
+          </el-select>
+        </el-form-item>
+
+        <el-form-item
+          label="教室"
+          prop="classrooms"
+        >
+          <el-select
+            v-model="formData.classroom_id"
+            placeholder="请选择教室"
+          >
+            <el-option
+              v-for="role in classData.classrooms"
+              :key="role.id"
+              :label="role.name"
+              :value="role.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item
+          label="学管师"
+          prop="manage_teachers"
+        >
+          <el-select
+            v-model="formData.audience_id"
+            placeholder="请选择学管师"
+          >
+            <el-option
+              v-for="role in manageData.manage_teachers"
+              :key="role.id"
+              :label="role.name"
+              :value="role.id"
+            />
+          </el-select>
+        </el-form-item>
+      </AppFormDialog>
     </template>
+
   </AppList>
 </template>
 
-<script>
-import list from '@/mixins/list';
-
-export default {
-  name: 'RoleList',
-  mixins: [list],
-  data() {
-    return {
-      columns: [
-        { prop: 'id', label: '班级编码' },
-        { prop: 'number', label: '课程名称' },
-        { prop: 'description', label: '课时数' },
-        { prop: 'role_type', label: '品类' },
-        { prop: 'data_level', label: '机构名称' },
-        { prop: 'created_at', label: '班级名称' },
-        { prop: 'updated_at', label: '上课时间' },
-        { prop: 'name', label: '约课/满课人数', search: true },
-        { prop: 'role_type_name', label: '班级状态' },
-      ],
-      list: {},
-
-    };
-  },
-  methods: {
-    checkMembers(roleType, roleTypeName) {
-      this.$router.push(`/user-list/${roleTypeName}-${roleType}`);
-    },
-    toCreateUser() {
-      this.$router.push('/role-create');
-    },
-    editRole(id) {
-      this.$router.push(`/role-edit/${id}`);
-    },
-    deleteClass(id) {
-      this.$_listMixin_alertDeleteItem(id, this.list.data, '角色', '/role');
-    },
-  },
-};
-</script>
