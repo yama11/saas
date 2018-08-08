@@ -94,14 +94,17 @@ export default {
         });
     },
 
-    $_listMixin_getList(uri) {
+    $_listMixin_getList(uri, query = this.$route.query) {
       this.loading = true;
 
-      const query = Object.keys(this.$route.query)
-        .map(key => `${key}=${this.$route.query[key]}`)
-        .join('&');
+      const search = Object.keys(query)
+        .reduce((acc, key, index) => {
+          const prefix = index ? '&' : '?';
 
-      return this.$http.get(`${uri}?${query}`)
+          return `${acc}${prefix}${key}=${query[key]}`;
+        }, '');
+
+      return this.$http.get(`${uri}${search}`)
         .then((data) => {
           this.loading = false;
 
