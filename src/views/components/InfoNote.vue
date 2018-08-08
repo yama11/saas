@@ -18,6 +18,11 @@ export default {
       type: String,
       default: '',
     },
+
+    formatter: {
+      type: String,
+      default: '',
+    },
   },
 };
 </script>
@@ -26,7 +31,8 @@ export default {
   <div class="order-info-note">
     <span>{{ label }}</span>
     :
-    <span>{{ content }}</span>
+    <span v-if="content">{{ content }}</span>
+    <span v-else>{{ formatter }}</span>
   </div>
 </template>
 

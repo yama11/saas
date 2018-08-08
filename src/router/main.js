@@ -11,10 +11,14 @@ import Category from '@/views/Category';
 import Discount from '@/views/Discount';
 import Student from '@/views/Student';
 import Parent from '@/views/Parent';
-import Arrange from '@/views/Arrange';
+import Class from '@/views/Class';
 import Arrstudent from '@/views/Arrstudent';
 import User from '@/views/User';
 import Role from '@/views/Role';
+import Arrange from '@/views/Arrange';
+import Change from '@/views/Change';
+import Quit from '@/views/Quit';
+import Freeze from '@/views/Freeze';
 
 const routes = [
   ...Courseware,
@@ -26,10 +30,14 @@ const routes = [
   ...Discount,
   ...Student,
   ...Parent,
-  ...Arrange,
+  ...Class,
   ...Arrstudent,
   ...User,
   ...Role,
+  ...Arrange,
+  ...Change,
+  ...Quit,
+  ...Freeze,
 ];
 
 export default routes;

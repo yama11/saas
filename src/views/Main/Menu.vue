@@ -95,34 +95,18 @@ export default {
             permission: 'system.flow',
             index: '/process-list',
           },
-          // {
-          //   name: '角色管理',
-          //   permission: 'system.role',
-          //   index: '/role-list',
-          // },
-          // {
-          //   name: '用户管理',
-          //   permission: 'system.user',
-          //   index: '/user-list',
-          // },
-          // {
-          //   name: '版本管理',
-          //   permission: 'system.package',
-          //   index: '/package-list',
-          // },
-          // 排班上课
           {
-            name: '约课班级',
+            name: '角色管理',
             permission: 'system.role',
             index: '/role-list',
           },
           {
-            name: '约课学生',
+            name: '用户管理',
             permission: 'system.user',
             index: '/user-list',
           },
           {
-            name: '上课安排',
+            name: '版本管理',
             permission: 'system.package',
             index: '/package-list',
           },
@@ -131,7 +115,48 @@ export default {
             permission: 'system.department',
             index: '/organization',
           },
-
+        ],
+      },
+      {
+        name: '排版上课',
+        permission: 'schedule_center',
+        children: [
+          {
+            name: '约课班级',
+            permission: 'schedule_center.class',
+            index: '/class-list',
+          },
+          {
+            name: '约课学生',
+            permission: 'schedule_center.intention',
+            index: '/intention-list',
+          },
+          {
+            name: '上课安排',
+            permission: 'schedule_center.class',
+            index: '/arrange-list',
+          },
+        ],
+      },
+      {
+        name: '变更调度',
+        permission: 'dispatch_center',
+        children: [
+          {
+            name: '转班管理',
+            permission: 'dispatch_center.change',
+            index: '/change-list',
+          },
+          {
+            name: '退班管理',
+            permission: 'dispatch_center.quit',
+            index: '/quit-list',
+          },
+          {
+            name: '冻结管理',
+            permission: 'dispatch_center.freeze',
+            index: '/freeze-list',
+          },
         ],
       },
     ],
