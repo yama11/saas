@@ -16,9 +16,9 @@ import Arrstudent from '@/views/Arrstudent';
 import User from '@/views/User';
 import Role from '@/views/Role';
 import Arrange from '@/views/Arrange';
-import Change from '@/views/Change';
-import Quit from '@/views/Quit';
-import Freeze from '@/views/Freeze';
+// import Change from '@/views/Change';
+// import Quit from '@/views/Quit';
+// import Freeze from '@/views/Freeze';
 
 const routes = [
   ...Courseware,
@@ -35,9 +35,9 @@ const routes = [
   ...User,
   ...Role,
   ...Arrange,
-  ...Change,
-  ...Quit,
-  ...Freeze,
+  // ...Change,
+  // ...Quit,
+  // ...Freeze,
 ];
 
 export default routes;
