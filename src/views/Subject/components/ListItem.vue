@@ -48,6 +48,10 @@ export default {
 
 }
 
+.subject-list-item > span {
+  word-break: break-all;
+}
+
 .subject-list-item__control {
   position: absolute;
   display: flex;
