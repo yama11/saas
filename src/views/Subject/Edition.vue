@@ -192,10 +192,10 @@ export default {
       :rules="rules"
       :visible.sync="dialogVisible"
       :id="editTargetID"
+      :object="editTargetID ? '编辑菜单' : '添加菜单'"
       label-width="6em"
       width="500px"
       url="/structure"
-      object="添加学科"
       @on-submit="structureCreate"
     >
       <el-form-item
