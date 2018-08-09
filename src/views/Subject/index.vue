@@ -47,6 +47,10 @@ export default {
     },
 
     preCreateSubject() {
+      this.formData = {
+        name: '',
+      };
+
       this.dialogVisible = true;
     },
 
