@@ -74,6 +74,11 @@ export default {
       const isCityIndex = this.division
         .findIndex(item => item === value);
 
+      const isExist = this.addressTags
+        .find(item => item.value === value);
+
+      if (isExist && isExist.count > 0) return;
+
       if (isCityIndex === -1) {
         this.division.push(value);
 
@@ -121,8 +126,8 @@ export default {
       class="address-multi__show">
       <el-tag
         v-for="tag in addressTags"
-        :key="tag.name"
-        closable
+        :key="tag.value"
+        :closable="tag.count > 0 ? false : true"
         @close="delCitys(tag.value)">
         {{ tag.name }}
       </el-tag>
