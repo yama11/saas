@@ -18,7 +18,7 @@ export default {
       id: this.$route.params.id,
 
       columns: [
-        { prop: 'wechat_user_name', label: '微信昵称' },
+        { prop: 'client_name', label: '微信昵称' },
         { prop: 'client_phone', label: '手机号码' },
         { prop: 'status_name', label: '状态' },
         { prop: 'created_at', label: '领取日期' },
