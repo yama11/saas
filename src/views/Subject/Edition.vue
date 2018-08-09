@@ -99,12 +99,13 @@ export default {
           type: 'warning',
           confirmButtonText: '删除',
           confirmButtonClass: 'el-button--danger',
-        })
-        .then(() => this.$http.delete(url))
-        .then(this.getData)
-        .catch(() => {
-          this.$message.error('删除菜单失败!');
-        });
+        },
+      )
+        .then(() => this.$http.delete(url)
+          .then(() => this.$message.success('删除菜单成功!'))
+          .catch(() => this.$message.error('删除菜单失败!')),
+        )
+        .then(this.getData);
     },
 
     appendNode(node, data) {
