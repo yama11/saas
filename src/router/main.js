@@ -4,7 +4,7 @@
 
 import Courseware from '@/views/Courseware';
 import Subject from '@/views/Subject';
-// import Curriculum from '@/views/Curriculum';
+import Curriculum from '@/views/Curriculum';
 import Category from '@/views/Category';
 import Product from '@/views/Product';
 import Order from '@/views/Order';
@@ -23,7 +23,7 @@ import Arrange from '@/views/Arrange';
 const routes = [
   ...Courseware,
   ...Subject,
-  // ...Curriculum,
+  ...Curriculum,
   ...Category,
   ...Product,
   ...Order,
