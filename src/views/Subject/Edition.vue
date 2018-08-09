@@ -28,6 +28,7 @@ export default {
     rules: {
       name: [
         { required: true, message: '请填写学科名称' },
+        { max: 10, message: '名称不应大于10个字符' },
       ],
     },
 
