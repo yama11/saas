@@ -7,7 +7,7 @@ import Subject from '@/views/Subject';
 // import Curriculum from '@/views/Curriculum';
 import Category from '@/views/Category';
 import Product from '@/views/Product';
-// import Order from '@/views/Order';
+import Order from '@/views/Order';
 import Discount from '@/views/Discount';
 import Student from '@/views/Student';
 import Parent from '@/views/Parent';
@@ -26,7 +26,7 @@ const routes = [
   // ...Curriculum,
   ...Category,
   ...Product,
-  // ...Order,
+  ...Order,
   ...Discount,
   ...Student,
   ...Parent,
