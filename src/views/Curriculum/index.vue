@@ -23,7 +23,9 @@ export default {
         { prop: 'price', label: '课时单价' },
         { prop: 'refund_rate', label: '扣课折扣' },
         { prop: 'scheme_number', label: '已排课时' },
-        { prop: 'merchandise_name', label: '关联商品' },
+        { label: '关联商品',
+          formatter: row => row.merchandise_name.join(', '),
+        },
       ],
 
       formData: {
@@ -183,6 +185,7 @@ export default {
           :key="col.prop"
           :prop="col.prop"
           :label="col.label"
+          :formatter="col.formatter"
         />
 
         <el-table-column
