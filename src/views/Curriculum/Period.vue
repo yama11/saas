@@ -5,6 +5,7 @@
  * @author suyanping
  */
 import Draggable from 'vuedraggable';
+import errorHandler from '@/components/AppFormAlert/errorHandler';
 
 export default {
   name: 'CurriculumPeriod',
@@ -26,7 +27,7 @@ export default {
 
       currCourseName: '',
 
-      courseData: [],
+      courseData: {},
 
       courseForm: {
         id: null,
@@ -36,7 +37,11 @@ export default {
         sort: null,
       },
 
-      courseRules: {},
+      courseRules: {
+        course_id: [
+          this.$rules.required('课时', 'number'),
+        ],
+      },
 
       courseId: null,
 
@@ -57,6 +62,15 @@ export default {
 
       isCheck: null,
 
+      structureId: null,
+
+      current_page: 1,
+
+      current_size: 10,
+
+      total: 0,
+
+      sortLoading: false,
     };
   },
 
@@ -75,18 +89,28 @@ export default {
     dragCourseware({ oldIndex, newIndex }) {
       if (oldIndex === newIndex) return;
 
+      this.sortLoading = true;
+
       const target = this.formData.content
         .find((item, index) => index === oldIndex);
 
-      const list = this.formData.content
-        .filter((item, index) => index !== oldIndex);
+      const { id } = target;
 
-      list.splice(newIndex, 0, target);
+      const url = `/curriculum/course/${id}`;
 
-      this.formData.content = list.map((item, index) => ({
-        ...item,
-        sort: index + 1,
-      }));
+      this.$http.post(url, {
+        ...target,
+        sort: newIndex + 1,
+      })
+        .then(() => this.getCourseList())
+        .catch((error) => {
+          const errorMessage = errorHandler(error);
+
+          this.$message.error(errorMessage[0]);
+        })
+        .finally(() => {
+          this.sortLoading = false;
+        });
     },
 
     delCourse(id) {
@@ -147,7 +171,7 @@ export default {
 
       this.structureList = [];
 
-      this.courseData = [];
+      this.courseData = {};
 
       this.currCourseName = '';
 
@@ -162,7 +186,7 @@ export default {
     getStructure(id) {
       this.structureList = [];
 
-      this.courseData = [];
+      this.courseData = {};
 
       this.currCourseName = '';
 
@@ -196,10 +220,13 @@ export default {
 
       this.currCourseName = data.name;
 
-      this.$http.get(`/course?equal[structure_id]=${data.id}`)
-        .then((res) => {
-          this.courseData = res.data;
-        });
+      this.structureId = data.id;
+
+      this.current_size = 10;
+
+      this.current_page = 1;
+
+      this.getCourseData();
     },
 
     checkCourse(id) {
@@ -209,6 +236,29 @@ export default {
         ...this.courseForm,
         course_id: id,
       };
+    },
+
+    onSizeChange(per_page) {
+      this.current_size = per_page;
+
+      this.current_page = 1;
+
+      this.getCourseData();
+    },
+
+    onCurrentChange(page) {
+      this.current_page = page;
+
+      this.getCourseData();
+    },
+
+    getCourseData() {
+      const url = `/course?page=${this.current_page}&per_page=${this.current_size}&equal[structure_id]=${this.structureId}`;
+
+      this.$http.get(url)
+        .then((res) => {
+          this.courseData = res;
+        });
     },
 
     submitEdition(submit) {
@@ -237,6 +287,7 @@ export default {
     </header>
 
     <div
+      v-loading.lock="sortLoading"
       class="curriculum-period-body">
 
       <Draggable
@@ -281,57 +332,78 @@ export default {
       :model="courseForm"
       object="选择课时"
       width="1000px"
-      label-width="6em"
+      label-width="1px"
       @on-submit="submitEdition"
     >
-      <el-select
-        v-model="subjectId"
-        placeholder="请选择学科"
-        style="margin-bottom: 20px;"
-        @change="getStructure(subjectId)"
-      >
-        <el-option
-          v-for="item in subjectList"
-          :key="item.id"
-          :value="item.id"
-          :label="item.name"
-        />
-      </el-select>
+      <el-form-item
+        label=" "
+        prop="course_id">
 
-      <div class="curriculum-period__content">
-
-        <el-tree
-          ref="tree"
-          :props="treeProps"
-          :data="structureList"
-          highlight-current
-          default-expand-all
-          node-key="id"
-          children="leaf"
-          empty-text=""
-          class="curriculum-period__course"
-          @node-click="selectStructure"
-        />
-
-        <div class="curriculum-period__info">
-          <span>{{ currCourseName }}</span>
-          <hr>
-          <div
-            v-for="item in courseData"
+        <el-select
+          v-model="subjectId"
+          placeholder="请选择学科"
+          style="margin-bottom: 20px;"
+          @change="getStructure(subjectId)"
+        >
+          <el-option
+            v-for="item in subjectList"
             :key="item.id"
-            @click="checkCourse(item.id)">
-            <p>{{ item.name }}</p>
-            <p>课件数：{{ item.courseware }}</p>
-            <p>游戏数：{{ item.games }}</p>
-            <span
-              v-if="isCheck === item.id"
-              class="curriculum-period-info__check">
-              <i class="el-icon-check"/>
-            </span>
-          </div>
-        </div>
+            :value="item.id"
+            :label="item.name"
+          />
+        </el-select>
 
-      </div>
+        <div class="curriculum-period__content">
+
+          <el-tree
+            ref="tree"
+            :props="treeProps"
+            :data="structureList"
+            highlight-current
+            default-expand-all
+            node-key="id"
+            children="leaf"
+            empty-text=""
+            class="curriculum-period__course"
+            @node-click="selectStructure"
+          />
+
+          <div class="curriculum-period__info">
+            <span>{{ currCourseName }}</span>
+            <hr>
+            <div
+              v-for="item in courseData.data"
+              :key="item.id"
+              class="curriculum-period-info__course"
+              @click="checkCourse(item.id)">
+              <p>{{ item.name }}</p>
+              <p>课件数：{{ item.courseware }}</p>
+              <p>游戏数：{{ item.games }}</p>
+              <span
+                v-if="isCheck === item.id"
+                class="curriculum-period-info__check">
+                <i class="el-icon-check"/>
+              </span>
+            </div>
+
+            <footer
+              class="curriculum-period-footer"
+            >
+              <el-pagination
+                v-if="courseData.last_page > 1"
+                :current-page="current_page"
+                :page-sizes="[10, 20]"
+                :page-size="current_size"
+                :total="courseData.total"
+                layout="total, sizes, prev, pager, next, jumper"
+                @size-change="onSizeChange"
+                @current-change="onCurrentChange"
+              />
+            </footer>
+          </div>
+
+        </div>
+      </el-form-item>
 
     </AppFormDialog>
 
@@ -402,7 +474,7 @@ export default {
 .curriculum-period__info{
   width: 72%;
   margin-left: 20px;
-  & div{
+  &>div{
     display: inline-block;
     cursor: pointer;
     text-align: center;
@@ -412,6 +484,14 @@ export default {
     margin: 20px 20px 0 0;
     position: relative;
   }
+}
+
+.curriculum-period-info__course>p{
+  margin: 0;
+}
+
+.curriculum-period-footer{
+  margin-top: 20px;
 }
 
 .curriculum-period-info__check{
