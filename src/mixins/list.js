@@ -6,6 +6,7 @@
 
 export default {
   data: () => ({
+    // 页面loading状态
     loading: false,
   }),
 
@@ -111,6 +112,8 @@ export default {
           return data;
         })
         .catch((error) => {
+          this.loading = false;
+
           this.$message.error('数据请求发生错误');
 
           throw error;
