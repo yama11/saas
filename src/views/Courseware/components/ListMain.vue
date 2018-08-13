@@ -157,7 +157,6 @@ export default {
       class="course-list-footer"
     >
       <el-pagination
-        v-if="list.last_page > 1"
         :current-page="list.current_page"
         :page-sizes="[10, 18]"
         :page-size="10"
