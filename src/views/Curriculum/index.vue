@@ -141,7 +141,12 @@ export default {
 
       this.$http.get(`/curriculum/${id}`)
         .then((res) => {
-          this.formData = res;
+          this.formData = {
+            ...res,
+            course_number: res.course_number
+              ? res.course_number.toString()
+              : null,
+          };
 
           this.getProductList(res.category_name);
         });
@@ -227,6 +232,7 @@ export default {
         :rules="formRules"
         :model="formData"
         :object="curriculumId ? '课程编辑' : '课程创建'"
+        :id="curriculumId"
         url="/curriculum"
         width="450px"
         label-width="6em"
