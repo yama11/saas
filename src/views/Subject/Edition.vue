@@ -5,8 +5,12 @@
  * @author huojinzhao
  */
 
+import { list } from '@/mixins';
+
 export default {
   name: 'SubjectEdition',
+
+  mixins: [list],
 
   data: () => ({
     subject: {
@@ -103,7 +107,9 @@ export default {
       )
         .then(() => this.$http.delete(url)
           .then(() => this.$message.success('删除菜单成功!'))
-          .catch(() => this.$message.error('删除菜单失败!')),
+          .catch(({ message }) => {
+            this.$message.error(`删除菜单失败，${message}`);
+          }),
         )
         .then(this.getData);
     },
