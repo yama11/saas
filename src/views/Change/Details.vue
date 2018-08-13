@@ -155,7 +155,6 @@ export default{
           this.data = body;
           this.scheme = body.current.scheme;
           this.schemeArr = body.original.scheme;
-          console.log(body.order_sn);
         })
         .catch((err) => {
           this.$message.error(err.message);
