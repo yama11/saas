@@ -18,7 +18,7 @@ import Role from '@/views/Role';
 import Arrange from '@/views/Arrange';
 import Change from '@/views/Change';
 // import Quit from '@/views/Quit';
-// import Freeze from '@/views/Freeze';
+import Freeze from '@/views/Freeze';
 import Liveroom from '@/views/Liveroom';
 
 const routes = [
@@ -38,7 +38,7 @@ const routes = [
   ...Arrange,
   ...Change,
   // ...Quit,
-  // ...Freeze,
+  ...Freeze,
   ...Liveroom,
 ];
 
