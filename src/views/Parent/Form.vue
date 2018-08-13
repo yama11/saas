@@ -1,10 +1,50 @@
+<script>
+/**
+ * @overview 家长管理 - 家长详情
+ *
+ * @author yehaifeng
+*/
+export default {
+
+  name: 'ParentForm',
+
+  data() {
+    return {
+
+      form: {},
+
+    };
+  },
+
+  created() {
+    this.getParentBefore();
+  },
+
+  methods: {
+
+    getParentBefore() {
+      this.$http.get(`/member_center/client/${this.$route.params.id}`)
+        .then((res) => {
+          this.form = res;
+        })
+        .catch((err) => {
+          this.$message.error(err.message);
+        });
+    },
+
+    disreguardRefund() {
+      return this.$router.push('/client-list');
+    },
+  },
+
+};
+</script>
 <template>
   <div class="parent-info">
-    <header class="package-info__header">
-      <h2 class="package-info__title">家长详情</h2>
+    <header class="parent-info__header">
+      <h2 class="parent-info__title">家长详情</h2>
     </header>
     <el-form
-      ref="formDetail"
       class="parent-form"
       label-width="80px"
       label-position="left"
@@ -19,6 +59,12 @@
         <span>{{ form.phone }}</span>
 
       </el-form-item>
+      <el-form-item
+        prop="balance"
+        label="账户余额">
+        <span>{{ form.balance }}</span>
+
+      </el-form-item>
 
       <el-form-item
         prop="role_type_name"
@@ -28,17 +74,17 @@
       </el-form-item>
 
       <el-form-item
-        prop="nickname"
+        prop="wechat_name"
         label="微信昵称">
-        <span>{{ form.nickname }}</span>
+        <span>{{ form.wechat_name }}</span>
 
       </el-form-item>
 
       <el-form-item
-        prop="headimgurl"
+        prop="iconurl"
         label="微信头像">
         <img
-          :src="form.headimgurl"
+          :src="form.iconurl"
           class="parent-form-headimgurl"
           alt="">
       </el-form-item>
@@ -46,10 +92,8 @@
       <el-form-item
         prop="created_at"
         label="注册时间">
-        <span
-          v-if="form.created_at"
-        >
-          {{ form.created_at.slice(0,10) }}
+        <span>
+          {{ form.register_at }}
         </span>
 
       </el-form-item>
@@ -59,7 +103,7 @@
         label="他的小孩">
         <div class="parent-form-childs">
           <div
-            v-for="item in form.students"
+            v-for="item in form.student"
             :key="item.id"
             class="parent-form-childs-item">
             <img
@@ -88,47 +132,7 @@
     </div>
   </div>
 </template>
-<script>
-/**
- * @desc 家长详情
- *
- * @author yehaifeng
-*/
-export default {
 
-  name: 'ParentForm',
-
-
-  data() {
-    return {
-      form: {},
-      title: '家长详情',
-    };
-  },
-
-  created() {
-    this.getFormBefore();
-  },
-
-  methods: {
-
-    getFormBefore() {
-      this.$http.get(`/wechatuser/${this.$route.params.id}`)
-        .then((res) => {
-          this.form = res;
-        })
-        .catch((err) => {
-          this.$message.error(err.message);
-        });
-    },
-
-    disreguardRefund() {
-      return this.$router.push('/parent-list');
-    },
-  },
-
-};
-</script>
 <style lang="postcss">
 .parent-form-headimgurl {
   width: 50px;

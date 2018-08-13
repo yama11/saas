@@ -2,15 +2,15 @@ import ParentList from './index.vue';
 import ParentForm from './Form';
 
 export default [
-  // 学生管理列表
+  // 家长管理列表
   {
-    path: 'parent-list',
+    path: 'client-list',
     name: 'ParentList',
     component: ParentList,
   },
-  // 学生管理列表
+  // 家长详情
   {
-    path: 'parent-info/:id',
+    path: 'client-info/:id',
     name: 'ParentInfo',
     component: ParentForm,
   },

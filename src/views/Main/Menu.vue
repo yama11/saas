@@ -164,6 +164,22 @@ export default {
           },
         ],
       },
+      {
+        name: '注册用户',
+        permission: 'member_center',
+        children: [
+          {
+            name: '学生管理',
+            permission: 'member_center.student',
+            index: '/student-list',
+          },
+          {
+            name: '家长管理',
+            permission: 'member_center.client',
+            index: '/client-list',
+          },
+        ],
+      },
     ],
   }),
 
