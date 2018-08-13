@@ -157,7 +157,7 @@ export default {
       class="list-footer"
     >
       <el-pagination
-        v-if="list.last_page > 1"
+        v-if="list.total > 10"
         :current-page="list.current_page"
         :page-sizes="[10, 20, 50, 100, 500]"
         :page-size="10"
