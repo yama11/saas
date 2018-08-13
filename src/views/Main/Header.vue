@@ -9,9 +9,11 @@ import { passwordModify } from '../components';
 export default {
   name: 'MainHeader',
 
-  computed: mapState({
-    userName: state => state.user.user.name,
-  }),
+  computed: {
+    ...mapState({
+      userName: state => state.user.user.realname,
+    }),
+  },
 
   methods: {
     preLogout() {
@@ -24,11 +26,11 @@ export default {
 
     logout() {
       this.$http.post('/user/logout', {})
-        .then(this.removeToken);
-    },
+        .then(() => {
+          localStorage.removeItem('token');
 
-    removeToken() {
-      localStorage.removeItem('token');
+          location.href = '/login';
+        });
     },
 
     preModifyPassword() {
