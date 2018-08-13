@@ -32,6 +32,8 @@ export default {
         { max: 10, message: '名称不应大于10个字符' },
       ],
     },
+
+    editTargetID: null,
   }),
 
   created() {
@@ -46,7 +48,9 @@ export default {
         });
     },
 
-    preCreateSubject() {
+    subjectCreate() {
+      this.editTargetID = null;
+
       this.formData = {
         name: '',
       };
@@ -54,7 +58,7 @@ export default {
       this.dialogVisible = true;
     },
 
-    subjectCreate(submit) {
+    subjectSubmit(submit) {
       submit()
         .then(this.getList);
     },
@@ -68,7 +72,17 @@ export default {
       );
     },
 
-    subjectEdit(id) {
+    subjectEdit({ name, id }) {
+      this.editTargetID = id;
+
+      this.formData = { name, id };
+
+      this.$nextTick(() => {
+        this.dialogVisible = true;
+      });
+    },
+
+    subjectCheck(id) {
       this.$router.push(`/subject-edition/${id}`);
     },
   },
@@ -88,10 +102,11 @@ export default {
         :data="item"
         @delete="subjectDelete"
         @edit="subjectEdit"
+        @check="subjectCheck"
       />
       <div
         class="module-subject__list-item subject-list__create"
-        @click="preCreateSubject"
+        @click="subjectCreate"
       >
         <i class="el-icon-plus" />
       </div>
@@ -101,11 +116,12 @@ export default {
       :model="formData"
       :rules="rules"
       :visible.sync="dialogVisible"
+      :id="editTargetID"
+      :object="editTargetID ? '编辑学科' : '添加学科'"
       label-width="6em"
       width="500px"
       url="/subject"
-      object="添加学科"
-      @on-submit="subjectCreate"
+      @on-submit="subjectSubmit"
     >
       <el-form-item
         label="学科名称"

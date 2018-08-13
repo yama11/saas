@@ -17,35 +17,43 @@ export default {
 
   methods: {
     subjectEdit() {
-      this.$emit('edit', this.data.id);
+      this.$emit('edit', this.data);
     },
 
     subjectDelete() {
       this.$emit('delete', this.data.id);
+    },
+
+    subjectCheck() {
+      this.$emit('check', this.data.id);
     },
   },
 };
 </script>
 
 <template>
-  <div class="module-subject__list-item subject-list-item">
+  <div
+    class="module-subject__list-item subject-list-item"
+    @click="subjectCheck"
+  >
     <span>{{ data.name }}</span>
     <div class="subject-list-item__control">
       <i
         class="el-icon-edit"
-        @click="subjectEdit"
+        @click.stop="subjectEdit"
       />
       <i
         class="el-icon-delete"
-        @click="subjectDelete"
+        @click.stop="subjectDelete"
       />
     </div>
   </div>
 </template>
 
 <style lang="postcss">
-.subject-list-item {
-
+.subject-list-item:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, .4);
 }
 
 .subject-list-item > span {
