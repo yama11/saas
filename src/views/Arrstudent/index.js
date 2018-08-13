@@ -1,17 +1,17 @@
-import ArrstudentList from './index.vue';
-import ArrstudentForm from './Form';
+import IntentionList from './index.vue';
+import IntentionForm from './Form';
 
 export default [
   // 约课学生列表
   {
-    path: 'user-list',
-    name: 'ArrstudentList',
-    component: ArrstudentList,
+    path: 'intention-list',
+    name: 'IntentionList',
+    component: IntentionList,
   },
   // 查看详情
   {
-    path: 'user-edit/:id',
-    name: 'ArrstudentForm',
-    component: ArrstudentForm,
+    path: 'intention-edit/:id',
+    name: 'IntentionForm',
+    component: IntentionForm,
   },
 ];

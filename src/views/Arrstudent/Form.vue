@@ -1,10 +1,14 @@
 <script>
-
+/**
+ * @overview  约课学生 - 约课详情
+ *
+ * @author  yehaifeng
+ */
 import { form } from '@/mixins';
 import InfoNote from '../components/InfoNote';
 
 export default{
-  name: 'RoleInfo',
+  name: 'IntentionForm',
 
   components: {
     InfoNote,
@@ -18,6 +22,11 @@ export default{
       data: null,
 
       from: null,
+
+      scheme: {},
+
+      // 定义星期
+      toDay: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
     };
   },
 
@@ -27,22 +36,24 @@ export default{
       if (!this.data) return [];
 
       const {
-        id: Id,
+        student_name: studentName,
         phone: Phone,
-        role_type: roleType,
-        user_state: userState,
-        user_state_name: userStateName,
-        gender_name: genderName,
-        name: Name,
-        email: Email,
-        created_at: createdAt,
-        updated_at: updatedAt,
+        curriculum_name: curriculumName,
+        course_number: courseNumber,
+        categories_name: categoriesName,
+        department_name: departmentName,
+        class_name: className,
       } = this.data;
+
+      // const {
+      //   start_date: startDate,
+      //   end_date: endDate,
+      // } = this.data.scheme;
 
       return [
         {
-          label: '约课时间',
-          content: Id.toString(),
+          label: '约课学生',
+          content: studentName,
         },
         {
           label: '家长电话',
@@ -50,35 +61,27 @@ export default{
         },
         {
           label: '课程名称',
-          content: roleType.toString(),
+          content: curriculumName,
         },
         {
           label: '课时数',
-          content: userState.toString(),
+          content: courseNumber.toString(),
         },
         {
           label: '品类',
-          content: userStateName,
+          content: categoriesName,
         },
         {
           label: '机构名称',
-          content: genderName,
+          content: departmentName,
         },
         {
           label: '班级名称',
-          content: Name,
+          content: className,
         },
         {
           label: '关联订单编号',
-          content: Email,
-        },
-        {
-          label: '上课时间段',
-          content: createdAt,
-        },
-        {
-          label: '上课时间',
-          content: updatedAt,
+          content: className,
         },
       ];
     },
@@ -92,10 +95,11 @@ export default{
   methods: {
 
     getOrderInfo() {
-      const url = `/user/${this.$route.params.id}`;
+      const url = `/intention/${this.$route.params.id}`;
       this.$http.get(url)
         .then((body) => {
           this.data = body;
+          this.scheme = body.scheme;
         })
         .catch((err) => {
           this.$message.error(err.message);
@@ -103,7 +107,7 @@ export default{
     },
 
     disreguardRefund() {
-      return this.$router.push('/user-list');
+      return this.$router.push('/intention-list');
     },
   },
 };
@@ -111,24 +115,46 @@ export default{
 
 
 <template>
-  <div class="package-info">
-    <header class="package-info__header">
-      <h2 class="package-info__title">约课详情</h2>
+  <div class="intention-info">
+    <header class="intention-info__header">
+      <h2 class="intention-info__title">约课详情</h2>
     </header>
     <div
       v-if="data"
-      class="order-info__body"
+      class="intention-info__body"
 
     >
-      <section class="package-info__buyer">
+      <section class="intention-info__buyer">
         <InfoNote
           v-for="note in buyer"
           :key="note.label"
           v-bind="note"
         />
       </section>
+      <div
+        class="intention-info__classtime"
+      >
+        <span>上课时间段</span>
+        :
+        <span>{{ scheme.start_date.split(' ')[0] }}
+          ~{{ scheme.end_date.split(' ')[0] }}</span>
+      </div>
+      <div
+        class="intention-info__classtime order-info-note"
+      >
+        <span>上课时间</span>
+        :
+        <span
+          v-for="(calendar,index) in scheme.calendar"
+          :key="index"
+          class="intention-info__classtime__week"
+        >
+          {{ toDay[calendar.day-1] }}{{ calendar.start_time }}~{{ calendar.end_time }}
+        </span>
 
-      <div class="package-info__but">
+      </div>
+
+      <div class="intention-info__but">
         <el-button
           type="primary"
           @click="disreguardRefund"
@@ -143,35 +169,29 @@ export default{
 
 
 <style lang="postcss">
-.role-info-foot{
-  height: 120px;
-  margin-left: 10px;
-  margin-top: 20px;
-}
-.role-info-foot__student{
-  float: left;
-  margin-right: 25px;
-}
-.role-info-head{
-  font-size: 20px;
-  font-weight: 800;
-  background-color:#ccc;
-  margin-top: 10px;
-}
-.package-info__but{
+.intention-info__but{
   display: flex;
   justify-content: center;
 }
-.order-info__body{
+.intention-info__body{
   padding-left: 10px;
 }
-.package-info__buyer{
+.intention-info__classtime{
+  padding-left: 8px;
+  padding-bottom:30px;
+}
+.intention-info__classtime__week{
+  padding-left: 80px;
+  margin-top: 10px;
+  display: block;
+}
+.intention-info__buyer{
     display: flex;
   flex-wrap: wrap;
   padding-left: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 22px;
 }
-.package-info__buyer .order-info-note{
+.intention-info__buyer .order-info-note{
     margin: .5em 0;
     width: 40%;
     padding-top: 15px;
