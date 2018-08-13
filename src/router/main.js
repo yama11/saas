@@ -16,7 +16,7 @@ import Arrstudent from '@/views/Arrstudent';
 import User from '@/views/User';
 import Role from '@/views/Role';
 import Arrange from '@/views/Arrange';
-// import Change from '@/views/Change';
+import Change from '@/views/Change';
 // import Quit from '@/views/Quit';
 // import Freeze from '@/views/Freeze';
 import Liveroom from '@/views/Liveroom';
@@ -36,7 +36,7 @@ const routes = [
   ...User,
   ...Role,
   ...Arrange,
-  // ...Change,
+  ...Change,
   // ...Quit,
   // ...Freeze,
   ...Liveroom,

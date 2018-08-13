@@ -1,0 +1,155 @@
+<script>
+/**
+ * @overview 转班管理  - 转班管理列表
+ *
+ * @author yehaifeng
+ */
+import list from '@/mixins/list';
+
+export default {
+
+  name: 'ChangeList',
+
+  mixins: [list],
+
+  data() {
+    return {
+
+      columns: [
+        { prop: 'student_name', label: '学习姓名' },
+        { prop: 'phone', label: '家长电话' },
+        { prop: 'department_name', label: '培训机构' },
+        { prop: 'original.curriculum_name', label: '课程名称' },
+        { prop: 'original.class_name', label: '转出班级' },
+        { prop: 'original.hour_remain', label: '转出班级剩余课时' },
+        { prop: 'current.class_name', label: '转入班级' },
+        { prop: 'current.hour_remain', label: '转入班级所需课时' },
+        { prop: 'done_date', label: '转班时间' },
+      ],
+
+      list: {},
+
+      change_status: [],
+
+      statusType: 1,
+
+    };
+  },
+
+  computed: {
+
+    searchArr() {
+      const searchList = [
+        { componentType: 'AppSearchDate', searchType: 'created_at' },
+        { selectValue: this.change_status, componentType: 'AppSearchStatus', searchType: 'change_status' },
+      ];
+      return searchList;
+    },
+
+  },
+
+  created() {
+    this.changeRoute();
+
+    this.indexBefore();
+
+    this.$watch('$route.query', () => {
+      this.changeRoute();
+    });
+  },
+
+  methods: {
+
+    changeRoute() {
+      const { page, per_page, ...search } = this.$route.query;
+
+      const status = 'equal[change_status]';
+
+      if (status in search) {
+        const changeType = search['equal[change_status]'];
+
+        this.statusType = changeType;
+        return;
+      }
+
+      this.statusType = 1;
+
+      const query = {
+        page: 1,
+        per_page: 10,
+        'equal[change_status]': 1,
+      };
+
+      this.$router.replace({ query });
+
+      this.$router.go(0);
+    },
+
+
+    editPackage(id) {
+      this.$router.push(`/change-info/${id}`);
+    },
+
+    disposePackage(id) {
+      this.$router.push(`/change-deal/${id}`);
+    },
+
+    indexBefore() {
+      this.$http.get('/change/index_before')
+        .then((res) => {
+          this.change_status = res.change_status;
+        });
+    },
+
+    toCreateUser() {
+      this.$router.push('/change-create');
+    },
+
+  },
+};
+</script>
+
+<template>
+  <AppList
+    ref="list"
+    :list.sync="list"
+    :columns="columns"
+    create-label="转班"
+    api="/change"
+    title="转班管理"
+    @create="toCreateUser"
+  >
+    <AppSearch
+      slot="search"
+      :search-arr="searchArr"
+    />
+    <template slot-scope="props">
+      <el-table :data="props.listData">
+        <el-table-column
+          v-for="column in columns"
+          :key="column.prop"
+          :prop="column.prop"
+          :label="column.label"
+        />
+        <el-table-column
+          label="操作"
+          width="230px"
+        >
+          <template slot-scope="scope">
+            <el-button
+              v-if="statusType !== '1'"
+              size="small"
+              @click="editPackage(scope.row.id)"
+            >查看</el-button>
+            <el-button
+              v-else
+              size="small"
+              @click="disposePackage(scope.row.id)"
+            >转班处理</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </template>
+  </AppList>
+</template>
+
