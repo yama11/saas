@@ -35,6 +35,7 @@ import AppSearchAddress from './AppSearchAddress';
 import AppSearchColumn from './AppSearchColumn';
 import AppSearchDate from './AppSearchDate';
 import AppSearchStatus from './AppSearchStatus';
+import AppSearchCascader from './AppSearchCascader';
 
 export default {
   name: 'AppSearch',
@@ -44,6 +45,7 @@ export default {
     AppSearchColumn,
     AppSearchDate,
     AppSearchStatus,
+    AppSearchCascader,
   },
 
   props: {
@@ -61,6 +63,7 @@ export default {
         AppSearchColumn: '',
         AppSearchDate: '',
         AppSearchStatus: '',
+        AppSearchCascader: {},
       },
 
       initArrData: [],
@@ -106,9 +109,21 @@ export default {
       };
 
       const data = searchArr.reduce(((acc, item) => {
-        const urlData = item.split(':');
+        const isObj = item instanceof Object;
 
-        acc[urlData[0]] = urlData[1];
+        if (isObj) {
+          // eslint-disable-next-line
+          acc = {
+            ...acc,
+            ...item,
+          };
+        }
+
+        if (!isObj) {
+          const urlData = item.split(':');
+
+          acc[urlData[0]] = urlData[1];
+        }
 
         return acc;
       }), { ...query });
