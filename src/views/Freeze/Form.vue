@@ -66,6 +66,10 @@ export default {
 
   methods: {
 
+    checkPermission(key, text) {
+      return this.$permissions(`dispatch_center.freeze.${key}`, text);
+    },
+
     indexBefore() {
       this.$http.get('/freeze/index_before')
         .then(() => {
@@ -100,10 +104,13 @@ export default {
     title="冻结"
   >
     <AppSearch
+      v-if="checkPermission('student')"
       slot="search"
       :search-arr="searchArr"
     />
-    <template slot-scope="props">
+    <template
+      v-if="checkPermission('student')"
+      slot-scope="props">
       <el-table :data="props.listData">
         <el-table-column
           v-for="column in columns"
@@ -118,6 +125,7 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
+              v-if="checkPermission('audit')"
               size="small"
               @click="freezeClass(scope.row.id)"
             >冻结</el-button>

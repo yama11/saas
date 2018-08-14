@@ -37,8 +37,15 @@ export default {
   computed: {
 
     searchArr() {
+      const column = [
+        { prop: 'student_name', label: '学习姓名' },
+        { prop: 'phone', label: '家长电话' },
+        { prop: 'department_name', label: '培训机构' },
+        { prop: 'curriculum_name', label: '课程名称' },
+      ];
       const searchList = [
-        { componentType: 'AppSearchDate', searchType: 'data_level' },
+        { componentType: 'AppSearchDate', searchType: 'created_at' },
+        { componentType: 'AppSearchColumn', searchType: column },
         { selectValue: this.freeze_status, componentType: 'AppSearchStatus', searchType: 'freeze_status' },
       ];
       return searchList;
@@ -56,6 +63,10 @@ export default {
   },
 
   methods: {
+
+    checkPermission(key, text) {
+      return this.$permissions(`dispatch_center.freeze.${key}`, text);
+    },
 
     changeRoute() {
       const { page, per_page, ...search } = this.$route.query;
@@ -114,10 +125,13 @@ export default {
 
   >
     <AppSearch
+      v-if="checkPermission('index')"
       slot="search"
       :search-arr="searchArr"
     />
-    <template slot-scope="props">
+    <template
+      v-if="checkPermission('index')"
+      slot-scope="props">
       <el-table :data="props.listData">
         <el-table-column
           v-for="column in columns"
@@ -131,12 +145,12 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
-              v-if="statusType !== '1'"
+              v-if="statusType !== '1' && checkPermission('show')"
               size="small"
               @click="freezeInfo(scope.row.id)"
             >查看</el-button>
             <el-button
-              v-else
+              v-else-if="checkPermission('deal')"
               size="small"
               @click="freezeDeal(scope.row.id)"
             >冻结处理</el-button>
