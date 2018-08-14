@@ -1,11 +1,139 @@
+<script>
+/**
+ * @overview 学员管理 - 编辑学生
+ *
+ * @author yehaifeng
+*/
+import { form } from '@/mixins';
+
+export default {
+
+  name: 'StudentForm',
+
+  mixins: [form],
+
+  data() {
+    return {
+
+      id: this.$route.params.id,
+
+      chinaJSON: this.$assets.chinaJSON,
+
+      schoolname: [],
+
+      studentForm: {
+        name: '',
+        gender: null,
+        school: null,
+        grade: null,
+        head_name: '',
+        head_url: '',
+        birth_at: '',
+        places: [],
+      },
+
+      rules: {
+        head_url: [
+          this.$rules.required('学员头像'),
+        ],
+        birth_at: [
+          this.$rules.required('出生年月'),
+        ],
+        name: [
+          this.$rules.required('学员姓名'),
+          { ...this.$rules.name },
+          {
+            max: 5,
+            message: '长度最多 5 个字符',
+            trigger: 'blur,change',
+          },
+        ],
+        gender: [
+          this.$rules.required('学员性别', 'number'),
+        ],
+        client_phone: [
+          this.$rules.required('第一联系人'),
+          { ...this.$rules.mobile },
+        ],
+      },
+
+      studentStoreBefore: {
+        grade: [],
+        gender: [],
+        school: [],
+      },
+
+      imgUrl: '',
+    };
+  },
+  created() {
+    this.getFormBefore();
+  },
+
+  methods: {
+    // 获取学员数据
+    getFormBefore() {
+      this.$http.get('/member_center/student/store_before')
+        .then((res) => {
+          this.studentStoreBefore = { ...res };
+        });
+    },
+
+
+    // 获取当前学员信息
+    getFormStore(id) {
+      this.$http.get(`/member_center/student/${id}`)
+        .then((res) => {
+          const {
+            created_at: createdAt,
+            deleted_at: deletedAt,
+            updated_at: updatedAt,
+            ...other
+          } = res;
+
+          this.studentForm = {
+            ...this.studentForm,
+            ...other,
+          };
+          this.studentForm.school = Number(this.studentForm.school);
+
+          this.changeCode(res.places);
+        });
+    },
+
+    changeCode(value) {
+      if (value.length === 0) return;
+
+      const address = value.join('/');
+
+      this.$http.get(`/member_center/student/school/${address}`)
+        .then((res) => {
+          this.schoolname = res;
+        });
+    },
+
+    avatarUploadSuccess(head_url, head_name, face_token) {
+      this.studentForm.head_url = head_url;
+      this.studentForm.head_name = head_name;
+      this.studentForm.face_token = face_token;
+    },
+
+    // 提交表单
+    submitForm(submit) {
+      submit();
+    },
+  },
+};
+</script>
 <template>
   <AppFormPage
     ref="studentForm"
     :model="studentForm"
     :rules="rules"
     :from="from"
-    url="/student"
-    object="学生"
+    :id ="id"
+    url="/member_center/student"
+    object="编辑学生"
     class="student-form"
     label-width="100px"
     @on-submit="submitForm"
@@ -15,20 +143,22 @@
     >
       <el-form-item
         label="第一联系人"
-        prop="phone"
+        prop="client_phone"
         class="student-form-contact__inputPhone"
       >
         <el-input
-          v-model="studentForm.phone"
+          v-model="studentForm.client_phone"
           placeholder="请输入手机号码"
 
         />
       </el-form-item>
       <el-form-item
         label="第二联系人"
+        prop="client_second_phone"
         class="student-form-contact__inputPhone"
       >
         <el-input
+          v-model="studentForm.client_second_phone"
           placeholder="请输入手机号码"
         />
       </el-form-item>
@@ -42,14 +172,7 @@
         class="student-form-contact__inputPhone"
       >
         <el-input
-          placeholder="请输入家长姓名"
-        />
-      </el-form-item>
-      <el-form-item
-        label="姓名"
-        class="student-form-contact__inputPhone"
-      >
-        <el-input
+          v-model="studentForm.client_name"
           placeholder="请输入家长姓名"
         />
       </el-form-item>
@@ -86,7 +209,7 @@
       >
         <AppCropUploader
           v-model="studentForm.head_url"
-          url="/student/upload"
+          url="/member_center/student/upload"
           post-name="head_url"
           @on-success="avatarUploadSuccess"
         />
@@ -107,30 +230,25 @@
 
     <el-form-item
       label="生源地区"
-      prop="department_id"
+      prop="places"
     >
-      <el-select
-        v-model="studentForm.department_id"
+      <el-cascader
+        :options="chinaJSON"
+        v-model="studentForm.places"
         placeholder="请选择生源地区"
-      >
-        <el-option
-          v-for="list in studentStoreBefore.department"
-          :key="list.value"
-          :value="list.value"
-          :label="list.name"
-        />
-      </el-select>
+        @change="changeCode(studentForm.places)"
+      />
     </el-form-item>
     <el-form-item
       label="生源学校"
-      prop="school"
+      prop="school_name"
     >
       <el-select
-        v-model="studentForm.school"
+        v-model="studentForm.school_id"
         placeholder="请输入生源学校"
       >
         <el-option
-          v-for="list in studentStoreBefore.school"
+          v-for="list in schoolname"
           :key="list.value"
           :value="list.value"
           :label="list.name"
@@ -158,121 +276,6 @@
   </AppFormPage>
 </template>
 
-<script>
-/**
- * @desc 创建和编辑学生
- *
- * @author suyanping
-*/
-import { form } from '@/mixins';
-import QRCode from 'qrcode';
-
-export default {
-  name: 'StudentForm',
-
-  mixins: [form],
-
-  data() {
-    return {
-      id: this.$route.params.id,
-
-      studentForm: {
-        head_url: '',
-        birth_at: '',
-        name: '',
-        gender: 1,
-        phone: '',
-        school: null,
-        grade: '',
-        department_id: '',
-        study_teacher_id: '',
-      },
-
-      rules: {
-        head_url: [
-          this.$rules.required('学员头像'),
-        ],
-        birth_at: [
-          this.$rules.required('出生年月'),
-        ],
-        name: [
-          this.$rules.required('学员姓名'),
-          { ...this.$rules.name },
-          {
-            max: 5,
-            message: '长度最多 5 个字符',
-            trigger: 'blur,change',
-          },
-        ],
-        gender: [
-          this.$rules.required('学员性别', 'number'),
-        ],
-        phone: [
-          this.$rules.required('第一联系人'),
-          { ...this.$rules.mobile },
-        ],
-      },
-
-      studentStoreBefore: {
-        grade: [],
-        gender: [],
-        department: [],
-        teachers: [],
-        school: [],
-      },
-
-      imgUrl: '',
-    };
-  },
-
-  methods: {
-    // 获取学员数据源
-    getFormBefore() {
-      this.$http.get('/student/store_before')
-        .then((res) => {
-          this.studentStoreBefore = { ...res };
-        });
-    },
-
-    // 获取当前学员信息
-    getFormStore(id) {
-      this.$http.get(`/student/${id}`)
-        .then((res) => {
-          const {
-            created_at: createdAt,
-            deleted_at: deletedAt,
-            updated_at: updatedAt,
-            ...other
-          } = res;
-
-          this.studentForm = {
-            ...this.studentForm,
-            ...other,
-          };
-          this.studentForm.school = Number(this.studentForm.school);
-
-          if (res.qrcode) {
-            QRCode.toDataURL(res.qrcode.toString())
-              .then((url) => {
-                this.imgUrl = url;
-              });
-          }
-        });
-    },
-
-    avatarUploadSuccess(head_url, head_name, face_token) {
-      this.studentForm.head_url = head_url;
-      this.studentForm.head_name = head_name;
-      this.studentForm.face_token = face_token;
-    },
-
-    // 提交表单
-    submitForm(submit) {
-      submit();
-    },
-  },
-};
-</script>
 
 <style lang="postcss">
 .student-form__input{

@@ -26,13 +26,13 @@ export default [
   },
   // 查看学生
   {
-    path: 'student-look/:id',
+    path: 'student-info/:id',
     name: 'StudentLook',
     component: StudentInfo,
   },
   // 查看课程
   {
-    path: 'course-look/:id',
+    path: 'course-info/:id',
     name: 'CourseLook',
     component: StudentCourse,
   },
