@@ -98,6 +98,15 @@ export default {
   },
 
   methods: {
+    checkCategory(key, text) {
+      return this.$permissions(`shop.category.${key}`, text);
+    },
+
+
+    checkProduct(key, text) {
+      return this.$permissions(`shop.product.${key}`, text);
+    },
+
     getCreateBefore() {
       this.$http.get('/category/create_before')
         .then((res) => {
@@ -242,6 +251,7 @@ export default {
 
       <template slot-scope="{ listData }">
         <el-button
+          v-if="checkCategory('store')"
           type="primary"
           size="small"
           @click="addCategory">添加品类</el-button>
@@ -264,12 +274,14 @@ export default {
           >
             <template slot-scope="scope">
               <el-button
+                v-if="checkCategory('update')"
                 size="small"
                 @click.stop="updateCategory(scope.row.id)"
               >
                 编辑
               </el-button>
               <el-button
+                v-if="checkCategory('delete')"
                 size="small"
                 type="danger"
                 @click.stop="deleteCategory(scope.row.id)"
@@ -306,9 +318,12 @@ export default {
       </template>
     </AppList>
 
-    <div class="sub-category-list">
+    <div
+      v-if="checkProduct('index')"
+      class="sub-category-list">
       <template>
         <el-button
+          v-if="checkProduct('store')"
           type="primary"
           size="small"
           @click="addSubcategory">添加子品类</el-button>
@@ -330,12 +345,14 @@ export default {
           >
             <template slot-scope="scope">
               <el-button
+                v-if="checkProduct('update')"
                 size="small"
                 @click="updateSubCategory(scope.row.id)"
               >
                 编辑
               </el-button>
               <el-button
+                v-if="checkProduct('delete')"
                 size="small"
                 type="danger"
                 @click="deleteSubCategory(scope.row.id)"
