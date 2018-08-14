@@ -64,6 +64,11 @@ export default {
   },
 
   methods: {
+
+    checkPermission(key, text) {
+      return this.$permissions(`dispatch_center.quit.${key}`, text);
+    },
+
     changeRoute() {
       const { page, per_page, ...search } = this.$route.query;
 
@@ -122,10 +127,13 @@ export default {
 
   >
     <AppSearch
+      v-if="checkPermission('index')"
       slot="search"
       :search-arr="searchArr"
     />
-    <template slot-scope="props">
+    <template
+      v-if="checkPermission('index')"
+      slot-scope="props">
       <el-table :data="props.listData">
         <el-table-column
           v-for="column in columns"
@@ -139,13 +147,12 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
-              v-if="statusType !== '1'"
-
+              v-if="statusType !== '1' && checkPermission('show')"
               size="small"
               @click="quitInfo(scope.row.id)"
             >查看</el-button>
             <el-button
-              v-else
+              v-else-if="checkPermission('deal')"
               size="small"
               @click="quitDeal(scope.row.id)"
             >退班处理</el-button>

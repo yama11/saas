@@ -80,6 +80,10 @@ export default {
 
   methods: {
 
+    checkPermission(key, text) {
+      return this.$permissions(`dispatch_center.quit.${key}`, text);
+    },
+
     formQuitClass(id) {
       this.visible = true;
 
@@ -112,10 +116,13 @@ export default {
     title="退班"
   >
     <AppSearch
+      v-if="checkPermission('student')"
       slot="search"
       :search-arr="searchArr"
     />
-    <template slot-scope="props">
+    <template
+      v-if="checkPermission('student')"
+      slot-scope="props">
       <el-table :data="props.listData">
         <el-table-column
           v-for="column in columns"
@@ -130,6 +137,7 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
+              v-if="checkPermission('audit')"
               size="small"
               @click="formQuitClass(scope.row.id)"
             >退班</el-button>
