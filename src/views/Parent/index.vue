@@ -37,7 +37,7 @@ export default {
         { prop: 'phone', label: '手机号' },
       ];
       const searchList = [
-        { componentType: 'AppSearchDate', searchType: 'register_at' },
+        { componentType: 'AppSearchDate', searchType: 'created_at' },
         { componentType: 'AppSearchColumn', searchType: column },
       ];
       return searchList;
@@ -45,6 +45,9 @@ export default {
   },
 
   methods: {
+    checkPermission(key, text) {
+      return this.$permissions(`member_center.client.${key}`, text);
+    },
     parentInfo(id) {
       this.$router.push(`/client-info/${id}`);
     },
@@ -62,10 +65,13 @@ export default {
       title="家长列表"
     >
       <AppSearch
+        v-if="checkPermission('index')"
         slot="search"
         :search-arr="searchArr"
       />
-      <template slot-scope="props">
+      <template
+        v-if="checkPermission('index')"
+        slot-scope="props">
         <el-table :data="props.listData">
           <el-table-column
             v-for="column in columns"
@@ -80,6 +86,7 @@ export default {
           >
             <template slot-scope="scope">
               <el-button
+                v-if="checkPermission('show')"
                 size="small"
                 @click.native="parentInfo(scope.row.id)"
               >查看</el-button>
