@@ -26,7 +26,7 @@ export default {
 
       productId: this.$route.params.id,
 
-      productStatus: 0,
+      productStatus: 1,
 
       orderCount: 0,
 
