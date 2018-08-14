@@ -42,6 +42,10 @@ export default {
   }),
 
   methods: {
+    checkPermission(key) {
+      return this.$permissions(`curriculum_center.course.${key}`);
+    },
+
     getList() {
       this.$emit('update');
     },
@@ -118,17 +122,23 @@ export default {
   <div class="global-main course-list-main">
     <h2 class="course-list__title">
       <el-button
+        v-if="checkPermission('store')"
         type="primary"
         @click="preCourseCreate"
       >
         添加课时
       </el-button>
     </h2>
-    <div class="course-list__body">
+    <div
+      v-if="checkPermission('index')"
+      class="course-list__body"
+    >
       <ListItem
         v-for="item in list.data"
         :key="item.id"
         :data="item"
+        :can-update="checkPermission('update')"
+        :can-delete="checkPermission('delete')"
         @delete="() => courseDelete(item.id)"
         @edit="() => preCourseEdit(item.id)"
       />
@@ -154,6 +164,7 @@ export default {
     </AppFormDialog>
 
     <footer
+      v-if="checkPermission('index')"
       class="course-list-footer"
     >
       <el-pagination

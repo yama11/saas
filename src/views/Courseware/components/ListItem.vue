@@ -13,6 +13,16 @@ export default {
       type: Object,
       required: true,
     },
+
+    canUpdate: {
+      type: Boolean,
+      default: true,
+    },
+
+    canDelete: {
+      type: Boolean,
+      default: true,
+    },
   },
 
   methods: {
@@ -32,10 +42,12 @@ export default {
     <span>{{ data.name }}</span>
     <div class="course-list-item__control">
       <i
+        v-if="canUpdate"
         class="el-icon-edit"
         @click="courseEdit"
       />
       <i
+        v-if="canDelete"
         class="el-icon-delete"
         @click="courseDelete"
       />
@@ -60,12 +72,15 @@ export default {
 .course-list-item__control {
   position: absolute;
   display: flex;
-  justify-content: space-between;
   bottom: 0;
   left: 0;
   padding: .5em 1em;
   width: 100%;
   font-size: 20px;
+}
+
+.subject-list-item__control > .el-icon-delete {
+  margin-left: auto;
 }
 
 .course-list-item__control > i:hover {

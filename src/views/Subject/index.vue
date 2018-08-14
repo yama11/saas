@@ -41,6 +41,10 @@ export default {
   },
 
   methods: {
+    checkPermission(key) {
+      return this.$permissions(`curriculum_center.subject.${key}`);
+    },
+
     getList() {
       this.$_listMixin_getList('/subject')
         .then(({ data }) => {
@@ -95,16 +99,22 @@ export default {
     class="global-main subject-list"
   >
     <h2 class="subject-list__title">学科管理</h2>
-    <div class="subject-list__body">
+    <div
+      v-if="checkPermission('delete')"
+      class="subject-list__body"
+    >
       <ListItem
         v-for="item in list"
         :key="item.id"
         :data="item"
+        :can-update="checkPermission('update')"
+        :can-delete="checkPermission('delete')"
         @delete="subjectDelete"
         @edit="subjectEdit"
         @check="subjectCheck"
       />
       <div
+        v-if="checkPermission('store')"
         class="module-subject__list-item subject-list__create"
         @click="subjectCreate"
       >
