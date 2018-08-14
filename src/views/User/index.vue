@@ -64,6 +64,10 @@ export default {
   }),
 
   methods: {
+    checkPermission(key, text) {
+      return this.$permissions(`system.user.${key}`, text);
+    },
+
     toDeleteUser(id) {
       this.$_listMixin_alertDeleteItem(
         id, this.list.data, '用户', '/user',
@@ -84,20 +88,22 @@ export default {
 <template>
   <AppList
     :list.sync="list"
-    :create-label="
-      $permissions('user.store', '添加用户')
-    "
+    :create-label="checkPermission('store', '添加用户')"
     title="用户管理"
     api="/user"
     @create="toCreateUser"
   >
 
     <AppSearch
+      v-if="checkPermission('index')"
       slot="search"
       :search-arr="searchs"
     />
 
-    <template slot-scope="props">
+    <template
+      v-if="checkPermission('index')"
+      slot-scope="props"
+    >
       <el-table :data="props.listData">
         <el-table-column
           v-for="column in columns"
@@ -112,12 +118,14 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
+              v-if="checkPermission('update')"
               size="small"
               @click="toUpdateUser(scope.row.id)"
             >
               编辑
             </el-button>
             <el-button
+              v-if="checkPermission('delete')"
               type="danger"
               size="small"
               @click="toDeleteUser(scope.row.id)"

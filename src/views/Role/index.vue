@@ -27,6 +27,10 @@ export default {
   }),
 
   methods: {
+    checkPermission(key, text) {
+      return this.$permissions(`system.role.${key}`, text);
+    },
+
     toCreateUser() {
       this.$router.push('/role-create');
     },
@@ -46,12 +50,15 @@ export default {
   <AppList
     :list.sync="list"
     :columns="columns"
-    :create-label="'添加角色'"
+    :create-label="checkPermission('store', '添加角色')"
     api="/role"
     title="角色列表"
     @create="toCreateUser"
   >
-    <template slot-scope="props">
+    <template
+      v-if="checkPermission('index')"
+      slot-scope="props"
+    >
       <el-table :data="props.listData">
         <el-table-column
           v-for="column in columns"
@@ -65,12 +72,14 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
+              v-if="checkPermission('update')"
               size="small"
               @click="editRole(scope.row.id)"
             >
               编辑
             </el-button>
             <el-button
+              v-if="checkPermission('delete')"
               type="danger"
               size="small"
               @click="deleteClass(scope.row.id)"
