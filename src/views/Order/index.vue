@@ -51,6 +51,10 @@ export default {
   },
 
   methods: {
+    checkPermission(key, text) {
+      return this.$permissions(`shop.order.${key}`, text);
+    },
+
     getIndexBefore() {
       this.$http.get('/order/index_before')
         .then((res) => {
@@ -75,6 +79,7 @@ export default {
   >
 
     <AppSearch
+      v-if="checkPermission('index')"
       slot="search"
       :search-arr="searchArr"/>
 
@@ -96,6 +101,7 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
+              v-if="checkPermission('show')"
               size="small"
               @click="lookOrderInfo(scope.row.id)"
             >
