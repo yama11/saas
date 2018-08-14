@@ -86,7 +86,6 @@ export default {
       this.$http.post('/quit/create', { id })
         .then((res) => {
           this.formData = { ...res };
-          console.log(this.formData);
         });
     },
 
