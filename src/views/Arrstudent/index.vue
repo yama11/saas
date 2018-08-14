@@ -4,7 +4,7 @@
  *
  * @author  yehaifeng
  */
-import { list } from '@/mixins';
+import list from '@/mixins/list';
 
 export default {
 
@@ -47,6 +47,9 @@ export default {
       student_number: null,
 
       arr: [],
+
+      categories: [],
+
     };
   },
 
@@ -68,9 +71,53 @@ export default {
         { prop: 'class_name', label: '约课班级' },
       ];
     },
+
+    searchArr() {
+      const column = [
+        { prop: 'curriculum_name', label: '课程名称' },
+        { prop: 'department_name', label: '培训机构' },
+        { prop: 'class_name', label: '约课班级' },
+
+      ];
+      const searchList = [
+        { selectValue: this.categories,
+          componentType: 'AppSearchCascader',
+          searchType: ['category_name', 'product_name'] },
+        { componentType: 'AppSearchColumn', searchType: column },
+      ];
+      return searchList;
+    },
+  },
+
+  created() {
+    this.toFormBefore();
   },
 
   methods: {
+
+    checkPermission(key, text) {
+      return this.$permissions(`schedule_center.intention.${key}`, text);
+    },
+
+    toFormBefore() {
+      this.$http.get('/intention/index_before')
+        .then((res) => {
+          this.categories = res.categories
+            .map((item) => {
+              const children = item.product
+                .map(proItem => ({
+                  value: proItem.product_name,
+                  label: proItem.product_name,
+                }));
+
+              return {
+                value: item.category_name,
+                label: item.category_name,
+                children,
+              };
+            });
+        });
+    },
 
     toDeleteUser(id) {
       this.$router.push(`/intention-edit/${id}`);
@@ -80,44 +127,45 @@ export default {
       this.arr = value;
     },
 
-    updateProcess(id) {
-      const curriculumName = this.arr
-        .map(item => item.curriculum_name);
+    updateProcess(id, curriculumID) {
+      this.formData.intention_ids = [];
 
-      const curriculumArr = [...new Set(curriculumName)];
+      if (id) {
+        this.visible = true;
+        this.formData.intention_ids.push(id);
 
-      if (curriculumArr.length !== 1 && !id) {
+        this.getFormData(curriculumID);
+
+        return;
+      }
+      const curriculumId = this.arr
+        .map(item => item.curriculum_id);
+
+      const curriculumArr = [...new Set(curriculumId)];
+
+      if (curriculumArr.length !== 1) {
         this.$message.error('请选择相同课程的学生');
         return;
       }
-      const curriculumId = this.arr.map(item => item.id);
-
-      this.formData.intention_ids = [];
-      this.id = id;
       this.visible = true;
-      this.$http.get('/intention/dispatch/3')
-        .then((res) => {
-          this.editionInfo = { ...res };
+      this.formData.intention_ids = this.arr.map(item => item.id);
 
+      this.getFormData(curriculumId[0]);
+    },
+
+    getFormData(cId) {
+      this.$http.get(`/intention/dispatch/${cId}`)
+        .then((res) => {
           this.editionInfo.schemes = res.schemes
             .map(item => ({
               ...item,
               date: item.start_date ? `${item.start_date.split(' ')[0]}~${item.end_date.split(' ')[0]}` : 'null~null',
             }));
         });
-      if (id) {
-        this.formData.intention_ids.push(id);
-      } else {
-        this.formData.intention_ids = curriculumId;
-      }
     },
 
     submitEdition(submit) {
       submit().then(() => this.$refs.list.getList());
-    },
-
-    updateList(listRef) {
-      listRef.getList();
     },
 
     changTime(id) {
@@ -155,14 +203,21 @@ export default {
 
 <template>
   <AppList
-    :key="$route.path"
+    ref="list"
     :list.sync="list"
     create-label="调度"
     title="约课学生"
     api="/intention"
     @create="updateProcess"
   >
-    <template slot-scope="props">
+    <AppSearch
+      v-if="checkPermission('index')"
+      slot="search"
+      :search-arr="searchArr"
+    />
+    <template
+      v-if="checkPermission('index')"
+      slot-scope="props">
       <el-table
         :data="props.listData"
         @selection-change="changeRodio"
@@ -182,17 +237,19 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
+              v-if="checkPermission('show')"
               type="small"
               size="small"
               @click="toDeleteUser(scope.row.id)"
             >查看</el-button>
             <el-button
+              v-if="checkPermission('dispatcher')"
               size="small"
-              @click="updateProcess(scope.row.id)"
-
+              @click="updateProcess(scope.row.id,scope.row.curriculum_id)"
             >调度</el-button>
 
             <AppFormDialog
+              v-if="checkPermission('dispatching')"
               :visible.sync="visible"
               :model="formData"
               label-width="5em"
