@@ -62,6 +62,8 @@ export default {
         product: [],
       },
 
+      cascaderList: [],
+
       curriculumId: null,
 
       visible: false,
@@ -69,11 +71,34 @@ export default {
     };
   },
 
+  computed: {
+    searchArr() {
+      const column = [
+        { prop: 'name', label: '课程名称' },
+        { prop: 'merchandise_name', label: '关联商品名称' },
+      ];
+
+      const searchList = [
+        { selectValue: this.cascaderList,
+          componentType: 'AppSearchCascader',
+          searchType: ['category_name', 'product_name'],
+        },
+        { componentType: 'AppSearchColumn', searchType: column },
+      ];
+
+      return searchList;
+    },
+  },
+
   created() {
     this.getIndexBefore();
   },
 
   methods: {
+    checkPermission(key, text) {
+      return this.$permissions(`curriculum_center.curriculum.${key}`, text);
+    },
+
     onSkipPage() {
       this.$router.push('curriculum-timeTable');
     },
@@ -81,7 +106,22 @@ export default {
     getIndexBefore() {
       this.$http.get('/curriculum/index_before')
         .then((res) => {
-          this.formBefore.categories = res.categories;
+          this.formBefore.catiesegor = res.categories;
+
+          this.cascaderList = res.categories
+            .map((item) => {
+              const children = item.product
+                .map(proItem => ({
+                  value: proItem.product_name,
+                  label: proItem.product_name,
+                }));
+
+              return {
+                label: item.category_name,
+                value: item.category_name,
+                children,
+              };
+            });
         });
     },
 
@@ -171,7 +211,7 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
-    create-label= "课程创建"
+    :create-label="checkPermission('store', '课程创建')"
     skip-label= "时间模板"
     class="curriculum-list"
     api="/curriculum"
@@ -180,7 +220,14 @@ export default {
     @skipPage="onSkipPage"
   >
 
-    <template slot-scope="{ listData }">
+    <AppSearch
+      v-if="checkPermission('index')"
+      slot="search"
+      :search-arr="searchArr"/>
+
+    <template
+      v-if="checkPermission('index')"
+      slot-scope="{ listData }">
 
       <el-table
         :data="listData"
@@ -199,24 +246,28 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
+              v-if="checkPermission('update')"
               size="small"
               @click="updateCurriculum(scope.row.id)"
             >
               编辑
             </el-button>
             <el-button
+              v-if="checkPermission('course_index')"
               size="small"
               @click="classManage(scope.row.id)"
             >
               课时管理
             </el-button>
             <el-button
+              v-if="checkPermission('schedule_index')"
               size="small"
               @click="curriculumArrangement(scope.row.id)"
             >
               排课
             </el-button>
             <el-button
+              v-if="checkPermission('delete')"
               size="small"
               type="danger"
               @click="deleteCurriculum(scope.row.id)"

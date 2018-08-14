@@ -65,10 +65,11 @@ export default {
     };
   },
 
-  created() {
-  },
-
   methods: {
+    checkPermission(key, text) {
+      return this.$permissions(`curriculum_center.class.${key}`, text);
+    },
+
     addClass() {
       this.classDialog = true;
 
@@ -131,6 +132,7 @@ export default {
   <div class="schedule-class">
     <p>意向班级：</p>
     <el-button
+      v-if="checkPermission('store')"
       size="small"
       @click="addClass">添加班级</el-button>
 
@@ -152,6 +154,7 @@ export default {
       >
         <template slot-scope="scope">
           <el-button
+            v-if="checkPermission('update')"
             size="small"
             @click="updateClass(scope.row.id)"
           >
@@ -159,7 +162,7 @@ export default {
           </el-button>
 
           <el-button
-            v-if="scope.row.student_number === 0"
+            v-if="scope.row.student_number === 0 && checkPermission('delete')"
             size="small"
             type="danger"
             @click="deleteClass(scope.row.id)"

@@ -79,6 +79,10 @@ export default {
   },
 
   methods: {
+    checkPermission(key, text) {
+      return this.$permissions(`curriculum_center.curriculum.${key}`, text);
+    },
+
     getCourseList() {
       this.$http.get(`/curriculum/course/${this.id}`)
         .then((res) => {
@@ -153,6 +157,10 @@ export default {
     },
 
     updateCourse(id, sort) {
+      const isUpdate = this.checkPermission('course_store');
+
+      if (!isUpdate) return;
+
       this.visible = true;
 
       this.courseId = id;
@@ -288,6 +296,7 @@ export default {
 
     <div
       v-loading.lock="sortLoading"
+      v-if="checkPermission('course_index')"
       class="curriculum-period-body">
 
       <Draggable
@@ -308,13 +317,18 @@ export default {
             <p>课件数：{{ item.ware_number }}</p>
             <p>游戏数：{{ item.game_number }}</p>
             <i
+              v-if="checkPermission('course_delete')"
               class="el-icon-delete"
               @click.stop="delCourse(item.id)"/>
+            <i
+              v-else
+              class="curriculum-period-body__display"/>
           </div>
 
           <div
             v-else
-            class="curriculum-period-body__empty">
+            class="curriculum-period-body__empty"
+          >
             <span>{{ index + 1 }}</span>
             <i class="el-icon-plus"/>
           </div>
@@ -439,6 +453,11 @@ export default {
   & .el-icon-delete{
     font-size: 23px;
   }
+}
+.curriculum-period-body__display{
+  display: inline-block;
+  width: 23px;
+  height: 21px;
 }
 
 .curriculum-period-body__title{

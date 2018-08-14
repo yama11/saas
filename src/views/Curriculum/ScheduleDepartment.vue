@@ -61,6 +61,10 @@ export default {
   },
 
   methods: {
+    checkPermission(key, text) {
+      return this.$permissions(`curriculum_center.curriculum.${key}`, text);
+    },
+
     getDealers() {
       this.$http.get('/option/dealers')
         .then((res) => {
@@ -168,6 +172,7 @@ export default {
 <template>
   <div class="schedule-department">
     <el-button
+      v-if="checkPermission('schedule_department_store')"
       size="small"
       @click="addDepartment">
       +选择意向机构
@@ -178,8 +183,8 @@ export default {
     <el-tag
       v-for="item in departments"
       :key="item.id"
+      :closable="checkPermission('schedule_department_delete')"
       type="info"
-      closable
       class="schedule-department__label"
       @close="delDepartment(item.id)">
       {{ item.name }}

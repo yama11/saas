@@ -75,6 +75,10 @@ export default {
   },
 
   methods: {
+    checkPermission(key, text) {
+      return this.$permissions(`curriculum_center.curriculum.${key}`, text);
+    },
+
     getCurriculum(val) {
       this.$http.get(`/curriculum/schedule/${this.id}`)
         .then((res) => {
@@ -223,13 +227,13 @@ export default {
 
       <div class="curriculum-schedule-body__status">
         <el-button
-          v-if="scheme.scheme_status === 2"
+          v-if="scheme.scheme_status === 2 && checkPermission('schedule_pause')"
           size="small"
           @click="pauseOpen()">
           暂停预约
         </el-button>
         <el-button
-          v-else
+          v-if="scheme.scheme_status !== 2 && checkPermission('schedule_begin')"
           size="small"
           @click="beginOpen()">
           开始预约
@@ -297,6 +301,7 @@ export default {
 .curriculum-schedule-body__status{
   background: #F0F0F0;
   padding: 5px 10px;
+  height: 45px;
   & >span{
     line-height: 35px;
     float: right;

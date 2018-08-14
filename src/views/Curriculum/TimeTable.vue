@@ -80,6 +80,9 @@ export default {
   },
 
   methods: {
+    checkPermission(key, text) {
+      return this.$permissions(`curriculum_center.timetable.${key}`, text);
+    },
 
     createTimeTable() {
       this.visible = true;
@@ -185,7 +188,7 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
-    create-label="创建时间表"
+    :create-label="checkPermission('store', '创建时间表')"
     class="timeTable-list"
     api="/timetable"
     title="时间表"
@@ -193,10 +196,13 @@ export default {
   >
 
     <AppSearch
+      v-if="checkPermission('index')"
       slot="search"
       :search-arr="searchArr"/>
 
-    <template slot-scope="{ listData }">
+    <template
+      v-if="checkPermission('index')"
+      slot-scope="{ listData }">
       <el-table
         :data="listData"
       >
@@ -214,12 +220,14 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
+              v-if="checkPermission('update')"
               size="small"
               @click="updateTimeTable(scope.row.id)"
             >
               编辑
             </el-button>
             <el-button
+              v-if="checkPermission('delete')"
               size="small"
               type="danger"
               @click="deleteTimeTable(scope.row.id)"

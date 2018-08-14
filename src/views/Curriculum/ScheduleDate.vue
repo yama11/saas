@@ -104,6 +104,10 @@ export default {
   },
 
   methods: {
+    checkPermission(key, text) {
+      return this.$permissions(`curriculum_center.curriculum.${key}`, text);
+    },
+
     addTime() {
       this.timeDialog = true;
 
@@ -213,6 +217,7 @@ export default {
 <template>
   <div class="schedule-date">
     <el-button
+      v-if="checkPermission('schedule_calendar_store')"
       size="small"
       @click="addTime">+选择时间</el-button>
     <div class="schedule-date-body__info">
