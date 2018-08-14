@@ -42,6 +42,7 @@ export default {
       ],
 
       status: [],
+      categories: [],
 
     };
   },
@@ -55,7 +56,10 @@ export default {
       ];
 
       const searchList = [
-        { selectValue: this.status, componentType: 'AppSearchStatus', searchType: 'status' },
+        { selectValue: this.status, componentType: 'AppSearchStatus', searchType: 'class_status' },
+        { selectValue: this.categories,
+          componentType: 'AppSearchCascader',
+          searchType: ['category_name', 'product_name'] },
         { componentType: 'AppSearchColumn', searchType: column },
       ];
       return searchList;
@@ -66,10 +70,30 @@ export default {
   },
 
   methods: {
+
+    checkPermission(key, text) {
+      return this.$permissions(`schedule_center.class.${key}`, text);
+    },
+
     indexBefore() {
       this.$http.get('/class/index_before')
         .then((res) => {
           this.status = res.status;
+
+          this.categories = res.categories
+            .map((item) => {
+              const children = item.product
+                .map(proItem => ({
+                  value: proItem.product_name,
+                  label: proItem.product_name,
+                }));
+
+              return {
+                value: item.category_name,
+                label: item.category_name,
+                children,
+              };
+            });
         });
     },
 
@@ -102,10 +126,13 @@ export default {
     title="约课班级"
   >
     <AppSearch
+      v-if="checkPermission('index')"
       slot="search"
       :search-arr="searchArr"
     />
-    <template slot-scope="props">
+    <template
+      v-if="checkPermission('index')"
+      slot-scope="props">
       <el-table :data="props.listData">
         <el-table-column
           v-for="column in columns"
@@ -120,11 +147,13 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
+              v-if="checkPermission('show')"
               size="small"
               @click="editClass(scope.row.id)"
             >查看</el-button>
             <el-button
-              v-if="scope.row.class_status_name ==='未开班'"
+              v-if="scope.row.class_status_name ==='未开班'
+              && checkPermission('ready')"
               type="danger"
               size="small"
               @click="deleteClass(scope.row.id)"
