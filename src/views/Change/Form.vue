@@ -105,6 +105,10 @@ export default {
 
   methods: {
 
+    checkPermission(key, text) {
+      return this.$permissions(`dispatch_center.change.${key}`, text);
+    },
+
 
     editPackage(id) {
       this.visible = true;
@@ -188,11 +192,14 @@ export default {
 
   >
     <AppSearch
+      v-if="checkPermission('student')"
       slot="search"
       :search-arr="searchArr"
     />
 
-    <template slot-scope="props">
+    <template
+      v-if="checkPermission('student')"
+      slot-scope="props">
       <el-table :data="props.listData">
         <el-table-column
           v-for="column in columns"
@@ -207,6 +214,7 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
+              v-if="checkPermission('audit')"
               size="small"
               @click="editPackage(scope.row.id)"
             >转班</el-button>
