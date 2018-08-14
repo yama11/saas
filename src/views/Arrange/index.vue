@@ -48,7 +48,7 @@ export default {
 
       id: null,
 
-      status: [],
+      arrangeStatus: [],
 
       visible: false,
 
@@ -76,6 +76,9 @@ export default {
         manage_teachers: [],
       },
 
+      categories: [],
+
+
     };
   },
 
@@ -88,7 +91,12 @@ export default {
       ];
 
       const searchList = [
-        { selectValue: this.status, componentType: 'AppSearchStatus', searchType: 'status' },
+        { selectValue: this.arrangeStatus,
+          componentType: 'AppSearchStatus',
+          searchType: 'class_status' },
+        { selectValue: this.categories,
+          componentType: 'AppSearchCascader',
+          searchType: ['category_name', 'product_name'] },
         { componentType: 'AppSearchColumn', searchType: column },
       ];
       return searchList;
@@ -100,20 +108,36 @@ export default {
   },
 
   methods: {
+
     indexBefore() {
       this.$http.get('/class/index_before')
         .then((res) => {
-          this.status = res.status;
+          this.arrangeStatus = res.status;
+
+          this.categories = res.categories
+            .map((item) => {
+              const children = item.product
+                .map(proItem => ({
+                  value: proItem.product_name,
+                  label: proItem.product_name,
+                }));
+
+              return {
+                value: item.category_name,
+                label: item.category_name,
+                children,
+              };
+            });
         });
     },
 
-    editPackage(id) {
+    arrangeInfo(id) {
       this.$router.push(`/arrange-info/${id}`);
     },
 
     submitEdition(submit) {
       submit()
-        .then(() => this.$refs.list);
+        .then(() => this.$refs.list.getList());
     },
 
     setClass(id) {
@@ -173,7 +197,7 @@ export default {
           <template slot-scope="scope">
             <el-button
               size="small"
-              @click="editPackage(scope.row.id)"
+              @click="arrangeInfo(scope.row.id)"
             >查看</el-button>
             <el-button
               type="small"
