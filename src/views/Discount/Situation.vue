@@ -50,6 +50,10 @@ export default {
   },
 
   methods: {
+    checkPermission(key, text) {
+      return this.$permissions(`shop.client_coupon.${key}`, text);
+    },
+
     getIndexBefore() {
       this.$http.get(`/coupon/${this.id}/client_coupon/index_before`)
         .then((res) => {
@@ -70,10 +74,13 @@ export default {
   >
 
     <AppSearch
+      v-if="checkPermission('index')"
       slot="search"
       :search-arr="searchArr"/>
 
-    <template slot-scope="{ listData }">
+    <template
+      v-if="checkPermission('index')"
+      slot-scope="{ listData }">
 
       <el-table
         :data="listData"

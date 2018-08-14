@@ -61,6 +61,10 @@ export default {
   },
 
   methods: {
+    checkPermission(key, text) {
+      return this.$permissions(`shop.coupon.${key}`, text);
+    },
+
     createDiscount() {
       this.$router.push('/discount-create');
     },
@@ -94,7 +98,7 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
-    create-label="添加优惠券"
+    :create-label="checkPermission('store', '添加优惠券')"
     class="discount"
     api="/coupon"
     title="优惠券管理"
@@ -102,10 +106,13 @@ export default {
   >
 
     <AppSearch
+      v-if="checkPermission('index')"
       slot="search"
       :search-arr="searchArr"/>
 
-    <template slot-scope="{ listData }">
+    <template
+      v-if="checkPermission('index')"
+      slot-scope="{ listData }">
 
       <el-table
         :data="listData"
@@ -124,7 +131,7 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
-              v-if="scope.row.status === 3"
+              v-if="scope.row.status === 3 && checkPermission('shelve')"
               size="small"
               @click="discountShelve(scope.row.id)"
             >
@@ -132,7 +139,7 @@ export default {
             </el-button>
 
             <el-button
-              v-if="scope.row.status === 2"
+              v-if="scope.row.status === 2 && checkPermission('off_shelve')"
               size="small"
               @click="discountOffShelve(scope.row.id)"
             >
@@ -140,6 +147,7 @@ export default {
             </el-button>
 
             <el-button
+              v-if="$permissions('shop.client_coupon')"
               size="small"
               @click="discountSituation(scope.row.id)"
             >
@@ -149,13 +157,13 @@ export default {
             <el-button
               v-if="scope.row.can_edit"
               size="small"
-              @click="editDiscount(scope.row.id)"
+              @click="editDiscount(scope.row.id) && checkPermission('update')"
             >
               编辑
             </el-button>
 
             <el-button
-              v-if="scope.row.can_delete"
+              v-if="scope.row.can_delete && checkPermission('delete')"
               size="small"
               type="danger"
               @click="deleteDiscount(scope.row.id)"
