@@ -135,7 +135,11 @@ export default {
 
         const likeWechat = item.indexOf('like[wechat_user]') === -1;
 
-        return likeExist && likeWechat;
+        const likeCategory = item.indexOf('like[category_name]') === -1;
+
+        const likeProduct = item.indexOf('like[product_name]') === -1;
+
+        return likeExist && likeWechat && likeCategory && likeProduct;
       });
 
       if (data !== undefined) {

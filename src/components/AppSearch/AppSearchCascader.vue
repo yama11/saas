@@ -52,7 +52,7 @@ export default {
       }
 
       const arrStr = value.reduce(((acc, item, index) => {
-        const type = `equal[${this.type[index]}]`;
+        const type = `like[${this.type[index]}]`;
 
         acc[type] = item;
 
@@ -72,7 +72,7 @@ export default {
       const { page, per_page, ...search } = this.$route.query;
 
       this.selectValue = this.type.map((item) => {
-        const status = `equal[${item}]`;
+        const status = `like[${item}]`;
 
         return search[status];
       });
