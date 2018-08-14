@@ -60,10 +60,31 @@ export default {
       },
 
       editTargetID: undefined,
+
+      searchs: [
+        {
+          searchType: [
+            {
+              label: '直播室名称',
+              prop: 'name',
+            },
+            {
+              label: '直播室账号',
+              prop: 'account',
+            },
+          ],
+          componentType: 'AppSearchColumn',
+          placeholder: '请输入搜索内容',
+        },
+      ],
     });
   },
 
   methods: {
+    checkPermission(key, text) {
+      return this.$permissions(`system.liveroom.${key}`, text);
+    },
+
     liveroomDelete(id) {
       this.$_listMixin_alertDeleteItem(
         id, this.list.data, '直播室', '/liveroom',
@@ -93,13 +114,23 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
+    :create-label="checkPermission('store', '添加直播间')"
     api="/liveroom"
     title="直播室管理"
-    create-label="添加直播间"
     class="liveroomList"
     @create="liveroomPreEdit"
   >
-    <el-table :data="list.data" >
+
+    <AppSearch
+      v-if="checkPermission('index')"
+      slot="search"
+      :search-arr="searchs"
+    />
+
+    <el-table
+      v-if="checkPermission('index')"
+      :data="list.data"
+    >
       <el-table-column
         v-for="col in columns"
         :key="col.prop"
@@ -110,6 +141,7 @@ export default {
       <el-table-column label="操作">
         <template slot-scope="{ row }">
           <el-button
+            v-if="checkPermission('update')"
             size="small"
             @click="liveroomPreEdit(row)"
           >
@@ -117,6 +149,7 @@ export default {
           </el-button>
 
           <el-button
+            v-if="checkPermission('delete')"
             size="small"
             type="danger"
             @click="liveroomDelete(row.id)"
