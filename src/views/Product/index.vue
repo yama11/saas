@@ -32,7 +32,7 @@ export default {
 
   computed: {
     searchArr() {
-      const column = [{ prop: 'curriculum_name', label: '商品标题' }];
+      const column = [{ prop: 'name', label: '商品标题' }];
 
       const searchList = [
         { selectValue: this.merchandise_status, componentType: 'AppSearchStatus', searchType: 'merchandise_status' },
@@ -48,6 +48,10 @@ export default {
   },
 
   methods: {
+    checkPermission(key, text) {
+      return this.$permissions(`shop.merchandise.${key}`, text);
+    },
+
     getIndexBefore() {
       this.$http.get('/merchandise/index_before')
         .then((res) => {
@@ -88,7 +92,7 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
-    create-label="添加商品"
+    :create-label="checkPermission('store', '添加商品')"
     class="product-list"
     api="/merchandise"
     title="商品管理"
@@ -96,10 +100,13 @@ export default {
   >
 
     <AppSearch
+      v-if="checkPermission('index')"
       slot="search"
       :search-arr="searchArr"/>
 
-    <template slot-scope="{ listData }">
+    <template
+      v-if="checkPermission('index')"
+      slot-scope="{ listData }">
 
       <el-table
         :data="listData"
@@ -117,32 +124,35 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
-              v-if="scope.row.status !== 2"
+              v-if="scope.row.status !== 2 && checkPermission('shelve')"
               size="small"
               @click="shelveProductInfo(scope.row.id)"
             >
               上架
             </el-button>
             <el-button
-              v-else
+              v-if="scope.row.status === 2 && checkPermission('off_shelve')"
               size="small"
               @click="offProductInfo(scope.row.id)"
             >
               下架
             </el-button>
             <el-button
+              v-if="checkPermission('show')"
               size="small"
               @click="lookProductInfo(scope.row.id)"
             >
               查看
             </el-button>
             <el-button
+              v-if="checkPermission('update')"
               size="small"
               @click="editProductInfo(scope.row.id)"
             >
               编辑
             </el-button>
             <el-button
+              v-if="checkPermission('delete')"
               size="small"
               type="danger"
               @click="delProductInfo(scope.row.id)"
