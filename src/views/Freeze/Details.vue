@@ -64,7 +64,7 @@ export default{
         },
         {
           label: '冻结课时',
-          details: hourRemain.toString(),
+          details: hourRemain ? hourRemain.toString() : '',
         },
         {
           label: '机构',
