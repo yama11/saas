@@ -123,7 +123,7 @@ export default {
         ],
       },
       {
-        name: '排版上课',
+        name: '排班上课',
         permission: 'schedule_center',
         children: [
           {

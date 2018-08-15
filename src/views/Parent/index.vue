@@ -60,7 +60,6 @@ export default {
     <AppList
       ref="list"
       :list.sync="list"
-      :columns="columns"
       api="/member_center/client"
       title="家长列表"
     >

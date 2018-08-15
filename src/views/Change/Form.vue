@@ -186,7 +186,6 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
-    :columns="columns"
     api="/change/student"
     title="转班"
 

@@ -60,7 +60,6 @@ export default {
 <template>
   <AppList
     :list.sync="list"
-    :columns="columns"
     :api="'/member_center/student/schedule/'+studentId+'/'+curriculumId"
     title="上课历史"
   >

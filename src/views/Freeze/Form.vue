@@ -99,7 +99,6 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
-    :columns="columns"
     api="/freeze/student"
     title="冻结"
   >

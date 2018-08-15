@@ -49,7 +49,6 @@ export default {
 <template>
   <AppList
     :list.sync="list"
-    :columns="columns"
     :create-label="checkPermission('store', '添加角色')"
     api="/role"
     title="角色列表"

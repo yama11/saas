@@ -124,7 +124,6 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
-    :columns="columns"
     create-label="转班"
     api="/change"
     title="转班管理"

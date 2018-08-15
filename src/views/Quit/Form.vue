@@ -111,7 +111,6 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
-    :columns="columns"
     api="/quit/student"
     title="退班"
   >

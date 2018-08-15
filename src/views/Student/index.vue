@@ -70,7 +70,6 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
-    :columns="columns"
     api="/member_center/student"
     title="学生管理"
     @create="onCreate"

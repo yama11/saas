@@ -173,7 +173,6 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
-    :columns="columns"
     api="/class"
     title="上课安排"
   >

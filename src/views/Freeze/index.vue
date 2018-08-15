@@ -117,7 +117,6 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
-    :columns="columns"
     create-label="冻结"
     api="/freeze"
     title="冻结管理"
