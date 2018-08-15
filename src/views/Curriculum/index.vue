@@ -106,7 +106,7 @@ export default {
     getIndexBefore() {
       this.$http.get('/curriculum/index_before')
         .then((res) => {
-          this.formBefore.catiesegor = res.categories;
+          this.formBefore.categories = res.categories;
 
           this.cascaderList = res.categories
             .map((item) => {
