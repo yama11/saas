@@ -100,7 +100,7 @@ export default {
 
               const nowTime = new Date().getTime();
 
-              const changeTime = new Date(value).getTime();
+              const changeTime = new Date(times.dateChange(value, 'noSecond')).getTime();
 
               if (nowTime > changeTime) {
                 callback(new Error('请选择大于当前的时间'));
@@ -142,6 +142,8 @@ export default {
       totalCourseList: [],
 
       selectCourseList: [],
+
+      timeNum: null,
 
     };
   },
@@ -220,6 +222,8 @@ export default {
             ...res,
             shelve_time: new Date(res.shelve_time),
           };
+
+          this.timeNum = new Date(res.shelve_time).getTime();
 
           this.productStatus = res.status;
 
@@ -418,10 +422,24 @@ export default {
 
       if (isEmpty) return;
 
-      this.dataForm.shelve_time = times.dateChange(new Date(), 'total');
+      this.dataForm.shelve_time = times.dateChange(new Date(), 'noSecond');
+    },
+
+    initSeconds() {
+      const currTime = new Date(this.dataForm.shelve_time).getTime();
+
+      if (currTime === this.timeNum) {
+        this.dataForm.shelve_time = times.dateChange(this.dataForm.shelve_time, 'isSecond');
+
+        return;
+      }
+
+      this.dataForm.shelve_time = times.dateChange(this.dataForm.shelve_time, 'noSecond');
     },
 
     submitForm(submit) {
+      const isUpdateTime = this.lookId || this.productStatus !== 1 || this.orderCount > 0;
+
       const priceIndex = this.courseList
         .findIndex(item => !item.sell_price);
 
@@ -429,12 +447,14 @@ export default {
         return;
       }
 
-      if (this.dataForm.shelve_time) {
-        this.dataForm.shelve_time = times.dateChange(this.dataForm.shelve_time, 'total');
+      if (this.dataForm.shelve_time && !isUpdateTime) {
+        this.initSeconds();
       }
 
-      if (this.lookId || this.productStatus !== 1 || this.orderCount > 0) {
-        this.$refs.dataForm.clearValidate(['shelve_time']);
+      if (isUpdateTime) {
+        this.dataForm.shelve_time = times.dateChange(this.dataForm.shelve_time, 'isSecond');
+
+        this.$refs.dataForm.clearValidate();
       }
 
       submit()
