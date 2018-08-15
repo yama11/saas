@@ -54,7 +54,9 @@ export default {
       const arrStr = value.reduce(((acc, item, index) => {
         const type = `like[${this.type[index]}]`;
 
-        acc[type] = item;
+        if (item) {
+          acc[type] = item;
+        }
 
         return acc;
       }), {});
