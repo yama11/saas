@@ -220,6 +220,7 @@ export default{
         <el-table
           :data="student"
           style="width: 262px"
+          height="140"
           border
         >
           <el-table-column
@@ -237,6 +238,7 @@ export default{
         <el-table
           :data="join"
           style="width:262px"
+          height="140"
           border
         >
           <el-table-column
@@ -254,6 +256,7 @@ export default{
         <el-table
           :data="leave"
           style="width: 262px"
+          height="140"
           border
         >
           <el-table-column
