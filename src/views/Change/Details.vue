@@ -34,6 +34,8 @@ export default{
         end_date: '',
       },
 
+      errand: null,
+
       // 定义星期
       toDay: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
 
@@ -54,11 +56,13 @@ export default{
       const {
         curriculum_name: curriculumName,
         class_name: className,
+        hour_remain: hourRemain,
       } = this.data.original;
 
       const {
         curriculum_name: CurriculumName,
         class_name: ClassName,
+        hour_remain: HourRemain,
       } = this.data.current;
 
       return [
@@ -92,11 +96,11 @@ export default{
         },
         {
           label: '转出课时',
-          details: ClassName,
+          details: hourRemain ? hourRemain.toString() : '',
         },
         {
           label: '转入所需课时',
-          details: ClassName,
+          details: HourRemain ? HourRemain.toString() : '',
         },
       ];
     },
@@ -109,7 +113,6 @@ export default{
         proposer_date: proposerDate,
         auditor_name: auditorName,
         audit_date: auditDate,
-        order_sn: orderSn,
         done_date: doneDate,
       } = this.data;
 
@@ -131,10 +134,6 @@ export default{
           details: auditDate,
         },
         {
-          label: '支付订单编号',
-          details: orderSn,
-        },
-        {
           label: '转班时间',
           details: doneDate,
         },
@@ -153,6 +152,7 @@ export default{
       this.$http.get(url)
         .then((body) => {
           this.data = body;
+          this.errand = this.data.original.hour_remain - this.data.current.hour_remain;
           this.scheme = body.current.scheme;
           this.schemeArr = body.original.scheme;
         })
@@ -186,10 +186,8 @@ export default{
         />
       </section>
       <div
-        class="aaa"
+        class="change-info-time"
       >
-
-
         <div
           class="change-info__classtime"
         >
@@ -231,6 +229,26 @@ export default{
           v-bind="note"
         />
       </section>
+      <div
+        class="change-info__order"
+      >
+        <div
+          v-if="errand<0"
+        >
+          <span>支付订单编号</span>
+          :
+          <span>{{ data.order_sn }}</span>
+        </div>
+
+        <div
+          v-else
+        >
+          <span>挂起课时</span>
+          :
+          <span>{{ errand }}</span>
+        </div>
+
+      </div>
       <div class="change-info__but">
         <el-button
           type="primary"
@@ -249,7 +267,7 @@ export default{
   padding-left: 1em;
 
 }
-.change-info .aaa{
+.change-info .change-info-time{
  box-sizing: border-box;
   display: flex;
  justify-content: space-between;
@@ -257,6 +275,10 @@ export default{
 .change-info__classtime{
   width: 50%;
   padding-left: 4em;
+}
+.change-info__order{
+  width: 50%;
+  padding-left: 62px;
 }
 .change-info__comeTime{
   width: 50%;
