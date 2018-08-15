@@ -324,7 +324,10 @@ export default {
                 .find(valItem => item.id === valItem.id);
 
               if (!course) {
-                this.courseList.push(item);
+                this.courseList.push({
+                  ...item,
+                  count: 0,
+                });
               }
             });
 
@@ -410,6 +413,14 @@ export default {
         ));
     },
 
+    initTime() {
+      const isEmpty = this.dataForm.shelve_time;
+
+      if (isEmpty) return;
+
+      this.dataForm.shelve_time = times.dateChange(new Date(), 'total');
+    },
+
     submitForm(submit) {
       const priceIndex = this.courseList
         .findIndex(item => !item.sell_price);
@@ -486,7 +497,7 @@ export default {
     </el-form-item>
 
     <el-form-item
-      label="课程简介"
+      label="商品简介"
       prop="brief"
     >
       <el-input
@@ -625,11 +636,12 @@ export default {
     >
       <el-date-picker
         v-model="dataForm.shelve_time"
-        :readonly="lookId || productStatus !== 1 || orderCount > 0"
+        :readonly="(lookId || productStatus !== 1 || orderCount > 0) ? true : false"
         :picker-options="pickerTime"
-        format="yyyy-MM-dd HH:mm:ss"
+        format="yyyy-MM-dd HH:mm"
         type="datetime"
-        placeholder="上架时间"/>
+        placeholder="上架时间"
+        @focus="initTime"/>
     </el-form-item>
 
     <AppFormDialog
