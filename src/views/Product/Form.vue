@@ -199,6 +199,14 @@ export default {
       this.editor.on('change', () => {
         this.dataForm.description = this.editor.getData();
       });
+
+      this.editor.on('focus', () => {
+        const address = document.getElementsByClassName('address-multi__select')[0];
+
+        if (address) {
+          address.style.display = 'none';
+        }
+      });
     }, 300);
   },
 
