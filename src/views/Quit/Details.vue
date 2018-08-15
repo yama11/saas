@@ -54,6 +54,7 @@ export default{
         discount: Discount,
         hour_remain: hourRemain,
         refund_money: refundMoney,
+        price: Price,
       } = this.data;
 
       return [
@@ -91,7 +92,7 @@ export default{
         },
         {
           label: '课时单价',
-          details: proposerName,
+          details: Price,
         },
         {
           label: '审核顾问',
@@ -103,7 +104,7 @@ export default{
         },
         {
           label: '总课时',
-          details: hourTotal,
+          details: hourTotal ? hourTotal.toString() : '',
         },
         {
           label: '实付金额',
@@ -111,7 +112,7 @@ export default{
         },
         {
           label: '已耗课时',
-          details: hourFinish,
+          details: hourFinish ? hourFinish.toString() : '',
         },
         {
           label: '原订单优惠金额',
