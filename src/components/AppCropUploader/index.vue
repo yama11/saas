@@ -57,7 +57,7 @@ export default {
 
     // 完整接口
     action() {
-      const productionURL = this.$http.apiRoot + this.url;
+      const productionURL = this.$http.baseURI + this.url;
 
       return productionURL;
     },

@@ -19,12 +19,6 @@ export default {
       default: '',
     },
 
-    // 上传接口名
-    postName: {
-      type: String,
-      default: '',
-    },
-
   },
 
   data() {
@@ -115,7 +109,7 @@ export default {
 
     uploading(param, file) {
       const addr = 'https://oa-statics.caihonggou.com/';
-      this.$http.post('http://upload.qiniup.com/', param)
+      this.$http.post('https://upload.qiniup.com/', param)
         .then((res) => {
           this.preview = addr + res.key;
           this.$message({
