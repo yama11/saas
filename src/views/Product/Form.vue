@@ -617,7 +617,7 @@ export default {
     >
       <el-date-picker
         v-model="dataForm.shelve_time"
-        :readonly="(lookId || productStatus !== 1 || order_count > 0) ? true : false"
+        :readonly="lookId || productStatus !== 1 || orderCount > 0"
         :picker-options="pickerTime"
         format="yyyy-MM-dd HH:mm:ss"
         type="datetime"
