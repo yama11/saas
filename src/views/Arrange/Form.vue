@@ -237,6 +237,7 @@ export default{
         <el-table
           :data="student"
           style="width: 522px"
+          height="145"
           border
         >
           <el-table-column
@@ -254,6 +255,7 @@ export default{
         <el-table
           :data="quit"
           style="width:522px"
+          height="145"
           border
         >
           <el-table-column
@@ -271,6 +273,7 @@ export default{
         <el-table
           :data="change"
           style="width: 522px"
+          height="145"
           border
         >
           <el-table-column
@@ -287,6 +290,7 @@ export default{
         <el-table
           :data="freeze"
           style="width: 522px"
+          height="145"
           border
         >
           <el-table-column
