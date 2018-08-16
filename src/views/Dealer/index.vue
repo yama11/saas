@@ -147,8 +147,9 @@ export default {
         :object="title"
         :id="formData.id"
         url="/dealer"
-        label-width="5em"
+        label-width="6em"
         width="500px"
+        class="dealer-form"
         @on-submit="submitEdition"
       >
         <el-form-item
@@ -211,3 +212,9 @@ export default {
     </template>
   </AppList>
 </template>
+<style lang="postcss">
+.dealer-form .el-cascader{
+  width: 377px;
+}
+</style>
+
