@@ -114,7 +114,36 @@ export default {
       this.$emit('divisionCode', this.division);
     },
 
-    stopDefault() {},
+    stopDefault(children, value, label) {
+      if (children) return;
+
+      const isCityIndex = this.division
+        .findIndex(item => item === value);
+
+      const isExist = this.addressTags
+        .find(item => item.value === value);
+
+      if (isExist && isExist.count > 0) return;
+
+      if (isCityIndex === -1) {
+        this.division.push(value);
+
+        this.addressTags.push({
+          name: label,
+          value,
+        });
+
+        this.getAddress();
+
+        return;
+      }
+
+      this.division.splice(isCityIndex, 1);
+
+      this.addressTags.splice(isCityIndex, 1);
+
+      this.getAddress();
+    },
 
   },
 };
@@ -141,9 +170,12 @@ export default {
           :key="pro.value"
           :class="pro.value === proId
           ? 'address-multi-select__back' : ''"
-          @click.stop="stopDefault"
+          @click.stop="stopDefault(pro.children,pro.value,pro.label)"
           @mousemove="getCitys(pro.children,pro.value,pro.label)">
           {{ pro.label }}
+          <span v-if="division.includes(pro.value)">
+            <i class="el-icon-check"/>
+          </span>
         </div>
       </div>
 
@@ -156,7 +188,7 @@ export default {
           class="address-multi-selected"
           @click.stop="getAreas(city.value,city.label)">
           {{ city.label }}
-          <span v-if="division.includes(city. value)">
+          <span v-if="division.includes(city.value)">
             <i class="el-icon-check"/>
           </span>
         </div>
