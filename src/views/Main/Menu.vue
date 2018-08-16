@@ -120,6 +120,11 @@ export default {
             permission: 'system.department',
             index: '/organization',
           },
+          {
+            name: '经销商管理',
+            permission: 'system.dealer',
+            index: '/dealer-list',
+          },
         ],
       },
       {

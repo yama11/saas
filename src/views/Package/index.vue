@@ -17,7 +17,7 @@ export default {
       columns: [
         { prop: 'production_name', label: '产品' },
         { prop: 'version', label: '版本' },
-        { prop: 'update_type_name', label: '更新方式', search: true },
+        { prop: 'update_type_name', label: '更新方式' },
         { prop: 'update_count', label: '更新人数' },
         { prop: 'package_status_name', label: '状态' },
         { prop: 'created_at', label: '发布时间' },

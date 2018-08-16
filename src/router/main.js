@@ -21,6 +21,7 @@ import Quit from '@/views/Quit';
 import Freeze from '@/views/Freeze';
 import Liveroom from '@/views/Liveroom';
 import Package from '@/views/Package';
+import Dealer from '@/views/Dealer';
 
 const routes = [
   ...Courseware,
@@ -42,6 +43,7 @@ const routes = [
   ...Freeze,
   ...Liveroom,
   ...Package,
+  ...Dealer,
 ];
 
 export default routes;
