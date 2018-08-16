@@ -20,6 +20,7 @@ import Change from '@/views/Change';
 import Quit from '@/views/Quit';
 import Freeze from '@/views/Freeze';
 import Liveroom from '@/views/Liveroom';
+import Package from '@/views/Package';
 
 const routes = [
   ...Courseware,
@@ -40,6 +41,7 @@ const routes = [
   ...Quit,
   ...Freeze,
   ...Liveroom,
+  ...Package,
 ];
 
 export default routes;
