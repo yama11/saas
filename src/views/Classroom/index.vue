@@ -408,7 +408,9 @@ export default {
         width="1000px"
         center>
         <div>
-          <el-table :data="classUsageList">
+          <el-table
+            :data="classUsageList"
+            max-height="500">
             <el-table-column
               v-for="column in usageColumn"
               :key="column.prop"
