@@ -9,6 +9,7 @@ import Category from '@/views/Category';
 import Product from '@/views/Product';
 import Order from '@/views/Order';
 import Discount from '@/views/Discount';
+import Classroom from '@/views/Classroom';
 import Student from '@/views/Student';
 import Parent from '@/views/Parent';
 import Class from '@/views/Class';
@@ -31,6 +32,7 @@ const routes = [
   ...Product,
   ...Order,
   ...Discount,
+  ...Classroom,
   ...Student,
   ...Parent,
   ...Class,

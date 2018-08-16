@@ -86,6 +86,11 @@ export default {
         permission: 'system',
         children: [
           {
+            name: '教室维护',
+            permission: 'system.classroom',
+            index: '/classroom-list',
+          },
+          {
             name: '直播室管理',
             permission: 'system.liveroom',
             index: '/liveroom-list',
