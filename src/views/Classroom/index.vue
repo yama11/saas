@@ -300,7 +300,7 @@ export default {
               编辑
             </el-button>
             <el-button
-              v-if="checkPermission('destroy')"
+              v-if="checkPermission('delete')"
               type="danger"
               size="small"
               @click="delClassroom(scope.row.id)"
