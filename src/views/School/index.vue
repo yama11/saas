@@ -89,6 +89,11 @@ export default {
   },
 
   methods: {
+
+    checkPermission(key, text) {
+      return this.$permissions(`system.school.${key}`, text);
+    },
+
     createSchool(id, value) {
       this.visible = true;
 
@@ -119,16 +124,19 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
-    create-label="添加学校"
+    :create-label="checkPermission('store')?'添加学校':null"
     title="生源学校"
     api="/school"
     @create="createSchool"
   >
     <AppSearch
+      v-if="checkPermission('index')"
       slot="search"
       :search-arr="searchArr"
     />
-    <template slot-scope="props">
+    <template
+      v-if="checkPermission('index')"
+      slot-scope="props">
       <el-table :data="props.listData">
         <el-table-column
           v-for="col in columns"
@@ -143,12 +151,14 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
+              v-if="checkPermission('update')"
               size="small"
               @click="createSchool(scope.row.id, scope.row)"
             >
               编辑
             </el-button>
             <el-button
+              v-if="checkPermission('delete')"
               type="danger"
               size="small"
               @click="deleteSchool(scope.row.id)"

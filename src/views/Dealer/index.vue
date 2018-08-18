@@ -18,10 +18,19 @@ export default {
         { prop: 'name', label: '经销商名称' },
         { prop: 'account', label: '管理员账号' },
         { label: '地区',
-          formatter: row => `
-            ${row.province.name}${row.city.name}${row.district.name}
-          `,
-        },
+          formatter: (row) => {
+            let arr = '';
+            if (row.province) {
+              arr += row.province.name;
+            }
+            if (row.city) {
+              arr += row.city.name;
+            }
+            if (row.district) {
+              arr += row.district.name;
+            }
+            return arr;
+          } },
         { prop: 'address', label: '详细地址' },
         { prop: 'phone', label: '联系电话' },
       ],
@@ -62,6 +71,10 @@ export default {
   },
 
   methods: {
+
+    checkPermission(key, text) {
+      return this.$permissions(`system.account.${key}`, text);
+    },
 
     editDealer(id, name, places, address, phone, account, password) {
       this.visible = true;
@@ -105,10 +118,13 @@ export default {
     @create="editDealer"
   >
     <AppSearch
+      v-if="checkPermission('index')"
       slot="search"
       :search-arr="searchArr"
     />
-    <template slot-scope="props">
+    <template
+      v-if="checkPermission('index')"
+      slot-scope="props">
       <el-table
         :data="props.listData"
       >

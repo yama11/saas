@@ -11,6 +11,7 @@ import { BaiduMap } from 'vue-baidu-map';
 export default {
 
   name: 'PackageForm',
+
   components: {
     BaiduMap,
   },
@@ -30,6 +31,7 @@ export default {
       formDate: {},
 
       mapLngLat: null,
+
       address: '',
 
     };
@@ -43,6 +45,7 @@ export default {
   },
 
   methods: {
+
     getFormBefore() {
       this.$http.get('/department/store_before')
         .then((res) => {

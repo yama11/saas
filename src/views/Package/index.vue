@@ -47,6 +47,10 @@ export default {
 
   methods: {
 
+    checkPermission(key, text) {
+      return this.$permissions(`system.package.${key}`, text);
+    },
+
     toCreatePackage() {
       this.$router.push('/package-create');
     },
@@ -92,16 +96,19 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
-    create-label="发布新版本"
+    :create-label="checkPermission('store')?'发布新版本':null"
     api="/package"
     title="版本管理"
     @create="toCreatePackage"
   >
     <AppSearch
+      v-if="checkPermission('index')"
       slot="search"
       :search-arr="searchArr"
     />
-    <template slot-scope="props">
+    <template
+      v-if="checkPermission('index')"
+      slot-scope="props">
       <el-table :data="props.listData">
         <el-table-column
           v-for="column in columns"
@@ -115,11 +122,12 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
+              v-if="checkPermission('show')"
               size="small"
               @click="infoPackage(scope.row.id)"
             >查看</el-button>
             <el-button
-              v-if="scope.row.package_status !== 2"
+              v-if="scope.row.package_status !== 2&&checkPermission('unpublish')"
               type="danger"
               size="small"
               @click="deleteClass(scope.row.id)"
@@ -127,7 +135,7 @@ export default {
               停止
             </el-button>
             <el-button
-              v-else
+              v-else-if="checkPermission('publish')"
               type="danger"
               size="small"
               @click="publishClass(scope.row.id)"
