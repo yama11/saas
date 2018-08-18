@@ -111,7 +111,7 @@ export default {
     >
       <el-input
         v-model="formDate.name"
-        :maxlength="30"
+        :maxlength="20"
         placeholder="请输入机构名称"
       />
     </el-form-item>
@@ -121,7 +121,7 @@ export default {
     >
       <el-input
         v-model="formDate.number"
-        :maxlength="30"
+        :maxlength="10"
         placeholder="请输入机构编码"
       />
     </el-form-item>
@@ -148,7 +148,6 @@ export default {
     >
       <el-input
         v-model="formDate.phone"
-        :maxlength="30"
         placeholder="请输入联系电话"
       />
     </el-form-item>
@@ -158,7 +157,6 @@ export default {
     >
       <el-input
         v-model="formDate.account"
-        :maxlength="30"
         placeholder="请输入管理员账号"
       />
     </el-form-item>
@@ -168,7 +166,6 @@ export default {
     >
       <el-input
         v-model="formDate.password"
-        :maxlength="30"
         placeholder="请输入密码"
       />
     </el-form-item>
@@ -257,7 +254,11 @@ export default {
 .anchorBL {
   display: none;
 }
-.BMap_pop{display:none}
-.BMap_shadow{display:none}
+.BMap_pop{
+  display:none
+  }
+.BMap_shadow{
+  display:none
+  }
 </style>
 
