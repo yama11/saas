@@ -24,6 +24,8 @@ import Liveroom from '@/views/Liveroom';
 import Package from '@/views/Package';
 import Dealer from '@/views/Dealer';
 import School from '@/views/School';
+import Organization from '@/views/Organization';
+
 
 const routes = [
   ...Courseware,
@@ -48,6 +50,7 @@ const routes = [
   ...Package,
   ...Dealer,
   ...School,
+  ...Organization,
 ];
 
 export default routes;

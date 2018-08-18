@@ -121,9 +121,9 @@ export default {
             index: '/package-list',
           },
           {
-            name: '培训机构',
+            name: '机构管理',
             permission: 'system.department',
-            index: '/organization',
+            index: '/organization-list',
           },
           {
             name: '经销商管理',
