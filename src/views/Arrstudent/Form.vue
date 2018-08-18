@@ -45,11 +45,6 @@ export default{
         class_name: className,
       } = this.data;
 
-      // const {
-      //   start_date: startDate,
-      //   end_date: endDate,
-      // } = this.data.scheme;
-
       return [
         {
           label: '约课学生',
@@ -65,7 +60,7 @@ export default{
         },
         {
           label: '课时数',
-          content: courseNumber.toString(),
+          content: courseNumber ? courseNumber.toString() : '',
         },
         {
           label: '品类',
@@ -77,10 +72,6 @@ export default{
         },
         {
           label: '班级名称',
-          content: className,
-        },
-        {
-          label: '关联订单编号',
           content: className,
         },
       ];
@@ -107,7 +98,11 @@ export default{
     },
 
     disreguardRefund() {
-      return this.$router.push('/intention-list');
+      this.$router.push('/intention-list');
+    },
+
+    orderNumber(id) {
+      this.$router.push(`/order-info/${id}`);
     },
   },
 };
@@ -132,13 +127,26 @@ export default{
         />
       </section>
       <div
-        class="intention-info__classtime"
+        class="intention-info-order"
       >
-        <span>上课时间段</span>
-        :
-        <span>{{ scheme.start_date.split(' ')[0] }}
-          ~{{ scheme.end_date.split(' ')[0] }}</span>
-      </div>
+        <div
+          class="intention-info__classtime"
+        >
+          <span>关联订单编号</span>
+          :
+          <span
+            class="intention-info__classtime-number"
+            @click="orderNumber(data.order_id)"
+          >{{ data.order_number }}</span>
+        </div>
+        <div
+          class="intention-info__classtime"
+        >
+          <span>上课时间段</span>
+          :
+          <span>{{ scheme.start_date.split(' ')[0] }}
+            ~{{ scheme.end_date.split(' ')[0] }}</span>
+      </div></div>
       <div
         class="intention-info__classtime order-info-note"
       >
@@ -176,7 +184,15 @@ export default{
 .intention-info__body{
   padding-left: 10px;
 }
+.intention-info-order{
+  display: flex;
+}
+.intention-info__classtime-number{
+  text-decoration: underline;
+  color: blue;
+}
 .intention-info__classtime{
+  width: 40%;
   padding-left: 8px;
   padding-bottom:30px;
 }
