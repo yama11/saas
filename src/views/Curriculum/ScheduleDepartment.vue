@@ -134,7 +134,19 @@ export default {
         };
       }
 
-      this.$http.get('/option/schedule_departments', valObj)
+      const conditionList = Object.keys(valObj);
+
+      if (conditionList.length === 0) {
+        this.formBefore.departmentData = [];
+
+        return;
+      }
+
+      const condition = conditionList
+        .map(key => `${key}=${valObj[key]}`)
+        .join('&');
+
+      this.$http.get(`/option/schedule_departments?${condition}`)
         .then((res) => {
           this.formBefore.departmentData = res.departments;
         });

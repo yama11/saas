@@ -140,7 +140,11 @@ export default {
         return acc;
       }), {});
 
-      this.$http.get('/option/schedule_departments', valObj)
+      const condition = Object.keys(valObj)
+        .map(key => `${key}=${valObj[key]}`)
+        .join('&');
+
+      this.$http.get(`/option/schedule_departments?${condition}`)
         .then((res) => {
           this.departmentList = res.departments;
         });
