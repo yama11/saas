@@ -109,6 +109,12 @@ export default {
     },
 
     addTime() {
+      if (!this.schemeId) {
+        this.$message.error('请选择一个时间段');
+
+        return;
+      }
+
       this.timeDialog = true;
 
       this.timeId = null;
