@@ -50,9 +50,9 @@ export default {
   computed: {
     searchArr() {
       const column = [
-        { prop: 'curriculum_name', label: '机构名称' },
-        { prop: 'department_name', label: '机构编码' },
-        { prop: 'dealer.name', label: '所属经销商' },
+        { prop: 'name', label: '机构名称' },
+        { prop: 'number', label: '机构编码' },
+        { prop: 'dealer_name', label: '所属经销商' },
         { prop: 'account', label: '账号' },
 
       ];
