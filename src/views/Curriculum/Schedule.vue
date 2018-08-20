@@ -124,6 +124,12 @@ export default {
     },
 
     beginOpen() {
+      if (!this.schemeId) {
+        this.$message.error('请选择一个时间段');
+
+        return;
+      }
+
       this.$http.post(`/curriculum/schedule/begin/${this.schemeId}`)
         .then(() => {
           this.getCurriculum('scheme');
@@ -131,6 +137,12 @@ export default {
     },
 
     pauseOpen() {
+      if (!this.schemeId) {
+        this.$message.error('请选择一个时间段');
+
+        return;
+      }
+
       this.$http.post(`/curriculum/schedule/pause/${this.schemeId}`)
         .then(() => {
           this.getCurriculum('scheme');

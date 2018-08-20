@@ -71,6 +71,12 @@ export default {
     },
 
     addClass() {
+      if (!this.schemeId) {
+        this.$message.error('请选择一个时间段');
+
+        return;
+      }
+
       this.classDialog = true;
 
       this.classId = null;

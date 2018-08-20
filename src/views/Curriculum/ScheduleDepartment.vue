@@ -73,6 +73,12 @@ export default {
     },
 
     addDepartment() {
+      if (!this.schemeId) {
+        this.$message.error('请选择一个时间段');
+
+        return;
+      }
+
       this.departmentDialog = true;
 
       this.departmentId = null;
