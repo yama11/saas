@@ -5,9 +5,14 @@
  * @author suyanping
  */
 import list from '@/mixins/list';
+import CourseSelect from './../components/CourseSelect';
 
 export default {
   name: 'CurriculumList',
+
+  components: {
+    CourseSelect,
+  },
 
   mixins: [list],
 
@@ -36,6 +41,9 @@ export default {
         refund_rate: null,
         price: null,
         code: '',
+        subject_id: null,
+        structure_id: null,
+        structure_name: '',
       },
 
       formRules: {
@@ -55,7 +63,13 @@ export default {
         code: [
           this.$rules.required('课程编码'),
         ],
+
+        structure_name: [
+          this.$rules.required('课程结构'),
+        ],
       },
+
+      subjectList: [],
 
       formBefore: {
         categories: [],
@@ -92,6 +106,8 @@ export default {
 
   created() {
     this.getIndexBefore();
+
+    this.getSubject();
   },
 
   methods: {
@@ -101,6 +117,13 @@ export default {
 
     onSkipPage() {
       this.$router.push('curriculum-timeTable');
+    },
+
+    getSubject() {
+      this.$http.get('/course/index_before')
+        .then((res) => {
+          this.subjectList = res.subjects;
+        });
     },
 
     getIndexBefore() {
@@ -165,8 +188,21 @@ export default {
         category_name: '',
         product_name: '',
         course_number: null,
+        refund_rate: null,
+        price: null,
         code: '',
+        subject_id: null,
+        structure_id: null,
+        structure_name: '',
       };
+    },
+
+    getCourseData(val) {
+      this.formData.structure_name = val.name;
+
+      this.formData.subject_id = val.subjectId;
+
+      this.formData.structure_id = val.structureId;
     },
 
     submitEdition(submit) {
@@ -352,6 +388,16 @@ export default {
             v-model="formData.code"
             :maxlength="10"
             placeholder="请输入课程编码"
+          />
+        </el-form-item>
+        <el-form-item
+          prop="structure_name"
+          label="课程结构"
+        >
+          <CourseSelect
+            :subject-list="subjectList"
+            :structure-name="formData.structure_name"
+            @getData="getCourseData"
           />
         </el-form-item>
       </AppFormDialog>
