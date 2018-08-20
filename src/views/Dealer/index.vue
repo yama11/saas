@@ -51,6 +51,27 @@ export default {
         account: '',
         password: '',
       },
+      rules: {
+        name: [
+          this.$rules.required('经销商名称'),
+        ],
+        places: [
+          this.$rules.required('所在地区', 'array'),
+        ],
+        address: [
+          this.$rules.required('地址'),
+        ],
+        phone: [
+          this.$rules.required('联系电话'),
+          { ...this.$rules.mobile },
+        ],
+        account: [
+          this.$rules.required('管理员账号'),
+        ],
+        password: [
+          this.$rules.required('密码'),
+        ],
+      },
 
     };
   },
@@ -162,8 +183,9 @@ export default {
         :model="formData"
         :object="title"
         :id="formData.id"
+        :rules ="rules"
         url="/dealer"
-        label-width="6em"
+        label-width="7em"
         width="500px"
         class="dealer-form"
         @on-submit="submitEdition"

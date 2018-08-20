@@ -117,7 +117,6 @@ export default{
     <div
       v-if="data"
       class="intention-info__body"
-
     >
       <section class="intention-info__buyer">
         <InfoNote
@@ -157,9 +156,8 @@ export default{
           :key="index"
           class="intention-info__classtime__week"
         >
-          {{ toDay[calendar.day-1] }}{{ calendar.start_time }}~{{ calendar.end_time }}
+          {{ toDay[calendar.day-1] }}&nbsp;{{ calendar.start_time }}~{{ calendar.end_time }}
         </span>
-
       </div>
 
       <div class="intention-info__but">

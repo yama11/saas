@@ -33,27 +33,14 @@ export default {
       },
 
       rules: {
-        head_url: [
-          this.$rules.required('学员头像'),
-        ],
-        birth_at: [
-          this.$rules.required('出生年月'),
-        ],
         name: [
           this.$rules.required('学员姓名'),
           { ...this.$rules.name },
           {
             max: 5,
-            message: '长度最多 5 个字符',
+            message: '长度最多 10 个字符',
             trigger: 'blur,change',
           },
-        ],
-        gender: [
-          this.$rules.required('学员性别', 'number'),
-        ],
-        client_phone: [
-          this.$rules.required('第一联系人'),
-          { ...this.$rules.mobile },
         ],
       },
 

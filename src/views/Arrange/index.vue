@@ -199,6 +199,7 @@ export default {
               @click="arrangeInfo(scope.row.id)"
             >查看</el-button>
             <el-button
+              v-if="scope.row.class_status_name!=='已结束'"
               type="small"
               size="small"
               @click="setClass(scope.row.id)"

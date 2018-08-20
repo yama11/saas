@@ -34,9 +34,37 @@ export default {
 
       address: '',
 
+      rules: {
+        name: [
+          this.$rules.required('机构名称'),
+        ],
+
+        number: [
+          this.$rules.required('机构编码'),
+        ],
+        dealer_id: [
+          this.$rules.required('所属经销商', 'number'),
+        ],
+        phone: [
+          this.$rules.required('联系电话'),
+          { ...this.$rules.mobile },
+        ],
+        account: [
+          this.$rules.required('管理员账号'),
+        ],
+        password: [
+          this.$rules.required('密码'),
+        ],
+        places: [
+          this.$rules.required('所在区域', 'array'),
+        ],
+        address: [
+          this.$rules.required('详细地址'),
+        ],
+      },
+
     };
   },
-
   created() {
     this.getFormBefore();
     if (this.id) {
@@ -99,9 +127,10 @@ export default {
     ref="formDate"
     :model="formDate"
     :from="from"
+    :rules="rules"
     :id="id"
     :object="id ?'编辑机构':'添加机构'"
-    label-width="6em"
+    label-width="7em"
     url="/department"
     @on-submit="submitEdition"
     @on-cancel="cancelForm"

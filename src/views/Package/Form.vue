@@ -27,15 +27,21 @@ export default {
       },
 
       rules: {
-
-        update_type: [
-          this.$rules.required('更新方式', 'number'),
-        ],
-
         production: [
           this.$rules.required('产品', 'number'),
         ],
-
+        update_type: [
+          this.$rules.required('更新方式', 'number'),
+        ],
+        increment: [
+          this.$rules.required('增量安装包'),
+        ],
+        full: [
+          this.$rules.required('全量安装包'),
+        ],
+        content: [
+          this.$rules.required('更新内容'),
+        ],
         version: [
           this.$rules.required('版本号'),
         ],

@@ -156,10 +156,13 @@ export default {
     getFormData(cId) {
       this.$http.get(`/intention/dispatch/${cId}`)
         .then((res) => {
-          this.editionInfo.schemes = res.schemes
+          const schemeList = res.schemes
+            .filter(item => item.start_date);
+
+          this.editionInfo.schemes = schemeList
             .map(item => ({
               ...item,
-              date: item.start_date ? `${item.start_date.split(' ')[0]}~${item.end_date.split(' ')[0]}` : 'null~null',
+              date: `${item.start_date.split(' ')[0]}~${item.end_date.split(' ')[0]}`,
             }));
         });
     },
