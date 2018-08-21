@@ -46,9 +46,18 @@ export default {
 
       student_number: null,
 
-      arr: [],
+      radioArr: [],
 
       categories: [],
+
+      rules: {
+        scheme_id: [
+          this.$rules.required('时间', 'number'),
+        ],
+        class_id: [
+          this.$rules.required('班级', 'number'),
+        ],
+      },
 
     };
   },
@@ -124,7 +133,7 @@ export default {
     },
 
     changeRodio(value) {
-      this.arr = value;
+      this.radioArr = value;
     },
 
     updateProcess(id, curriculumID) {
@@ -138,7 +147,7 @@ export default {
 
         return;
       }
-      const curriculumId = this.arr
+      const curriculumId = this.radioArr
         .map(item => item.curriculum_id);
 
       const curriculumArr = [...new Set(curriculumId)];
@@ -148,7 +157,7 @@ export default {
         return;
       }
       this.visible = true;
-      this.formData.intention_ids = this.arr.map(item => item.id);
+      this.formData.intention_ids = this.radioArr.map(item => item.id);
 
       this.getFormData(curriculumId[0]);
     },
@@ -255,9 +264,10 @@ export default {
               v-if="checkPermission('dispatching')"
               :visible.sync="visible"
               :model="formData"
+              :rules="rules"
               label-width="5em"
               url="/intention"
-              object="学生"
+              object="调度学生"
               class="process-edition"
               width="500px"
               @on-submit="submitEdition"
