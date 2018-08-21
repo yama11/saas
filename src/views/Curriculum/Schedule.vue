@@ -112,7 +112,11 @@ export default {
             this.getScheme(this.schemeId);
 
             this.getClasses(this.schemeId);
+
+            return;
           }
+
+          this.addSchedule();
         });
     },
 
