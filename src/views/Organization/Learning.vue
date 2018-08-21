@@ -31,6 +31,22 @@ export default {
       visible: false,
 
       title: '',
+
+      rules: {
+        realname: [
+          this.$rules.required('学管师姓名'),
+        ],
+        phone: [
+          this.$rules.required('手机号'),
+          { ...this.$rules.mobile },
+        ],
+        name: [
+          this.$rules.required('学管师账号'),
+        ],
+        password: [
+          this.$rules.required('密码'),
+        ],
+      },
     };
   },
 
@@ -167,9 +183,10 @@ export default {
       <AppFormDialog
         :visible.sync="visible"
         :model="formData"
+        :rules ="rules"
         :url="`/department/${id}/manager_teacher`"
         :object="title"
-        label-width="6em"
+        label-width="7em"
         class="process-edition"
         width="500px"
         @on-submit="submitEdition"
