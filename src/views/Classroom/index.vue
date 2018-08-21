@@ -94,7 +94,7 @@ export default {
       const column = [
         { prop: 'name', label: '教室名称' },
         { prop: 'department_name', label: '所属机构' },
-        { prop: 'classroom_status_name', label: '账号' },
+        { prop: 'account', label: '账号' },
       ];
 
       const searchList = [{ componentType: 'AppSearchColumn', searchType: column }];
