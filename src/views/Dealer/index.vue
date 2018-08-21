@@ -101,7 +101,7 @@ export default {
       this.visible = true;
 
       if (id) {
-        this.title = '编辑机构';
+        this.title = '编辑经销商';
         this.formData = {
           id,
           name,
@@ -112,7 +112,7 @@ export default {
           password,
         };
       } else {
-        this.title = '新增机构';
+        this.title = '添加经销商';
         this.formData = {};
       }
     },
@@ -133,7 +133,7 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
-    create-label="添加机构"
+    create-label="添加经销商"
     api="/dealer"
     title="经销商管理"
     @create="editDealer"
@@ -252,7 +252,7 @@ export default {
 </template>
 <style lang="postcss">
 .dealer-form .el-cascader{
-  width: 377px;
+  width: 100%;
 }
 </style>
 
