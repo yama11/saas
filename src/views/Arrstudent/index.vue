@@ -137,6 +137,12 @@ export default {
     },
 
     updateProcess(id, curriculumID) {
+      this.formData = {};
+      this.calendar = [];
+      this.classes = [];
+      this.student_number = null;
+      this.capacity = null;
+
       this.formData.intention_ids = [];
 
       if (id) {
@@ -181,9 +187,6 @@ export default {
     },
 
     changTime(id) {
-      this.calendar = [];
-      this.classes = [];
-
       const timeId = this.editionInfo.schemes
         .find(item => item.id === id);
 
@@ -195,9 +198,6 @@ export default {
     },
 
     changClass(id) {
-      this.capacity = null;
-      this.student_number = null;
-
       const classId = this.classes
         .find(item => item.id === id);
 

@@ -19,7 +19,7 @@ export default {
       columns: [
         { prop: 'code', label: '班级编码' },
         { prop: 'curriculum_name', label: '课程名称' },
-        { prop: 'schedule_total', label: '课时' },
+        { prop: 'schedule_total', label: '课时数' },
         { prop: 'categories_name', label: '品类' },
         { prop: 'department_name', label: '机构' },
         { prop: 'name', label: '班级' },
@@ -141,6 +141,8 @@ export default {
     },
 
     setClass(id) {
+      this.formData = {};
+
       this.id = id;
 
       this.visible = true;
