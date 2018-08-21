@@ -32,6 +32,8 @@ export default {
 
       title: '',
 
+      managerId: null,
+
       rules: {
         realname: [
           this.$rules.required('学管师姓名'),
@@ -75,6 +77,7 @@ export default {
       this.visible = true;
       if (id) {
         this.title = '编辑学管师';
+        this.managerId = id;
         this.formData.name = name;
         this.formData.realname = realname;
         this.formData.phone = phone;
@@ -184,6 +187,7 @@ export default {
         :visible.sync="visible"
         :model="formData"
         :rules ="rules"
+        :id ="managerId"
         :url="`/department/${id}/manager_teacher`"
         :object="title"
         label-width="7em"
