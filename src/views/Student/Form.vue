@@ -34,13 +34,14 @@ export default {
 
       rules: {
         name: [
-          this.$rules.required('学员姓名'),
+          this.$rules.required('学生姓名'),
           { ...this.$rules.name },
-          {
-            max: 5,
-            message: '长度最多 10 个字符',
-            trigger: 'blur,change',
-          },
+        ],
+        head_url: [
+          this.$rules.required('学生头像', 'string'),
+        ],
+        gender: [
+          this.$rules.required('性别', 'number'),
         ],
       },
 
@@ -65,7 +66,6 @@ export default {
           this.studentStoreBefore = { ...res };
         });
     },
-
 
     // 获取当前学员信息
     getFormStore(id) {
@@ -172,6 +172,7 @@ export default {
       <el-input
         v-model="studentForm.name"
         placeholder="请输入学生姓名"
+        maxlength="10"
         class="student-form__input"
       />
     </el-form-item>
