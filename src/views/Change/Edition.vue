@@ -117,7 +117,7 @@ export default{
       <span
         v-for="(calendar,index) in formData.original.classes.scheme.calendar"
         :key="index"
-        class="change-info__classtime__week"
+        class="change-edition__classtime"
       >
         {{ toDay[calendar.day-1] }}&nbsp;{{ calendar.start_time }}~{{ calendar.end_time }}
       </span>
@@ -187,7 +187,7 @@ export default{
 </template>
 
 <style>
-.change-edition .change-info__classtime__week{
+.change-edition .change-edition__classtime{
   display: block;
 }
 .change-edition .el-select>.el-input{
