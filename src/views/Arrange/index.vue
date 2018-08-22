@@ -249,7 +249,7 @@ export default {
             <el-option
               v-for="role in editionInfo.anchor"
               :key="role.id"
-              :label="role.name"
+              :label="role.realname"
               :value="role.id"
             />
           </el-select>
