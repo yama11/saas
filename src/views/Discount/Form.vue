@@ -181,6 +181,9 @@ export default {
                 give_class_hour: res.give_class_hour
                   ? res.give_class_hour.toString()
                   : null,
+                expire_day: res.expire_day
+                  ? res.expire_day.toString()
+                  : null,
                 validityDate: '',
                 useDate: '',
               };
