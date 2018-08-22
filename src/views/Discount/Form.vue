@@ -33,6 +33,7 @@ export default {
         discount_money: null,
         discount_rate: null,
         give_class_hour: null,
+        audition_price: null,
         administrative_division_code: [],
         total_quantity: null,
         condition: 1,
@@ -66,6 +67,26 @@ export default {
         discount_rate: [
           this.$rules.required('折扣优惠'),
           { ...this.$rules.discount },
+        ],
+
+        audition_price: [
+          {
+            validator(rule, value, callback) {
+              if (!value) {
+                callback();
+
+                return;
+              }
+
+              const pattern = /(^[1-9]{1}[0-9]*$)|(^[0-9]*\.[0-9]{2}$)/;
+
+              if (!pattern.test(value)) {
+                callback(new Error('请输入正整数或者保留两位小数'));
+              }
+
+              callback();
+            },
+          },
         ],
 
         administrative_division_code: [
@@ -104,13 +125,13 @@ export default {
         couponCondition: [],
         couponExpireType: [],
         couponCanSuperposition: [],
-        curriculum: [],
-        merchandise: [],
       },
 
       division: [],
 
       addressTags: [],
+
+      shopList: [],
 
     };
   },
@@ -120,7 +141,11 @@ export default {
 
     if (this.id) {
       this.getDiscountData();
+
+      return;
     }
+
+    this.merchandiseOrCurriculum(1);
   },
 
   methods: {
@@ -137,37 +162,58 @@ export default {
         });
     },
 
+    merchandiseOrCurriculum(type) {
+      this.shopList = [];
+
+      return this.$http.get(`/coupon/type/${type}/applicable`)
+        .then((res) => {
+          this.shopList = res;
+        });
+    },
+
     getDiscountData() {
       this.$http.get(`/coupon/${this.id}`)
         .then((res) => {
-          this.discountForm = {
-            ...res,
-            validityDate: '',
-            useDate: '',
-          };
+          this.merchandiseOrCurriculum(res.type)
+            .then(() => {
+              this.discountForm = {
+                ...res,
+                give_class_hour: res.give_class_hour
+                  ? res.give_class_hour.toString()
+                  : null,
+                validityDate: '',
+                useDate: '',
+              };
 
-          this.division = res.coupon_administrative_division
-            .map(item => item.administrative_division_code);
+              this.division = res.coupon_administrative_division
+                .map(item => item.administrative_division_code);
 
-          this.addressTags = res.coupon_administrative_division
-            .map(item => ({
-              name: item.administrative_division_full_name,
-              value: item.administrative_division_code,
-            }));
+              this.addressTags = res.coupon_administrative_division
+                .map(item => ({
+                  name: item.administrative_division_full_name,
+                  value: item.administrative_division_code,
+                }));
 
-          this.discountForm.administrative_division_code =
-           res.coupon_administrative_division
-             .map(item => item.administrative_division_code);
+              this.discountForm.administrative_division_code =
+                res.coupon_administrative_division
+                  .map(item => item.administrative_division_code);
 
-          if (res.condition !== 3) {
-            this.discountForm.validityDate =
-            [new Date(res.distribute_effect_time), new Date(res.distribute_expire_time)];
-          }
+              if (res.condition !== 3) {
+                this.discountForm.validityDate =
+                  [new Date(res.distribute_effect_time), new Date(res.distribute_expire_time)];
+              }
 
-          if (res.expire_type === 1) {
-            this.discountForm.useDate =
-            [new Date(res.expire_effect_time), new Date(res.expire_expire_time)];
-          }
+              if (res.expire_type === 1) {
+                this.discountForm.useDate =
+                  [new Date(res.expire_effect_time), new Date(res.expire_expire_time)];
+              }
+
+              this.discountForm.coupon_applicable['App\\Models\\Curriculum'] = res.coupon_applicable['App\\Models\\Curriculum']
+                .map(item => item.applicable_id);
+
+              this.discountForm.coupon_applicable['App\\Models\\Merchandise'] = res.coupon_applicable['App\\Models\\Merchandise']
+                .map(item => item.applicable_id);
+            });
         });
     },
 
@@ -176,6 +222,10 @@ export default {
     },
 
     submitForm(submit) {
+      if (this.discountForm.type === 4 && !this.discountForm.audition_price) {
+        this.discountForm.audition_price = 0.00;
+      }
+
       if (this.discountForm.validityDate) {
         this.discountForm.distribute_effect_time =
         times.dateChange(this.discountForm.validityDate[0], 'zero');
@@ -195,15 +245,22 @@ export default {
       submit();
     },
 
-    resetFormType(discountForm) {
+    resetFormType(discountForm, type) {
       this.discountForm.discount_money = null;
       this.discountForm.discount_rate = null;
       this.discountForm.give_class_hour = null;
+      this.discountForm.audition_price = null;
 
       this.discountForm.coupon_applicable = {
         'App\\Models\\Merchandise': [],
         'App\\Models\\Curriculum': [],
       };
+
+      this.merchandiseOrCurriculum(type);
+
+      if (type === 4) {
+        this.discountForm.can_superposition = 0;
+      }
 
       this.$refs[discountForm].clearValidate(['discount_money', 'discount_rate', 'give_class_hour']);
     },
@@ -264,7 +321,7 @@ export default {
           v-for="item in formBefore.couponType"
           :key="item.value"
           :label="item.value"
-          @change="resetFormType('discountForm')">
+          @change="resetFormType('discountForm',item.value)">
           {{ item.name }}
         </el-radio>
       </el-radio-group>
@@ -295,7 +352,7 @@ export default {
     </el-form-item>
 
     <el-form-item
-      v-else
+      v-else-if="discountForm.type === 3"
       label=" "
       prop="give_class_hour"
     >
@@ -303,6 +360,30 @@ export default {
         v-model="discountForm.give_class_hour"
         placeholder="请输入赠送课时数"
         style="width:200px;"
+      />
+    </el-form-item>
+
+    <el-form-item
+      v-else
+      label=" "
+      prop="give_class_hour"
+    >
+      <el-input
+        v-model="discountForm.give_class_hour"
+        placeholder="请输入该券可体验课时数"
+        style="width:200px;"
+      />
+    </el-form-item>
+
+    <el-form-item
+      v-if="discountForm.type === 4"
+      label="购买金额"
+      prop="audition_price"
+    >
+      <el-input
+        v-model="discountForm.audition_price"
+        placeholder="请输入该券购买金额"
+        style="width:400px;"
       />
     </el-form-item>
 
@@ -427,7 +508,7 @@ export default {
         placeholder="请选择可使用商品"
         style="width:400px;">
         <el-option
-          v-for="item in formBefore.merchandise"
+          v-for="item in shopList"
           :key="item.id"
           :label="item.name"
           :value="item.id"/>
@@ -445,7 +526,7 @@ export default {
         placeholder="请选择可使用课程"
         style="width:400px;">
         <el-option
-          v-for="item in formBefore.curriculum"
+          v-for="item in shopList"
           :key="item.id"
           :label="item.name"
           :value="item.id"/>
@@ -460,7 +541,8 @@ export default {
         <el-radio
           v-for="item in formBefore.couponCanSuperposition"
           :key="item.value"
-          :label="item.value">
+          :label="item.value"
+          :disabled="discountForm.type === 4 && item.value === 1">
           {{ item.name }}
         </el-radio>
       </el-radio-group>
