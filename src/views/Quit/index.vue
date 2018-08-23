@@ -55,12 +55,6 @@ export default {
 
   created() {
     this.indexBefore();
-
-    this.changeRoute();
-
-    this.$watch('$route.query', () => {
-      this.changeRoute();
-    });
   },
 
   methods: {
@@ -68,30 +62,6 @@ export default {
     checkPermission(key, text) {
       return this.$permissions(`dispatch_center.quit.${key}`, text);
     },
-
-    changeRoute() {
-      const { page, per_page, ...search } = this.$route.query;
-
-      const status = 'equal[quit_status]';
-
-      if (status in search) {
-        const quitType = search['equal[quit_status]'];
-
-        this.statusType = quitType;
-        return;
-      }
-
-      const query = {
-        page: 1,
-        per_page: 10,
-        'equal[quit_status]': 1,
-      };
-
-      this.$router.push({ query });
-
-      this.$router.go(0);
-    },
-
 
     quitInfo(id) {
       this.$router.push(`/quit-info/${id}`);
@@ -146,7 +116,7 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
-              v-if="statusType !== '1' && checkPermission('show')"
+              v-if="scope.row.quit_status !== 1 && checkPermission('show')"
               size="small"
               @click="quitInfo(scope.row.id)"
             >查看</el-button>
