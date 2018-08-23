@@ -56,13 +56,7 @@ export default {
   },
 
   created() {
-    this.changeRoute();
-
     this.indexBefore();
-
-    this.$watch('$route.query', () => {
-      this.changeRoute();
-    });
   },
 
   methods: {
@@ -70,32 +64,6 @@ export default {
     checkPermission(key, text) {
       return this.$permissions(`dispatch_center.change.${key}`, text);
     },
-
-    changeRoute() {
-      const { page, per_page, ...search } = this.$route.query;
-
-      const status = 'equal[change_status]';
-
-      if (status in search) {
-        const changeType = search['equal[change_status]'];
-
-        this.statusType = changeType;
-        return;
-      }
-
-      this.statusType = 1;
-
-      const query = {
-        page: 1,
-        per_page: 10,
-        'equal[change_status]': 1,
-      };
-
-      this.$router.replace({ query });
-
-      this.$router.go(0);
-    },
-
 
     editPackage(id) {
       this.$router.push(`/change-info/${id}`);
@@ -150,7 +118,7 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
-              v-if="statusType !== '1' && checkPermission('show')"
+              v-if="scope.row.change_status !== 1 && checkPermission('show')"
               size="small"
               @click="editPackage(scope.row.id)"
             >查看</el-button>
