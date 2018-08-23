@@ -25,6 +25,9 @@ import Package from '@/views/Package';
 import Dealer from '@/views/Dealer';
 import School from '@/views/School';
 import Organization from '@/views/Organization';
+import Datail from '@/views/Datail';
+// import Drawmoney from '@/views/Drawmoney';
+// import Dealeraccount from '@/views/Dealeraccount';
 
 
 const routes = [
@@ -51,6 +54,9 @@ const routes = [
   ...Dealer,
   ...School,
   ...Organization,
+  ...Datail,
+  // ...Drawmoney,
+  // ...Dealeraccount,
 ];
 
 export default routes;

@@ -190,6 +190,32 @@ export default {
           },
         ],
       },
+      {
+        name: '财务中心',
+        permission: 'finance',
+        children: [
+          {
+            name: '用户账户管理',
+            permission: 'finance.account_detail',
+            index: '/detail-list',
+          },
+          {
+            name: '用户提现',
+            permission: 'finance.draw_money',
+            index: '/draw-list',
+          },
+          {
+            name: '经销商结算',
+            permission: 'finance.account',
+            index: '/account-list',
+          },
+          // {
+          //   name: '培训机构结算',
+          //   permission: 'finance.class',
+          //   index: '/arrange-list',
+          // },
+        ],
+      },
     ],
   }),
 
