@@ -5,12 +5,20 @@
  * @author yehaifeng
  */
 import list from '@/mixins/list';
+import ChangeEdition from '../Change/Edition';
+import QuitEdition from '../Quit/Edition';
 
 export default {
 
   name: 'FreezeList',
 
+  components: {
+    ChangeEdition,
+    QuitEdition,
+  },
+
   mixins: [list],
+
 
   data() {
     return {
@@ -27,9 +35,34 @@ export default {
 
       list: {},
 
-      freeze_status: [],
+      freeze_status: null,
 
       statusType: 1,
+
+      editionInfo: {
+        id: null,
+        visible: false,
+        formData: {
+          original: {
+            classes: {
+              scheme: {
+                start_date: '',
+                end_date: '',
+              },
+            },
+          },
+          current: {
+            scheme: {},
+          },
+          schemeArr: [],
+        },
+      },
+
+      editionQuit: {
+        id: null,
+        visible: false,
+        formData: {},
+      },
 
     };
   },
@@ -54,12 +87,6 @@ export default {
 
   created() {
     this.indexBefore();
-
-    this.changeRoute();
-
-    this.$watch('$route.query', () => {
-      this.changeRoute();
-    });
   },
 
   methods: {
@@ -68,27 +95,48 @@ export default {
       return this.$permissions(`dispatch_center.freeze.${key}`, text);
     },
 
-    changeRoute() {
-      const { page, per_page, ...search } = this.$route.query;
+    changeClass(value, id) {
+      this.editionInfo.id = value.id;
+      this.editionInfo.visible = true;
 
-      const status = 'equal[freeze_status]';
+      this.$http.post('/change/create', { id })
+        .then((res) => {
+          this.editionInfo.formData.original = res.original;
+          this.editionInfo.formData.original.class_id = res.original.classes.id;
+          this.editionInfo.formData.original.curriculum_id = res.original.curriculum_id;
+          this.editionInfo.formData.original.scheme_id = res.original.classes.scheme.id;
 
-      if (status in search) {
-        const freezeType = search['equal[freeze_status]'];
+          this.editionInfo.formData.current = { ...res.current };
+          this.editionInfo.formData.student_id = res.student_id;
+          this.editionInfo.formData.parent_id = res.parent_id;
+          this.editionInfo.formData.hour_id = res.hour_id;
 
-        this.statusType = freezeType;
-        return;
-      }
+          this.editionInfo.formData.original.classes.scheme = res.original.classes.scheme;
 
-      const query = {
-        page: 1,
-        per_page: 10,
-        'equal[freeze_status]': 1,
-      };
+          const currCourse = res.current
+            .find(item => item.id === this.editionInfo.formData.original.curriculum_id);
+          if (currCourse) {
+            this.editionInfo.formData.current.curriculum_id = currCourse.id;
 
-      this.$router.push({ query });
+            const arrs = currCourse.scheme
+              .filter(item => item.start_date);
 
-      this.$router.go(0);
+            this.editionInfo.formData.schemeArr = arrs
+              .map(item => ({
+                ...item,
+                date: `${item.start_date.split(' ')[0]}~${item.end_date.split(' ')[0]}`,
+              }));
+          }
+        });
+    },
+
+    quitDeal(id) {
+      this.editionQuit.visible = true;
+      this.editionQuit.id = id;
+      this.$http.post('/quit/create', { id })
+        .then((res) => {
+          this.editionQuit.formData = { ...res };
+        });
     },
 
     freezeInfo(id) {
@@ -109,6 +157,10 @@ export default {
     toCreateFreeze() {
       this.$router.push('/freeze-create');
     },
+
+    submitEdition(submit) {
+      submit().then(() => this.$refs.list.getList());
+    },
   },
 };
 </script>
@@ -121,7 +173,6 @@ export default {
     api="/freeze"
     title="冻结管理"
     @create="toCreateFreeze"
-
   >
     <AppSearch
       v-if="checkPermission('index')"
@@ -144,15 +195,42 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
-              v-if="statusType !== '1' && checkPermission('show')"
+              v-if="scope.row.freeze_status !== 1&& checkPermission('show')"
               size="small"
               @click="freezeInfo(scope.row.id)"
             >查看</el-button>
             <el-button
-              v-else-if="checkPermission('deal')"
+              v-if="scope.row.freeze_status === 2"
+              size="small"
+              @click="changeClass(scope.row,scope.row.id)"
+            >转班</el-button>
+            <el-button
+              v-if="scope.row.freeze_status === 2"
+              size="small"
+              @click="quitDeal(scope.row.id)"
+            >退班</el-button>
+            <el-button
+              v-if="scope.row.freeze_status === 1 &&checkPermission('deal')"
               size="small"
               @click="freezeDeal(scope.row.id)"
             >冻结处理</el-button>
+
+            <!-- 转班 -->
+            <ChangeEdition
+              :visible.sync="editionInfo.visible"
+              :id="editionInfo.id"
+              :form-data="editionInfo.formData"
+              width="458px"
+              @on-submit="submitEdition"
+            />
+            <!-- 退班 -->
+            <QuitEdition
+              :visible.sync="editionQuit.visible"
+              :id="editionQuit.id"
+              :form-data="editionQuit.formData"
+              width="458px"
+              @on-submit="submitEdition"
+            />
           </template>
         </el-table-column>
       </el-table>
@@ -161,5 +239,8 @@ export default {
 </template>
 
 <style>
-
+.change-edition .change-info__classtime__week{
+  margin-top: 10px;
+  display: block;
+}
 </style>
