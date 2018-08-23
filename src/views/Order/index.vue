@@ -62,6 +62,10 @@ export default {
         });
     },
 
+    createOrder() {
+      this.$router.push('/order-create');
+    },
+
     lookOrderInfo(id) {
       this.$router.push(`/order-info/${id}`);
     },
@@ -73,9 +77,11 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
+    :create-label="checkPermission('batch_store') ? '批量创建订单' : null"
     class="order-list"
     api="/order"
     title="订单管理"
+    @create="createOrder"
   >
 
     <AppSearch
