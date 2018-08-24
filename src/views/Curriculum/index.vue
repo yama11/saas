@@ -237,7 +237,13 @@ export default {
     },
 
     deleteCurriculum(id) {
-      this.$_listMixin_alertDeleteItem(id, this.list.data, '课程', '/curriculum');
+      this.$_listMixin_alertDeleteItem(
+        id,
+        this.list.data,
+        '课程',
+        '/curriculum',
+        this.$refs.list,
+      );
     },
   },
 };

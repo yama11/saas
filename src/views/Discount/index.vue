@@ -88,7 +88,13 @@ export default {
     },
 
     deleteDiscount(id) {
-      this.$_listMixin_alertDeleteItem(id, this.list.data, '优惠券', '/coupon');
+      this.$_listMixin_alertDeleteItem(
+        id,
+        this.list.data,
+        '优惠券',
+        '/coupon',
+        this.$refs.list,
+      );
     },
   },
 };

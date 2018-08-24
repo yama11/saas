@@ -82,7 +82,13 @@ export default {
     },
 
     delProductInfo(id) {
-      this.$_listMixin_alertDeleteItem(id, this.list.data, '优惠券', '/merchandise');
+      this.$_listMixin_alertDeleteItem(
+        id,
+        this.list.data,
+        '优惠券',
+        '/merchandise',
+        this.$refs.list,
+      );
     },
   },
 };

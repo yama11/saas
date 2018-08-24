@@ -131,7 +131,13 @@ export default {
     },
 
     deleteTimeTable(id) {
-      this.$_listMixin_alertDeleteItem(id, this.list.data, '时间表', '/timetable');
+      this.$_listMixin_alertDeleteItem(
+        id,
+        this.list.data,
+        '时间表',
+        '/timetable',
+        this.$refs.list,
+      );
     },
 
     getContent(subsidiary) {

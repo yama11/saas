@@ -190,7 +190,13 @@ export default {
     },
 
     delClassroom(id) {
-      this.$_listMixin_alertDeleteItem(id, this.list.data, '教室', '/classroom');
+      this.$_listMixin_alertDeleteItem(
+        id,
+        this.list.data,
+        '教室',
+        '/classroom',
+        this.$refs.list,
+      );
     },
 
     disabledClassroom(id) {
