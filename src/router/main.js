@@ -28,7 +28,7 @@ import Organization from '@/views/Organization';
 import Datail from '@/views/Datail';
 import Drawmoney from '@/views/Drawmoney';
 import Dealeraccount from '@/views/Dealeraccount';
-// import Departmentaccount from '@/views/Departmentaccount';
+import Departmentaccount from '@/views/Departmentaccount';
 
 
 const routes = [
@@ -58,7 +58,7 @@ const routes = [
   ...Datail,
   ...Drawmoney,
   ...Dealeraccount,
-  // ...Departmentaccount,
+  ...Departmentaccount,
 ];
 
 export default routes;
