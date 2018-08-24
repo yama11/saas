@@ -27,7 +27,7 @@ import School from '@/views/School';
 import Organization from '@/views/Organization';
 import Datail from '@/views/Datail';
 import Drawmoney from '@/views/Drawmoney';
-// import Dealeraccount from '@/views/Dealeraccount';
+import Dealeraccount from '@/views/Dealeraccount';
 // import Departmentaccount from '@/views/Departmentaccount';
 
 
@@ -57,7 +57,7 @@ const routes = [
   ...Organization,
   ...Datail,
   ...Drawmoney,
-  // ...Dealeraccount,
+  ...Dealeraccount,
   // ...Departmentaccount,
 ];
 
