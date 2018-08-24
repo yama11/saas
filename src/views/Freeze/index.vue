@@ -35,7 +35,7 @@ export default {
 
       list: {},
 
-      freeze_status: null,
+      freeze_status: [],
 
       statusType: 1,
 
