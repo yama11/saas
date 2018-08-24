@@ -140,7 +140,7 @@ export default {
         .then(() => this.$refs.list.getList());
     },
 
-    setClass(id) {
+    setClass(id, departmentId) {
       this.formData = {};
 
       this.id = id;
@@ -156,12 +156,12 @@ export default {
           this.formData.scheme_id = this.editionInfo.rota.scheme_id;
         });
 
-      this.$http.get('/option/classrooms')
+      this.$http.get(`/option/classrooms?department_id=${departmentId}`)
         .then((res) => {
           this.classData = { ...res };
         });
 
-      this.$http.get('/option/manage_teachers')
+      this.$http.get(`/option/manage_teachers?department_id=${departmentId}`)
         .then((res) => {
           this.manageData = { ...res };
         });
@@ -204,7 +204,7 @@ export default {
               v-if="scope.row.class_status_name!=='已结束'"
               type="small"
               size="small"
-              @click="setClass(scope.row.id)"
+              @click="setClass(scope.row.id,scope.row.department_id)"
             >
               班级设置
             </el-button>
