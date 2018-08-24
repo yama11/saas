@@ -18,8 +18,9 @@ export default {
      * @param list        {Array}     目标所在数组列表
      * @param appellation {string}    目标称呼
      * @param uri         {string}    删除接口前缀
+     * @param tableHref   {object}    数据渲染表格的ref
      */
-    $_listMixin_alertDeleteItem(id, list, appellation, uri) {
+    $_listMixin_alertDeleteItem(id, list, appellation, uri, tableHref) {
       this.$confirm(
         `确定删除该${appellation}？`,
         '删除确认',
@@ -31,7 +32,7 @@ export default {
           // beforeClose,
         })
         .then(() => {
-          this.$_listMixin_deleteItem(id, list, uri);
+          this.$_listMixin_deleteItem(id, list, uri, tableHref);
         })
         .catch(() => {});
     },
@@ -44,7 +45,7 @@ export default {
      * @param message     {string}    删除提醒文案
      * @param uri         {string}    删除接口前缀
      */
-    $_listMixin_confirmDeleteItem(id, list, message, uri) {
+    $_listMixin_confirmDeleteItem(id, list, message, uri, tableHref) {
       this.$prompt(
         message,
         '确认删除',
@@ -60,28 +61,35 @@ export default {
         .then(({ value }) => {
           const header = { CheckoutPassword: value };
 
-          this.$_listMixin_deleteItem(id, list, uri, header);
+          this.$_listMixin_deleteItem(id, list, uri, tableHref, header);
         })
         .catch(() => {});
     },
 
-    $_listMixin_deleteItem(id, list, uri, header) {
+    $_listMixin_deleteItem(id, list, uri, tableHref, header) {
       return this.$http.delete(`${uri}/${id}`, header)
         .then(() => {
           const index = list.findIndex(item => item.id === id);
 
-          if (index > -1) {
-            list.splice(index, 1);
+          if (index === -1) return;
 
-            this.$alert(
-              '删除成功',
-              '删除确认',
-              {
-                confirmButtonText: '我知道了',
-                type: 'success',
-                confirmButtonClass: 'success',
-              });
+          if (!tableHref) {
+            list.splice(index, 1);
           }
+
+          this.$alert(
+            '删除成功',
+            '删除确认',
+            {
+              confirmButtonText: '我知道了',
+              type: 'success',
+              confirmButtonClass: 'success',
+            })
+            .then(() => {
+              if (tableHref) {
+                tableHref.getList();
+              }
+            });
         })
         .catch(({ message }) => {
           this.$alert(
