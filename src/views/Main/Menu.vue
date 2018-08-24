@@ -206,14 +206,14 @@ export default {
           },
           {
             name: '经销商结算',
-            permission: 'finance.account',
+            permission: 'finance.dealer',
             index: '/account-list',
           },
-          // {
-          //   name: '培训机构结算',
-          //   permission: 'finance.class',
-          //   index: '/arrange-list',
-          // },
+          {
+            name: '培训机构结算',
+            permission: 'finance.department',
+            index: '/department-list',
+          },
         ],
       },
     ],
