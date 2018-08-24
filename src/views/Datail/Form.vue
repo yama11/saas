@@ -30,8 +30,6 @@ export default {
         { label: '交易时间', prop: 'created_at' },
       ],
 
-      formData: {},
-
     };
   },
   computed: {
@@ -49,10 +47,6 @@ export default {
   },
 
   methods: {
-
-    checkPermission(key, text) {
-      return this.$permissions(`finance.account_detail.${key}`, text);
-    },
 
     checkInfo(value) {
       if (value.account_type_name === '退班') {
@@ -73,7 +67,6 @@ export default {
     title="用户账户"
   >
     <template
-      v-if="checkPermission('index')"
       slot-scope="props">
       <el-table :data="props.listData">
         <el-table-column
@@ -89,7 +82,6 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
-              v-if="checkPermission('show')"
               size="small"
               @click="checkInfo(scope.row)"
             >
