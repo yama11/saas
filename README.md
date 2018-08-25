@@ -43,6 +43,22 @@ vue + vue-router + vuex + element-ui
         |-- courseware          // 课程中心 -> 课时内容   -   霍金朝
         |-- Subject             // 系统维护 -> 角色管理   -   霍金朝
         |-- courseware          // 系统维护 -> 用户管理   -   霍金朝
+        |-- Dealer              // 系统维护 -> 经销商管理   -   叶海峰
+        |-- Organization        // 系统维护 -> 机构管理   -   叶海峰
+        |-- Package             // 系统维护 -> 版本管理   -   叶海峰
+        |-- School              // 系统维护 -> 生源学校   -   叶海峰
+        |-- Arrange             // 排班上课 -> 上课安排   -   叶海峰
+        |-- Arrstudent          // 排班上课 -> 约课学生   -   叶海峰
+        |-- Class               // 排班上课 -> 约课班级   -   叶海峰
+        |-- Change              // 变更调度 -> 转班管理   -   叶海峰
+        |-- Quit                // 变更调度 -> 退班管理   -   叶海峰
+        |-- Freeze              // 变更调度 -> 冻结管理   -   叶海峰
+        |-- Parent              // 注册用户 -> 家长管理   -   叶海峰
+        |-- Student             // 注册用户 -> 学生管理   -   叶海峰
+        |-- Datail              // 财务中心 -> 账户管理   -   叶海峰
+        |-- Drawmoney           // 财务中心 -> 用户提现   -   叶海峰
+        |-- Dealeraccount       // 财务中心 -> 经销商结算   -   叶海峰
+        |-- Departmentaccount   // 财务中心 -> 机构结算   -   叶海峰
     |-- App.vue         // 根组件
     |-- main.js         // 程序入口
 ......
