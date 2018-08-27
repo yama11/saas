@@ -59,6 +59,11 @@ vue + vue-router + vuex + element-ui
         |-- Drawmoney           // 财务中心 -> 用户提现   -   叶海峰
         |-- Dealeraccount       // 财务中心 -> 经销商结算   -   叶海峰
         |-- Departmentaccount   // 财务中心 -> 机构结算   -   叶海峰
+        |-- Curriculum          // 课程中心 -> 课程管理   -   苏严萍
+        |-- Category            // 商品中心 -> 品类管理   -   苏严萍
+        |-- Product             // 商品中心 -> 商品管理   -   苏严萍
+        |-- Order               // 商品中心 -> 订单管理   -   苏严萍
+        |-- Discount            // 商品中心 -> 优惠券管理 -   苏严萍
     |-- App.vue         // 根组件
     |-- main.js         // 程序入口
 ......
