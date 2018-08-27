@@ -29,7 +29,13 @@ export default {
             return '';
           } },
 
-        { label: '领取/总发放数量', formatter: row => `${row.distributed_quantity}/${row.total_quantity}` },
+        { label: '领取/总发放数量',
+          formatter: (row) => {
+            const distributed = row.distributed_quantity ? row.distributed_quantity : 0;
+            const total = row.total_quantity ? row.total_quantity : 0;
+
+            return `${distributed}/${total}`;
+          } },
 
         { prop: 'minimum_price', label: '消费最低金额' },
 
