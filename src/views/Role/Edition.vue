@@ -144,6 +144,10 @@ export default {
 </template>
 
 <style lang="postcss">
+.role-form .el-form-item:nth-child(2) {
+  margin-bottom: 45px;
+}
+
 .role-form__permission .el-form-item__content {
   overflow: hidden;
 }
