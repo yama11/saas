@@ -45,16 +45,20 @@ export default {
       {
         searchType: [
           {
-            label: '姓名',
-            prop: 'realname',
+            label: '角色名称',
+            prop: 'role_name',
+          },
+          {
+            label: '手机号码',
+            prop: 'phone',
           },
           {
             label: '登陆账号',
             prop: 'name',
           },
           {
-            label: '手机号',
-            prop: 'phone',
+            label: '用户姓名',
+            prop: 'realname',
           },
         ],
         componentType: 'AppSearchColumn',
