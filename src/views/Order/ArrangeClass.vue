@@ -120,7 +120,11 @@ export default {
     },
 
     getClassList(id) {
-      this.$http.get(`/order/batch/class?equal[curriculum_id]=${id}`)
+      this.formData.classId = null;
+
+      const data = `equal[curriculum_id]=${this.curriculumId}&equal[department_id]=${id}`;
+
+      this.$http.get(`/order/batch/class?${data}`)
         .then((res) => {
           this.classList = res;
         });
@@ -152,8 +156,6 @@ export default {
         });
 
       this.getDepartmentList(id);
-
-      this.getClassList(id);
     },
 
     getClassTime(id) {
@@ -317,7 +319,8 @@ export default {
       >
         <el-select
           v-model="formData.departmentId"
-          placeholder="请选择上课机构">
+          placeholder="请选择上课机构"
+          @change="getClassList(formData.departmentId)">
 
           <el-option
             v-for="item in departmentList"
