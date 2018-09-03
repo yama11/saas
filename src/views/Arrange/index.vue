@@ -110,7 +110,7 @@ export default {
   methods: {
 
     indexBefore() {
-      this.$http.get('/class/index_before')
+      this.$http.get('/class/arrange_before')
         .then((res) => {
           this.arrangeStatus = res.status;
 
@@ -175,7 +175,7 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
-    api="/class"
+    api="/class/arrange"
     title="上课安排"
   >
     <AppSearch
