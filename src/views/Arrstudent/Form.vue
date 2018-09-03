@@ -23,7 +23,10 @@ export default{
 
       from: null,
 
-      scheme: {},
+      scheme: {
+        start_date: null,
+        end_date: null,
+      },
 
       // 定义星期
       toDay: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
@@ -143,7 +146,9 @@ export default{
         >
           <span>上课时间段</span>
           :
-          <span>{{ scheme.start_date.split(' ')[0] }}
+          <span
+            v-if="scheme"
+          >{{ scheme.start_date.split(' ')[0] }}
             ~{{ scheme.end_date.split(' ')[0] }}</span>
       </div></div>
       <div
@@ -152,12 +157,17 @@ export default{
         <span>上课时间</span>
         :
         <span
-          v-for="(calendar,index) in scheme.calendar"
-          :key="index"
-          class="intention-info__classtime__week"
+          v-if="scheme"
         >
-          {{ toDay[calendar.day-1] }}&nbsp;{{ calendar.start_time }}~{{ calendar.end_time }}
+          <span
+            v-for="(calendar,index) in scheme.calendar"
+            :key="index"
+            class="intention-info__classtime__week"
+          >
+            {{ toDay[calendar.day-1] }}&nbsp;{{ calendar.start_time }}~{{ calendar.end_time }}
+          </span>
         </span>
+
       </div>
 
       <div class="intention-info__but">
