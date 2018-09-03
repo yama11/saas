@@ -265,11 +265,10 @@ export default {
               :visible.sync="visible"
               :model="formData"
               :rules="rules"
-              label-width="5em"
+              label-width="8em"
               url="/intention"
               object="调度学生"
               class="process-edition"
-              width="500px"
               @on-submit="submitEdition"
             >
               <el-form-item
