@@ -130,6 +130,11 @@ export default {
             permission: 'system.dealer',
             index: '/dealer-list',
           },
+          {
+            name: '城市合伙人管理',
+            permission: 'system.partner',
+            index: '/partner-list',
+          },
         ],
       },
       {
