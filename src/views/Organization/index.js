@@ -21,7 +21,7 @@ export default [
     name: 'OrganizationEdit',
     component: OrganizationForm,
   },
-  // 机构管理 - 学管师列表
+  // 机构管理 - 辅师列表
   {
     path: '/organization-teacher/:id',
     name: 'LearningTeacher',

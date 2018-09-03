@@ -1,6 +1,6 @@
 <script>
 /**
- * @overview 冻结管理  - 冻结详情
+ * @overview 挂起管理  - 挂起详情
  *
  * @author yehaifeng
  */
@@ -63,7 +63,7 @@ export default{
           details: curriculumName,
         },
         {
-          label: '冻结课时',
+          label: '挂起课时',
           details: hourRemain ? hourRemain.toString() : '',
         },
         {
@@ -71,7 +71,7 @@ export default{
           details: departmentName,
         },
         {
-          label: '冻结班级',
+          label: '挂起班级',
           details: className,
         },
         {
@@ -87,7 +87,7 @@ export default{
           details: auditorName,
         },
         {
-          label: '冻结时间',
+          label: '挂起时间',
           details: auditDate,
         },
       ];
@@ -122,7 +122,7 @@ export default{
 <template>
   <div class="freeze-info">
     <header class="freeze-info__header">
-      <h2 class="freeze-info__title">冻结详情</h2>
+      <h2 class="freeze-info__title">挂起详情</h2>
     </header>
     <div
       v-if="data"

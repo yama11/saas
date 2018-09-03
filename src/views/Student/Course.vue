@@ -25,7 +25,7 @@ export default {
         { label: '品类', formatter: row => (row.category_type === 1 ? '正常类型' : '试听类型') },
         { prop: 'hour_total', label: '课时数' },
         { prop: 'hour_finish', label: '已耗课时' },
-        { prop: 'hour_freeze', label: '冻结课时' },
+        { prop: 'hour_freeze', label: '挂起课时' },
         { prop: 'hour_quit', label: '退班课时' },
         { prop: 'hour_change', label: '转班课时' },
         { prop: 'create_date', label: '约课时间' },
@@ -72,7 +72,7 @@ export default {
         <span>剩余可用课时</span>
         :
         <span>{{ list.statics.hour_remain }}</span>&nbsp;&nbsp;&nbsp;
-        <span>冻结课时</span>
+        <span>挂起课时</span>
         :
         <span>{{ list.statics.hour_freeze }}</span>&nbsp;&nbsp;&nbsp;
         <span>已耗课时</span>

@@ -73,7 +73,7 @@ export default {
       slot-scope="props">
       <span style="margin-left:10px;">总星星: {{ list.star_number }}</span>
       <span style="margin-left:10px;">班级名称: {{ list.class.name }}</span>
-      <span style="margin-left:10px;">学管师: {{ list.class.audience_name }}</span>
+      <span style="margin-left:10px;">辅师: {{ list.class.audience_name }}</span>
       <el-table :data="list.schedule.data">
         <el-table-column
           v-for="column in columns"

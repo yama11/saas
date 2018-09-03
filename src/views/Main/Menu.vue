@@ -168,7 +168,7 @@ export default {
             index: '/quit-list',
           },
           {
-            name: '冻结管理',
+            name: '挂起管理',
             permission: 'dispatch_center.freeze',
             index: '/freeze-list',
           },

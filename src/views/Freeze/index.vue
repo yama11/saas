@@ -1,6 +1,6 @@
 <script>
 /**
- * @overview 冻结管理  - 冻结管理列表
+ * @overview 挂起管理  - 挂起管理列表
  *
  * @author yehaifeng
  */
@@ -27,10 +27,10 @@ export default {
         { prop: 'student_name', label: '学习姓名' },
         { prop: 'phone', label: '家长电话' },
         { prop: 'curriculum_name', label: '课程名称' },
-        { prop: 'hour_remain', label: '冻结课时' },
+        { prop: 'hour_remain', label: '挂起课时' },
         { prop: 'department_name', label: '培训机构' },
         { prop: 'class_name', label: '班级' },
-        { prop: 'audit_date', label: '冻结时间' },
+        { prop: 'audit_date', label: '挂起时间' },
       ],
 
       list: {},
@@ -169,9 +169,9 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
-    create-label="冻结"
+    create-label="挂起"
     api="/freeze"
-    title="冻结管理"
+    title="挂起管理"
     @create="toCreateFreeze"
   >
     <AppSearch
@@ -213,7 +213,7 @@ export default {
               v-if="scope.row.freeze_status === 1 &&checkPermission('deal')"
               size="small"
               @click="freezeDeal(scope.row.id)"
-            >冻结处理</el-button>
+            >挂起处理</el-button>
 
             <!-- 转班 -->
             <ChangeEdition

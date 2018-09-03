@@ -1,6 +1,6 @@
 <script>
 /**
- * @overview 冻结管理  - 冻结列表
+ * @overview 挂起管理  - 挂起列表
  *
  * @author yehaifeng
  */
@@ -100,7 +100,7 @@ export default {
     ref="list"
     :list.sync="list"
     api="/freeze/student"
-    title="冻结"
+    title="挂起"
   >
     <AppSearch
       v-if="checkPermission('student')"
@@ -127,20 +127,20 @@ export default {
               v-if="checkPermission('audit')"
               size="small"
               @click="freezeClass(scope.row.id)"
-            >冻结</el-button>
+            >挂起</el-button>
             <AppFormDialog
               :visible.sync="visible"
               :model="formData"
               url="/freeze"
               label-width="5em"
-              object="冻结"
+              object="挂起"
               width="500px"
               class="freeze-popup"
               @on-submit="submitEdition"
             >
               <span
                 class="freeze-popup__span"
-              >确定冻结该学生该课程?</span>
+              >确定挂起该学生该课程?</span>
             </AppFormDialog>
           </template>
         </el-table-column>

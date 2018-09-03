@@ -4,25 +4,25 @@ import FreezeDispose from './Dispose';
 import FreezeDetails from './Details';
 
 export default [
-  // 冻结管理列表
+  // 挂起管理列表
   {
     path: 'freeze-list',
     name: 'FreezeList',
     component: FreezeList,
   },
-  // 冻结
+  // 挂起
   {
     path: 'freeze-create',
     name: 'FreezeForm',
     component: FreezeForm,
   },
-  // 冻结处理
+  // 挂起处理
   {
     path: 'freeze-deal/:id',
     name: 'FreezeDispose',
     component: FreezeDispose,
   },
-  // 冻结详情
+  // 挂起详情
   {
     path: 'freeze-info/:id',
     name: 'FreezeDetails',

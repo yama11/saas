@@ -55,7 +55,7 @@ export default {
         <el-form-item label="教师:">
           <span>{{ list.schedule.teacher_name }}&nbsp;&nbsp;</span>
         </el-form-item>
-        <el-form-item label="学管师:">
+        <el-form-item label="辅师:">
           <span>{{ list.class.audience_name }}&nbsp;&nbsp;</span>
         </el-form-item>
       </div>

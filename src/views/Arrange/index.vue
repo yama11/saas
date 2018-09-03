@@ -41,7 +41,7 @@ export default {
         { prop: 'studio_name', label: '直播室' },
         { prop: 'anchor_name', label: '直播教师' },
         { prop: 'classroom_name', label: '教室' },
-        { prop: 'audience_name', label: '学管师' },
+        { prop: 'audience_name', label: '辅师' },
       ],
 
       list: {},
@@ -272,12 +272,12 @@ export default {
           </el-select>
         </el-form-item>
         <el-form-item
-          label="学管师"
+          label="辅师"
           prop="manage_teachers"
         >
           <el-select
             v-model="formData.audience_id"
-            placeholder="请选择学管师"
+            placeholder="请选择辅师"
           >
             <el-option
               v-for="role in manageData.manage_teachers"

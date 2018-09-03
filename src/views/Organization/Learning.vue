@@ -1,6 +1,6 @@
 <script>
 /**
- * @overview 机构管理 - 学管师管理
+ * @overview 机构管理 - 辅师管理
  *
  * @author yehaifeng
  */
@@ -15,8 +15,8 @@ export default {
   data() {
     return {
       columns: [
-        { prop: 'realname', label: '学管师姓名' },
-        { prop: 'name', label: '学管师账号' },
+        { prop: 'realname', label: '辅师姓名' },
+        { prop: 'name', label: '辅师账号' },
         { prop: 'phone', label: '手机号' },
         { prop: 'created_at', label: '添加时间' },
         { prop: 'user_status_name', label: '状态' },
@@ -36,14 +36,14 @@ export default {
 
       rules: {
         realname: [
-          this.$rules.required('学管师姓名'),
+          this.$rules.required('辅师姓名'),
         ],
         phone: [
           this.$rules.required('手机号'),
           { ...this.$rules.mobile },
         ],
         name: [
-          this.$rules.required('学管师账号'),
+          this.$rules.required('辅师账号'),
         ],
         password: [
           this.$rules.required('密码'),
@@ -55,7 +55,7 @@ export default {
   computed: {
     searchArr() {
       const column = [
-        { prop: 'realname', label: '学管师姓名' },
+        { prop: 'realname', label: '辅师姓名' },
         { prop: 'phone', label: '手机号码' },
       ];
       const searchList = [
@@ -76,7 +76,7 @@ export default {
     learningTeacher(id, name, realname, phone, password) {
       this.visible = true;
       if (id) {
-        this.title = '编辑学管师';
+        this.title = '编辑辅师';
         this.managerId = id;
         this.formData.name = name;
         this.formData.realname = realname;
@@ -84,7 +84,7 @@ export default {
         this.formData.password = password;
         this.formData.department_id = this.id;
       } else {
-        this.title = '添加学管师';
+        this.title = '添加辅师';
         this.formData = {};
         this.formData.department_id = this.id;
       }
@@ -113,7 +113,7 @@ export default {
     },
 
     deleteLearning(id) {
-      this.$_listMixin_alertDeleteItem(id, this.list.data, '学管师', `/department/${this.id}/manager_teacher`);
+      this.$_listMixin_alertDeleteItem(id, this.list.data, '辅师', `/department/${this.id}/manager_teacher`);
     },
 
     submitEdition(submit) {
@@ -129,8 +129,8 @@ export default {
     :list.sync="list"
     :id="id"
     :api="`/department/${id}/manager_teacher`"
-    :create-label="checkPermission('store')?'添加学管师':null"
-    title="学管师管理"
+    :create-label="checkPermission('store')?'添加辅师':null"
+    title="辅师管理"
     @create="learningTeacher"
   >
     <AppSearch
@@ -196,13 +196,13 @@ export default {
         @on-submit="submitEdition"
       >
         <el-form-item
-          label="学管师姓名"
+          label="辅师姓名"
           prop="realname"
         >
           <el-input
             v-model="formData.realname"
             maxlength="10"
-            placeholder="请输入学管师姓名"
+            placeholder="请输入辅师姓名"
           />
         </el-form-item>
         <el-form-item
@@ -211,16 +211,16 @@ export default {
         >
           <el-input
             v-model="formData.phone"
-            placeholder="请输入学管师手机号码"
+            placeholder="请输入辅师手机号码"
           />
         </el-form-item>
         <el-form-item
-          label="学管师账号"
+          label="辅师账号"
           prop="name"
         >
           <el-input
             v-model="formData.name"
-            placeholder="请输入学管师账号"
+            placeholder="请输入辅师账号"
           />
         </el-form-item>
         <el-form-item
@@ -229,7 +229,7 @@ export default {
         >
           <el-input
             v-model="formData.password"
-            placeholder="请输入学管师密码"
+            placeholder="请输入辅师密码"
           />
         </el-form-item>
       </AppFormDialog>

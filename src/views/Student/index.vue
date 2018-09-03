@@ -1,6 +1,6 @@
 <script>
 /**
- * @desc 学生列表
+ * @overview 学生管理 - 学生列表
  *
  * @author yehaifeng
 */

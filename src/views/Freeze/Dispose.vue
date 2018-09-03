@@ -1,6 +1,6 @@
 <script>
 /**
- * @overview 冻结管理  - 冻结处理
+ * @overview 挂起管理  - 挂起处理
  *
  * @author yehaifeng
  */
@@ -62,7 +62,7 @@ export default{
           details: curriculumName,
         },
         {
-          label: '冻结课时',
+          label: '挂起课时',
           details: hourRemain ? hourRemain.toString() : '',
         },
         {
@@ -70,7 +70,7 @@ export default{
           details: departmentName,
         },
         {
-          label: '冻结班级',
+          label: '挂起班级',
           details: className,
         },
         {

@@ -119,7 +119,7 @@ export default {
             <el-button
               size="small"
               @click="managerTeacher(scope.row.id)"
-            >学管师管理</el-button>
+            >辅师管理</el-button>
             <el-button
               v-if="checkPermission('update')"
               size="small"

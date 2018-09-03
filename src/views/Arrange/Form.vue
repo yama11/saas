@@ -69,12 +69,12 @@ export default{
 
       tableFreeze: [
         { label: '学生姓名', prop: 'student_name' },
-        { label: '冻结时间',
+        { label: '挂起时间',
           formatter: row =>
             `${row.audit_date.split(' ')[0]}`,
         },
         { label: '课耗数', prop: 'hour_finish' },
-        { label: '冻结数', prop: 'hour_remain' },
+        { label: '挂起数', prop: 'hour_remain' },
       ],
     };
   },
@@ -286,7 +286,7 @@ export default{
         </el-table>
       </div>
       <div class="arrange-info-foot">
-        <span class="arrange-info-foot__student">冻结记录</span>
+        <span class="arrange-info-foot__student">挂起记录</span>
         <el-table
           :data="freeze"
           style="width: 522px"
