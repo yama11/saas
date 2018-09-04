@@ -391,8 +391,8 @@ export default {
               class="curriculum-period-info__course"
               @click="checkCourse(item.id)">
               <p>{{ item.name }}</p>
-              <p>课件数：{{ item.courseware }}</p>
-              <p>游戏数：{{ item.games }}</p>
+              <p>课件数：{{ item.ware_number }}</p>
+              <p>游戏数：{{ item.game_number }}</p>
               <span
                 v-if="isCheck === item.id"
                 class="curriculum-period-info__check">
