@@ -5,6 +5,7 @@
  * @author suyanping
  */
 import list from '@/mixins/list';
+import { token } from '@/utils';
 
 export default {
   name: 'OrderList',
@@ -18,10 +19,12 @@ export default {
       columns: [
         { prop: 'client_phone', label: '购买手机号' },
         { prop: 'student_name', label: '小孩' },
+        { prop: 'department_name', label: '机构' },
         { prop: 'merchandise_name', label: '商品名称' },
         { prop: 'order_time', label: '下单时间' },
         { prop: 'paid_money', label: '实付金额' },
         { prop: 'status_name', label: '订单状态' },
+        { prop: 'order_source_name', label: '来源' },
       ],
 
       order_status: [],
@@ -72,6 +75,19 @@ export default {
     lookOrderInfo(id) {
       this.$router.push(`/order-info/${id}`);
     },
+
+    exportExcel() {
+      const tokens = token.get();
+
+      const query = Object.keys(this.$route.query)
+        .map(key => `${key}=${this.$route.query[key]}`)
+        .join('&');
+
+      const url = 'https://final-admin-api.caihonggou.com/order/export?';
+
+
+      window.location.href = `${url}${query}&token=${tokens}`;
+    },
   },
 };
 </script>
@@ -84,7 +100,9 @@ export default {
     class="order-list"
     api="/order"
     title="订单管理"
+    skip-label="导出excel"
     @create="createOrder"
+    @skipPage="exportExcel"
   >
 
     <AppSearch
