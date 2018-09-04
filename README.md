@@ -43,7 +43,8 @@ vue + vue-router + vuex + element-ui
         |-- courseware          // 课程中心 -> 课时内容   -   霍金朝
         |-- Subject             // 系统维护 -> 角色管理   -   霍金朝
         |-- courseware          // 系统维护 -> 用户管理   -   霍金朝
-        |-- Dealer              // 系统维护 -> 经销商管理   -   叶海峰
+        |-- courseware          // 系统维护 -> 直播间管理  -   霍金朝
+        |-- Dealer              // 系统维护 -> 经销商管理  -   叶海峰
         |-- Organization        // 系统维护 -> 机构管理   -   叶海峰
         |-- Package             // 系统维护 -> 版本管理   -   叶海峰
         |-- School              // 系统维护 -> 生源学校   -   叶海峰
@@ -57,7 +58,7 @@ vue + vue-router + vuex + element-ui
         |-- Student             // 注册用户 -> 学生管理   -   叶海峰
         |-- Datail              // 财务中心 -> 账户管理   -   叶海峰
         |-- Drawmoney           // 财务中心 -> 用户提现   -   叶海峰
-        |-- Dealeraccount       // 财务中心 -> 经销商结算   -   叶海峰
+        |-- Dealeraccount       // 财务中心 -> 经销商结算  -   叶海峰
         |-- Departmentaccount   // 财务中心 -> 机构结算   -   叶海峰
         |-- Curriculum          // 课程中心 -> 课程管理   -   苏严萍
         |-- Category            // 商品中心 -> 品类管理   -   苏严萍

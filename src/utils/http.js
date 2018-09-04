@@ -2,9 +2,12 @@ import Http from 'enslaver-http';
 import token from './token';
 
 const apiMap = {
-  localhost: 'https://final-admin-api.caihonggou.com',
-  'final-admin-vue.caihonggou.com': 'https://final-admin-api.caihonggou.com',
-  // 'oa-v2-admin.aikaola.com': 'https://oa-v2-admin-api.aikaola.com/v1',
+  localhost:
+    'https://final-admin-api.caihonggou.com',
+  'final-admin-vue.caihonggou.com':
+    'https://final-admin-api.caihonggou.com',
+  'final-admin.aikaola.com':
+    'https://final-admin-api.aikaola.com',
 };
 
 const errorAOP = (res) => {
