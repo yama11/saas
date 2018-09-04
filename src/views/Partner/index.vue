@@ -116,7 +116,6 @@ export default {
 
     toCreatePartner(id, name, phone, address, places, account, dealer_ids) {
       this.visible = true;
-      this.formData = {};
 
       if (id) {
         this.title = '编辑合伙人';
@@ -134,7 +133,15 @@ export default {
       }
 
       this.title = '添加合伙人';
-      this.formData = {};
+      this.formData = {
+        name: '',
+        places: [],
+        address: '',
+        phone: '',
+        account: '',
+        password: '',
+        dealer_ids: [],
+      };
       this.indexBefore();
     },
 
@@ -151,6 +158,7 @@ export default {
     submitEdition(submit) {
       submit().then(() => this.$refs.list.getList());
     },
+
 
   },
 };
