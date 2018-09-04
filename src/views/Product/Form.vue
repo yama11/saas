@@ -721,25 +721,6 @@ export default {
         style="display:none;"
         @change="changeImg">
 
-        <!-- <el-upload
-        id="product-form-detail__upload"
-        :on-success="detailUploadSuccess"
-        :on-error="uploadError"
-        :action="uploadURL"
-        :headers="uploadHeaders"
-        :show-file-list="false"
-        accept="image/jpg,image/jpeg,image/png"
-        name="resource"
-      /> -->
-
-        <!-- <AppUploader
-        v-if="!lookId"
-        id="product-form-detail__upload"
-        v-model="dataForm.cover"
-        name="resource"
-        @on-success="getCoverUrl"
-      /> -->
-
     </el-form-item>
 
     <el-form-item
