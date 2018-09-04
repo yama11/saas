@@ -36,7 +36,10 @@ export default {
         { prop: 'merchandise_name', label: '商品名称' },
       ];
 
+      const department = this.$store.state.user.department_tree;
+
       const searchList = [
+        { selectValue: department, componentType: 'AppSearchAddress', searchType: 'scope', placeholder: '选择机构' },
         { selectValue: this.order_status, componentType: 'AppSearchStatus', searchType: 'order_status' },
         { componentType: 'AppSearchDate', searchType: 'created_at' },
         { componentType: 'AppSearchColumn', searchType: column },
