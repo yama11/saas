@@ -54,6 +54,7 @@ export default {
         ],
         password: [
           this.$rules.required('密码'),
+          { ...this.$rules.userPassword },
         ],
         places: [
           this.$rules.required('所在区域', 'array'),

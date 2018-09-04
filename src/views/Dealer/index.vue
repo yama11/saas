@@ -14,8 +14,10 @@ export default {
 
   data() {
     return {
+
       columns: [
         { prop: 'name', label: '经销商名称' },
+        { prop: 'partner.name', label: '所属合伙人' },
         { prop: 'account', label: '管理员账号' },
         { label: '地区',
           formatter: (row) => {
@@ -37,6 +39,8 @@ export default {
 
       list: {},
 
+      partners: [],
+
       visible: false,
 
       title: '',
@@ -50,13 +54,18 @@ export default {
         phone: '',
         account: '',
         password: '',
+        partner_id: null,
       },
+
       rules: {
         name: [
           this.$rules.required('经销商名称'),
         ],
         places: [
           this.$rules.required('所在地区', 'array'),
+        ],
+        partner_id: [
+          this.$rules.required('所属合伙人', 'number'),
         ],
         address: [
           this.$rules.required('地址'),
@@ -70,12 +79,15 @@ export default {
         ],
         password: [
           this.$rules.required('密码'),
+          { ...this.$rules.userPassword },
         ],
       },
 
     };
   },
+
   computed: {
+
     searchArr() {
       const column = [
         { prop: 'name', label: '经销商名称' },
@@ -83,7 +95,10 @@ export default {
         { prop: 'phone', label: '联系电话' },
       ];
 
+      const department = this.$store.state.user.department_tree;
+
       const searchList = [
+        { selectValue: department, componentType: 'AppSearchAddress', searchType: 'scope', placeholder: '选择机构' },
         { componentType: 'AppSearchColumn', searchType: column },
       ];
 
@@ -93,12 +108,20 @@ export default {
 
   methods: {
 
+    indexBefore() {
+      this.$http.get('/dealer/store_before')
+        .then((res) => {
+          this.partners = res.partners;
+        });
+    },
+
     checkPermission(key, text) {
       return this.$permissions(`system.account.${key}`, text);
     },
 
-    editDealer(id, name, places, address, phone, account, password) {
+    editDealer(id, name, places, address, phone, account, password, partner_id) {
       this.visible = true;
+      this.indexBefore();
 
       if (id) {
         this.title = '编辑经销商';
@@ -110,11 +133,21 @@ export default {
           phone,
           account,
           password,
+          partner_id,
         };
-      } else {
-        this.title = '添加经销商';
-        this.formData = {};
+        return;
       }
+
+      this.title = '添加经销商';
+      this.formData = {
+        name: '',
+        places: [],
+        address: '',
+        phone: '',
+        account: '',
+        password: '',
+        partner_id: null,
+      };
     },
 
     deleteDealer(id) {
@@ -165,7 +198,8 @@ export default {
               size="small"
               @click="editDealer(scope.row.id,scope.row.name,
                                  scope.row.places,scope.row.address,
-                                 scope.row.phone,scope.row.account,scope.row.password)"
+                                 scope.row.phone,scope.row.account,scope.row.password,
+                                 scope.row.partner_id)"
             >编辑</el-button>
             <el-button
               type="danger"
@@ -186,7 +220,7 @@ export default {
         :rules ="rules"
         url="/dealer"
         label-width="7em"
-        width="500px"
+        width="650px"
         class="dealer-form"
         @on-submit="submitEdition"
       >
@@ -209,6 +243,22 @@ export default {
             v-model="formData.places"
             placeholder="请选择所在地区"
           />
+        </el-form-item>
+        <el-form-item
+          label="所属合伙人"
+          prop="partner_id"
+        >
+          <el-select
+            v-model="formData.partner_id"
+            filterable
+            placeholder="请选择或者输入所属合伙人"
+          >
+            <el-option
+              v-for="item in partners"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"/>
+          </el-select>
         </el-form-item>
         <el-form-item
           label="详细地址"
@@ -243,6 +293,7 @@ export default {
         >
           <el-input
             v-model="formData.password"
+            type="password"
             placeholder="请输入密码"
           />
         </el-form-item>
@@ -251,7 +302,7 @@ export default {
   </AppList>
 </template>
 <style lang="postcss">
-.dealer-form .el-cascader{
+.dealer-form .el-cascader,.dealer-form .el-select{
   width: 100%;
 }
 </style>

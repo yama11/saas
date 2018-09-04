@@ -71,6 +71,7 @@ export default {
         ],
         password: [
           this.$rules.required('密码'),
+          { ...this.$rules.userPassword },
         ],
 
       },
