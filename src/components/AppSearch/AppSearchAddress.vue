@@ -4,8 +4,8 @@
       :change-on-select = "true"
       :options="searchList"
       v-model="place"
+      :placeholder="placeholder"
       clearable
-      placeholder="选择地区"
       size="small"
     />
   </div>
@@ -35,6 +35,11 @@ export default {
     type: {
       type: String,
       default: '',
+    },
+
+    placeholder: {
+      type: String,
+      default: '选择地区',
     },
   },
 
