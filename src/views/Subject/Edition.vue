@@ -20,6 +20,11 @@ export default {
 
     data: [],
 
+    editor: '',
+
+    list: {},
+
+
     dialogVisible: false,
 
     formData: {
@@ -27,12 +32,16 @@ export default {
       subject_id: 0,
       parent_id: 0,
       describe: '',
+      introduce: '',
     },
 
     rules: {
       name: [
         { required: true, message: '请填写学科名称' },
         { max: 10, message: '名称不应大于10个字符' },
+      ],
+      introduce: [
+        { required: true, message: '请填写简介' },
       ],
     },
 
@@ -82,14 +91,50 @@ export default {
         describe: '',
         subject_id: this.subjectID,
         parent_id: parentID,
+        introduce: '',
       };
 
       this.dialogVisible = true;
+
+      this.getEditor(300);
+    },
+
+    getEditor(sec) {
+      if (this.editor) {
+        this.editor.setData(this.formData.describe);
+
+        return;
+      }
+
+      setTimeout(() => {
+        window.CKEDITOR.replace('editor', {
+          height: '300px',
+          width: '100%',
+          toolbar: 'Full',
+          language: 'zh-cn',
+        });
+
+        this.editor = window.CKEDITOR.instances.editor;
+
+        this.editor.on('instanceReady', () => {
+          this.editor.on('change', () => {
+            this.formData.describe = this.editor.getData();
+          });
+
+          this.editor.addCommand('image', {
+            exec() {},
+          });
+        });
+
+        this.editor.setData(this.formData.describe);
+      }, sec);
     },
 
     structureCreate(submit) {
       submit()
-        .then(this.getData);
+        .then(() => {
+          this.getData();
+        });
     },
 
     deleteNode(node, data) {
@@ -118,24 +163,27 @@ export default {
       this.preLeafCreate(data.id);
     },
 
-    editNode({
-      id,
-      name,
-      subject_id,
-      parent_id,
-      describe = '',
-    }) {
+    editNode(id) {
       this.editTargetID = id;
 
-      this.formData = {
-        id,
-        name,
-        subject_id,
-        parent_id,
-        describe,
-      };
-
       this.dialogVisible = true;
+
+      this.$http.get(`/structure/${id}`)
+        .then((res) => {
+          this.formData = { ...res };
+        })
+        .catch(() => {
+          this.formData = {
+            name: '',
+            subject_id: 0,
+            parent_id: 0,
+            describe: '',
+            introduce: '',
+          };
+        })
+        .finally(() => {
+          this.getEditor(100);
+        });
     },
   },
 };
@@ -168,7 +216,7 @@ export default {
           <el-button
             type="text"
             size="mini"
-            @click="() => editNode(data)"
+            @click="() => editNode(data.id)"
           >
             编辑
           </el-button>
@@ -200,7 +248,7 @@ export default {
       :id="editTargetID"
       :object="editTargetID ? '编辑菜单' : '添加菜单'"
       label-width="6em"
-      width="500px"
+      width="800px"
       url="/structure"
       @on-submit="structureCreate"
     >
@@ -209,6 +257,29 @@ export default {
         prop="name"
       >
         <el-input v-model="formData.name" />
+      </el-form-item>
+      <el-form-item
+        label="简介"
+        prop="introduce"
+      >
+        <el-input
+          :rows="2"
+          v-model="formData.introduce"
+          resize="none"
+          autosize
+          type="textarea"
+        />
+      </el-form-item>
+      <el-form-item
+        label="详细介绍"
+        prop="describe"
+        class="student-describe"
+      >
+        <textarea
+          id="editor"
+          v-model="formData.describe"
+          rows="10"
+          cols="80"/>
       </el-form-item>
     </AppFormDialog>
   </div>
@@ -234,5 +305,8 @@ export default {
 
 .subject-edition__node-control {
 
+}
+.student-describe textarea{
+  width: 100%;
 }
 </style>
