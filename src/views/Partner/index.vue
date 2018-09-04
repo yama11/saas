@@ -212,7 +212,7 @@ export default {
           :rules ="rules"
           url="/partner"
           label-width="8em"
-          width="500px"
+          width="650px"
           class="partner-form"
           @on-submit="submitEdition"
         >

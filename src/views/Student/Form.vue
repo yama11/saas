@@ -275,7 +275,9 @@ export default {
 .student-form-contact .student-form-contact__inputPhone{
   float: left;
   width: 300px;
-
+}
+.app-crop-uploader__span{
+  display: none;
 }
 .student-form__block{
   position: relative;
