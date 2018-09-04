@@ -97,7 +97,12 @@ export default {
         { prop: 'account', label: '账号' },
       ];
 
-      const searchList = [{ componentType: 'AppSearchColumn', searchType: column }];
+      const department = this.$store.state.user.department_tree;
+
+      const searchList = [
+        { selectValue: department, componentType: 'AppSearchAddress', searchType: 'scope', placeholder: '选择机构' },
+        { componentType: 'AppSearchColumn', searchType: column },
+      ];
 
       return searchList;
     },
