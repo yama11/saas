@@ -2,7 +2,7 @@
  * @overview 主应用路由
  */
 
-import Courseware from '@/views/Courseware';
+// import Courseware from '@/views/Courseware';
 import Subject from '@/views/Subject';
 import Curriculum from '@/views/Curriculum';
 import Category from '@/views/Category';
@@ -33,7 +33,7 @@ import Partner from '@/views/Partner';
 
 
 const routes = [
-  ...Courseware,
+  // ...Courseware,
   ...Subject,
   ...Curriculum,
   ...Category,

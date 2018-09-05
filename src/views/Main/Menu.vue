@@ -17,11 +17,11 @@ export default {
             permission: 'curriculum_center.subject',
             index: '/subject-list',
           },
-          {
-            name: '课时内容',
-            permission: 'curriculum_center.course',
-            index: '/courseware-list',
-          },
+          // {
+          //   name: '课时内容',
+          //   permission: 'curriculum_center.course',
+          //   index: '/courseware-list',
+          // },
           {
             name: '课程管理',
             permission: 'curriculum_center.curriculum',

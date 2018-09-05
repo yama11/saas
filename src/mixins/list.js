@@ -127,5 +127,32 @@ export default {
           throw error;
         });
     },
+
+    /**
+     * 改变每页条数
+     * @param {number} per_page 每页条数
+     */
+    $_listMixin_changeSize(per_page) {
+      this.$router.push({
+        query: {
+          ...this.$route.query,
+          page: 1,
+          per_page,
+        },
+      });
+    },
+
+    /**
+     * 翻页
+     * @param {number} page 当前页数
+     */
+    $_listMixin_changeIndex(page) {
+      this.$router.push({
+        query: {
+          ...this.$route.query,
+          page,
+        },
+      });
+    },
   },
 };
