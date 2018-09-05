@@ -23,7 +23,7 @@ export default {
         { prop: 'schedule_total', label: '课时数' },
         { prop: 'categories_name', label: '品类' },
         { prop: 'department_name', label: '机构名称' },
-        { prop: 'classroom_name', label: '班级名称' },
+        { prop: 'name', label: '班级名称' },
         { label: '上课时间',
           formatter: row =>
             `
@@ -52,7 +52,7 @@ export default {
       const column = [
         { prop: 'curriculum_name', label: '课程名称' },
         { prop: 'department_name', label: '校区' },
-        { prop: 'classroom_name', label: '班级' },
+        { prop: 'name', label: '班级' },
       ];
 
       const searchList = [
