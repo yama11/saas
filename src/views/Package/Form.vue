@@ -30,6 +30,12 @@ export default {
         production: [
           this.$rules.required('产品', 'number'),
         ],
+        update_type: [
+          this.$rules.required('更新方式', 'number'),
+        ],
+        full: [
+          this.$rules.required('全量安装包'),
+        ],
         version: [
           this.$rules.required('版本号'),
         ],
