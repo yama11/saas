@@ -85,7 +85,7 @@ export default {
       this.$_listMixin_alertDeleteItem(
         id,
         this.list.data,
-        '优惠券',
+        '商品',
         '/merchandise',
         this.$refs.list,
       );
