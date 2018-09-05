@@ -59,7 +59,7 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
-    api="/member_center/student/curriculum/1"
+    :api="'/member_center/student/curriculum/'+id"
     title="课程列表"
   >
     <template>
