@@ -40,7 +40,10 @@ export default {
 <template>
   <div class="course-list-item">
     <span>{{ data.name }}</span>
-    <div class="course-list-item__control">
+    <div
+      v-if="false"
+      class="course-list-item__control"
+    >
       <i
         v-if="canUpdate"
         class="el-icon-edit"

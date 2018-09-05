@@ -122,7 +122,7 @@ export default {
   <div class="global-main course-list-main">
     <h2 class="course-list__title">
       <el-button
-        v-if="checkPermission('store')"
+        v-if="false"
         type="primary"
         @click="preCourseCreate"
       >
@@ -211,6 +211,8 @@ export default {
 }
 
 .course-list-footer {
+  display: flex;
+  justify-content: center;
   padding: 2em 0 1em;
   margin-top: auto;
 }
