@@ -54,9 +54,12 @@ export default {
         { prop: 'number', label: '机构编码' },
         { prop: 'dealer_name', label: '所属经销商' },
         { prop: 'account', label: '账号' },
-
       ];
+
+      const department = this.$store.state.user.department_tree;
+
       const searchList = [
+        { selectValue: department, componentType: 'AppSearchAddress', searchType: 'scope', placeholder: '选择机构' },
         { componentType: 'AppSearchColumn', searchType: column },
       ];
       return searchList;

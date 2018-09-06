@@ -64,9 +64,6 @@ export default {
         places: [
           this.$rules.required('所在地区', 'array'),
         ],
-        partner_id: [
-          this.$rules.required('所属合伙人', 'number'),
-        ],
         address: [
           this.$rules.required('地址'),
         ],
@@ -95,10 +92,7 @@ export default {
         { prop: 'phone', label: '联系电话' },
       ];
 
-      const department = this.$store.state.user.department_tree;
-
       const searchList = [
-        { selectValue: department, componentType: 'AppSearchAddress', searchType: 'scope', placeholder: '选择机构' },
         { componentType: 'AppSearchColumn', searchType: column },
       ];
 

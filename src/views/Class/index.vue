@@ -54,8 +54,10 @@ export default {
         { prop: 'department_name', label: '校区' },
         { prop: 'name', label: '班级' },
       ];
+      const department = this.$store.state.user.department_tree;
 
       const searchList = [
+        { selectValue: department, componentType: 'AppSearchAddress', searchType: 'scope', placeholder: '选择机构' },
         { selectValue: this.status, componentType: 'AppSearchStatus', searchType: 'class_status' },
         { selectValue: this.categories,
           componentType: 'AppSearchCascader',

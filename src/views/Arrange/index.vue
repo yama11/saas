@@ -90,7 +90,10 @@ export default {
         { prop: 'classroom_name', label: '班级' },
       ];
 
+      const department = this.$store.state.user.department_tree;
+
       const searchList = [
+        { selectValue: department, componentType: 'AppSearchAddress', searchType: 'scope', placeholder: '选择机构' },
         { selectValue: this.arrangeStatus,
           componentType: 'AppSearchStatus',
           searchType: 'class_status' },
@@ -99,6 +102,7 @@ export default {
           searchType: ['category_name', 'product_name'] },
         { componentType: 'AppSearchColumn', searchType: column },
       ];
+
       return searchList;
     },
   },

@@ -76,7 +76,11 @@ export default {
         { prop: 'department_name', label: '培训机构' },
         { prop: 'curriculum_name', label: '课程名称' },
       ];
+
+      const department = this.$store.state.user.department_tree;
+
       const searchList = [
+        { selectValue: department, componentType: 'AppSearchAddress', searchType: 'scope', placeholder: '选择机构' },
         { componentType: 'AppSearchDate', searchType: 'created_at' },
         { componentType: 'AppSearchColumn', searchType: column },
         { selectValue: this.freeze_status, componentType: 'AppSearchStatus', searchType: 'freeze_status' },

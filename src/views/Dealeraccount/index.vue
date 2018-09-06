@@ -30,6 +30,17 @@ export default {
 
     };
   },
+  computed: {
+    searchArr() {
+      const department = this.$store.state.user.department_tree;
+
+      const searchList = [
+        { selectValue: department, componentType: 'AppSearchAddress', searchType: 'scope', placeholder: '选择机构' },
+      ];
+
+      return searchList;
+    },
+  },
 
   methods: {
 
@@ -58,6 +69,11 @@ export default {
     title="经销商结算"
     api="/finance/dealer/index"
   >
+    <AppSearch
+      v-if="checkPermission('index')"
+      slot="search"
+      :search-arr="searchArr"
+    />
     <template
       v-if="checkPermission('index')"
       slot-scope="props">

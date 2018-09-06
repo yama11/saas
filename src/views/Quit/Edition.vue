@@ -73,9 +73,9 @@ export default{
     </el-form-item>
     <el-form-item
       label="实付金额"
-      prop="paid"
+      prop="paid_money"
     >
-      <span>{{ formData.paid }}</span>
+      <span>{{ formData.paid_money }}</span>
     </el-form-item>
     <el-form-item
       label="已耗课时"

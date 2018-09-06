@@ -86,9 +86,11 @@ export default {
         { prop: 'curriculum_name', label: '课程名称' },
         { prop: 'department_name', label: '培训机构' },
         { prop: 'class_name', label: '约课班级' },
-
       ];
+      const department = this.$store.state.user.department_tree;
+
       const searchList = [
+        { selectValue: department, componentType: 'AppSearchAddress', searchType: 'scope', placeholder: '选择机构' },
         { selectValue: this.categories,
           componentType: 'AppSearchCascader',
           searchType: ['category_name', 'product_name'] },
