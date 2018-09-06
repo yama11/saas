@@ -162,7 +162,9 @@ export default{
           v-bind="note"
         />
       </section>
-      <div>
+      <div
+        class="change-info-time"
+      >
         <div
           class="change-info__outtime"
         >
@@ -170,13 +172,16 @@ export default{
           <span>{{ scheme.start_date.split(' ')[0] }}
             ~{{ scheme.end_date.split(' ')[0] }}</span><br>
           <span
-            v-for="(calendar,index) in scheme.calendar"
-            :key="index"
-            class="change-info__outtime__week"
+            class="change-info__classtime__span"
           >
-            {{ toDay[calendar.day-1] }}{{ calendar.start_time }}~{{ calendar.end_time }}
+            <span
+              v-for="(calendar,index) in scheme.calendar"
+              :key="index"
+              class="change-info__outtime__week"
+            >
+              {{ toDay[calendar.day-1] }}{{ calendar.start_time }}~{{ calendar.end_time }}
+            </span>
           </span>
-
         </div>
         <div
           class="change-info__enter"
@@ -185,13 +190,16 @@ export default{
           <span>{{ currentScheme.start_date.split(' ')[0] }}
             ~{{ currentScheme.end_date.split(' ')[0] }}</span><br>
           <span
-            v-for="(calendar,index) in currentScheme.calendar"
-            :key="index"
-            class="change-info__outtime__week"
+            class="change-info__classtime__span"
           >
-            {{ toDay[calendar.day-1] }}{{ calendar.start_time }}~{{ calendar.end_time }}
+            <span
+              v-for="(calendar,index) in currentScheme.calendar"
+              :key="index"
+              class="change-info__outtime__week"
+            >
+              {{ toDay[calendar.day-1] }}{{ calendar.start_time }}~{{ calendar.end_time }}
+            </span>
           </span>
-
         </div>
       </div>
       <div class="change-info__but">
@@ -225,15 +233,26 @@ export default{
   display: flex;
   flex-wrap: wrap;
 }
+.change-info .change-info-time{
+  box-sizing: border-box;
+  display: flex;
+ justify-content: space-between;
+ margin-bottom: 30px;
+}
+.change-info__classtime__span{
+  display: block;
+  height: 270px;
+  overflow-y: scroll;
+  margin-left: 60px;
+  margin-right: 10px;
+}
 .change-info__enter,.change-info__outtime{
   width: 50%;
-  padding-left: 4em;
-  padding-bottom:30px;
+ margin-left: 60px;
 }
 .change-info__outtime__week{
-  padding-left: 110px;
-  margin-top: 10px;
-  display: block;
+  display: inline-block;
+  margin:10px 10px;
 }
 .change-info__buyer .order-info-note{
     width: 50%;

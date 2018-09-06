@@ -1,7 +1,12 @@
 <script>
+
+import { form } from '@/mixins';
+
 export default{
 
   name: 'ChangeEdition',
+
+  mixins: [form],
 
   props: {
     id: {
@@ -33,6 +38,15 @@ export default{
 
       schedule_remain: null,
 
+      rules: {
+        scheme_id: [
+          this.$rules.required('转入上课时间', 'number'),
+        ],
+        class_id: [
+          this.$rules.required('转入班级', 'number'),
+        ],
+      },
+
     };
   },
 
@@ -55,7 +69,7 @@ export default{
 
       const timeId = this.formData.schemeArr
         .find(item => item.id === id);
-
+      this.formData.current.scheme_id = timeId.id;
       if (timeId) {
         this.calendar = timeId.calendar;
         this.formData.current.hour_remain = timeId.schedule_remain;
@@ -68,13 +82,14 @@ export default{
     changClass(id) {
       const classArr = this.classes
         .find(item => item.id === id);
+      this.formData.current.class_id = classArr.id;
       if (classArr) {
         this.formData.current.department_id = classArr.department_id;
       }
     },
 
     submitEdition(submit) {
-      submit().then(() => this.$refs.list.getList());
+      submit().then(() => this.$emit('getData'));
     },
   },
 
@@ -85,9 +100,10 @@ export default{
   <AppFormDialog
     :visible="visible"
     :model="formData"
+    :rules="rules"
     url="/change"
     object="转班"
-    label-width="7em"
+    label-width="8em"
     class="change-edition"
     width="550px"
     @on-submit="submitEdition"
@@ -115,11 +131,15 @@ export default{
         ~{{ formData.original.classes.scheme.end_date.split(' ')[0] }}</span>
       <br>
       <span
-        v-for="(calendar,index) in formData.original.classes.scheme.calendar"
-        :key="index"
         class="change-edition__classtime"
       >
-        {{ toDay[calendar.day-1] }}&nbsp;{{ calendar.start_time }}~{{ calendar.end_time }}
+        <span
+          v-for="(calendar,index) in formData.original.classes.scheme.calendar"
+          :key="index"
+          class="change-edition__classtime-span"
+        >
+          {{ toDay[calendar.day-1] }}&nbsp;{{ calendar.start_time }}~{{ calendar.end_time }}
+        </span>
       </span>
     </el-form-item>
     <el-form-item
@@ -129,13 +149,13 @@ export default{
     </el-form-item>
     <el-form-item
       label="转入上课时间"
-      prop="class_id"
+      prop="scheme_id"
     >
       <el-select
-        v-model="formData.current.scheme_id"
+        v-model="formData.scheme_id"
         width="150px"
         placeholder="请选择上课时期"
-        @change="changTime(formData.current.scheme_id)"
+        @change="changTime(formData.scheme_id)"
       >
         <el-option
           v-for="role in formData.schemeArr"
@@ -149,23 +169,26 @@ export default{
       label="上课时间"
     >
       <div
-        v-for="(calendar,index) in calendar"
-        v-if="calendar"
-        :key="index"
+        class="change-edition__classtime"
       >
-        {{ toDay[calendar.day-1] }}{{ calendar.start_time }}~{{ calendar.end_time }}
+        <div
+          v-for="(calendar,index) in calendar"
+          v-if="calendar"
+          :key="index"
+          class="change-edition__classtime-span"
+        >
+          {{ toDay[calendar.day-1] }}{{ calendar.start_time }}~{{ calendar.end_time }}
+        </div>
       </div>
-
     </el-form-item>
-
     <el-form-item
       label="转入班级"
       prop="class_id"
     >
       <el-select
-        v-model="formData.current.class_id"
+        v-model="formData.class_id"
         placeholder="请选择班级"
-        @change="changClass(formData.current.class_id)"
+        @change="changClass(formData.class_id)"
       >
         <el-option
           v-for="role in classes"
@@ -175,11 +198,10 @@ export default{
         />
       </el-select>
     </el-form-item>
-
-
     <el-form-item
       v-model="formData.current.hour_remain"
       label="转入所需课时"
+      class="change-edition__time"
     >
       <span>{{ schedule_remain }}</span>
     </el-form-item>
@@ -189,6 +211,16 @@ export default{
 <style>
 .change-edition .change-edition__classtime{
   display: block;
+  height: 200px;
+  overflow-y: scroll;
+  margin-top: 10px;
+}
+.change-edition .change-edition__classtime-span{
+  display: inline-block;
+  margin-right: 10px;
+}
+.change-edition__time{
+  margin-top: 10px;
 }
 .change-edition .el-select>.el-input{
   width: 217px;

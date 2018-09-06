@@ -196,13 +196,16 @@ export default{
           <span>{{ schemeArr.start_date.split(' ')[0] }}
             ~{{ schemeArr.end_date.split(' ')[0] }}</span><br>
           <span
-            v-for="(calendar,index) in scheme.calendar"
-            :key="index"
-            class="change-info__classtime__week"
+            class="change-info__classtime__span"
           >
-            {{ toDay[calendar.day-1] }}{{ calendar.start_time }}~{{ calendar.end_time }}
+            <span
+              v-for="(calendar,index) in scheme.calendar"
+              :key="index"
+              class="change-info__classtime__week"
+            >
+              {{ toDay[calendar.day-1] }}&nbsp;{{ calendar.start_time }}~{{ calendar.end_time }}
+            </span>
           </span>
-
         </div>
         <div
           class="change-info__comeTime"
@@ -212,13 +215,16 @@ export default{
           <span>{{ scheme.start_date.split(' ')[0] }}
             ~{{ scheme.end_date.split(' ')[0] }}</span><br>
           <span
-            v-for="(calendar,index) in scheme.calendar"
-            :key="index"
-            class="change-info__classtime__week"
+            class="change-info__classtime__span"
           >
-            {{ toDay[calendar.day-1] }}{{ calendar.start_time }}~{{ calendar.end_time }}
+            <span
+              v-for="(calendar,index) in scheme.calendar"
+              :key="index"
+              class="change-info__classtime__week"
+            >
+              {{ toDay[calendar.day-1] }}&nbsp;{{ calendar.start_time }}~{{ calendar.end_time }}
+            </span>
           </span>
-
         </div>
       </div>
       <section class="change-info__buyer">
@@ -257,7 +263,6 @@ export default{
           确定
         </el-button>
       </div>
-
     </div>
   </div>
 </template>
@@ -274,7 +279,7 @@ export default{
 }
 .change-info__classtime{
   width: 50%;
-  padding-left: 4em;
+  margin-left: 60px;
 }
 .change-info__order{
   width: 50%;
@@ -282,14 +287,18 @@ export default{
 }
 .change-info__comeTime{
   width: 50%;
-  padding-left: 30px;
+}
+.change-info__classtime__span{
+  display: block;
+  height: 270px;
+  overflow-y: scroll;
+  margin-left: 60px;
+  margin-right: 10px;
 }
 .change-info__classtime__week{
-  padding-left: 110px;
-  margin-top: 10px;
-  display: block;
+  display: inline-block;
+  margin:10px 10px;
 }
-
 .change-info__buyer{
   margin-top: 30px;
   padding-left: 4em;

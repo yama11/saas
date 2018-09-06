@@ -44,6 +44,8 @@ export default {
 
       formData: {
         id: null,
+        class_id: null,
+        scheme_id: null,
         original: {
           classes: {
             scheme: {
@@ -88,13 +90,15 @@ export default {
 
 
     changeClass(value, id) {
+      this.visible = true;
       this.formData = {
+        class_id: null,
+        scheme_id: null,
         original: { classes: { scheme: { start_date: '', end_date: '' } } },
         current: { scheme: {} },
         schemeArr: [],
       };
 
-      this.visible = true;
       this.$http.post('/change/create', { id })
         .then((res) => {
           this.formData.original = res.original;
@@ -127,8 +131,8 @@ export default {
       this.id = value.id;
     },
 
-    submitEdition(submit) {
-      submit().then(() => this.$refs.list.getList());
+    submitEdition() {
+      this.$refs.list.getList();
     },
   },
 };
@@ -168,16 +172,16 @@ export default {
               @click="changeClass(scope.row,scope.row.id)"
             >转班</el-button>
 
-            <ChangeEdition
-              :visible.sync="visible"
-              :id="formData.id"
-              :form-data="formData"
-              width="458px"
-              @on-submit="submitEdition"
-            />
           </template>
         </el-table-column>
       </el-table>
+      <ChangeEdition
+        :visible.sync="visible"
+        :id="formData.id"
+        :form-data="formData"
+        width="458px"
+        @getData="submitEdition"
+      />
     </template>
   </AppList>
 </template>
