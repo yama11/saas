@@ -110,7 +110,7 @@ export default {
     },
 
     checkPermission(key, text) {
-      return this.$permissions(`system.account.${key}`, text);
+      return this.$permissions(`system.dealer.${key}`, text);
     },
 
     editDealer(id, name, places, address, phone, account, password, partner_id) {
