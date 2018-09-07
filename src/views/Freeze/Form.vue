@@ -60,21 +60,10 @@ export default {
     },
   },
 
-  created() {
-    this.indexBefore();
-  },
-
   methods: {
 
     checkPermission(key, text) {
       return this.$permissions(`dispatch_center.freeze.${key}`, text);
-    },
-
-    indexBefore() {
-      this.$http.get('/freeze/index_before')
-        .then(() => {
-
-        });
     },
 
     freezeClass(id) {
@@ -83,6 +72,9 @@ export default {
       this.$http.post('/freeze/create', { id })
         .then((res) => {
           this.formData = { ...res };
+        })
+        .catch(({ message }) => {
+          this.$message.error(message);
         });
     },
 

@@ -158,6 +158,9 @@ export default {
       this.$http.post('/quit/create', { id })
         .then((res) => {
           this.editionQuit.formData = { ...res };
+        })
+        .catch(({ message }) => {
+          this.$message.error(message);
         });
     },
 
@@ -173,6 +176,9 @@ export default {
       this.$http.get('/freeze/index_before')
         .then((res) => {
           this.freeze_status = res.freeze_status;
+        })
+        .catch(({ message }) => {
+          this.$message.error(message);
         });
     },
 
