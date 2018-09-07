@@ -100,6 +100,24 @@ export default {
     },
 
     changeClass(value, id) {
+      this.editionInfo = {
+        id: null,
+        visible: false,
+        formData: {
+          original: {
+            classes: {
+              scheme: {
+                start_date: '',
+                end_date: '',
+              },
+            },
+          },
+          current: {
+            scheme: {},
+          },
+          schemeArr: [],
+        },
+      };
       this.editionInfo.id = value.id;
       this.editionInfo.visible = true;
 
