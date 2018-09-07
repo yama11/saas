@@ -94,7 +94,7 @@ export default {
           <template slot-scope="scope">
             <el-button
               size="small"
-              @click="departmentDetail(scope.row.dealer_id,scope.row.year,scope.row.month)"
+              @click="departmentDetail(scope.row.department_id,scope.row.year,scope.row.month)"
             >
               明细
             </el-button>
