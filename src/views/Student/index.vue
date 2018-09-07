@@ -1,3 +1,4 @@
+<script src="https://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
 /**
  * @overview 学生管理 - 学生列表
@@ -26,6 +27,15 @@ export default {
       ],
 
       list: {},
+
+      centerDialogVisible: false,
+
+      url: '/member_center/student/import',
+
+      fileData:{},
+
+      reader:{},
+
     };
   },
 
@@ -43,18 +53,24 @@ export default {
       ];
       return searchList;
     },
+
   },
 
   methods: {
     checkPermission(key, text) {
       return this.$permissions(`member_center.student.${key}`, text);
     },
+
     onCreate() {
-      this.$router.push('/student-create');
+      const url = 'https://final-admin-api.caihonggou.com/export?';
+
+      window.location.href = `${url}`;
     },
+
     infoStudent(id) {
       this.$router.push(`/student-info/${id}`);
     },
+
     editStudent(id) {
       this.$router.push(`/student-edit/${id}`);
     },
@@ -62,6 +78,33 @@ export default {
     lookCourse(id, name) {
       this.$router.push(`/course-info/${id}_${name}`);
     },
+
+    exportExcel() {
+      this.fileData = {};
+      this.reader = {};
+      this.centerDialogVisible = true;
+    },
+
+    fileChange(e) {
+      this.fileData = e.target.files[0];
+      this.reader = new FormData();
+      this.reader.append('excel',this.fileData);
+      this.$refs.myfile.value = null;
+    },
+
+    fileUpload(){
+
+     this.$http.post('/member_center/student/import',this.reader)
+        .then(() => {
+          this.$refs.list.getList();
+          this.$message.success('文件上传成功!')
+          this.centerDialogVisible = false;
+        })
+        .catch(() => {
+          this.$message.error('文件上传失败，请重新上传!');
+          this.centerDialogVisible = false;
+        })
+      }
   },
 };
 </script>
@@ -70,9 +113,12 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
+    create-label="导入模板下载"
     api="/member_center/student"
     title="学生管理"
+    skip-label="导入excel"
     @create="onCreate"
+    @skipPage="exportExcel"
   >
     <AppSearch
       v-if="checkPermission('index')"
@@ -117,6 +163,38 @@ export default {
           </template>
         </el-table-column>
       </el-table>
+
+      <el-dialog
+        :visible.sync="centerDialogVisible"
+        title="学生导入"
+        width="30%"
+        center>
+        <input
+          id="myfile"
+          ref="myfile"
+          type="file"
+          name="myfile"
+          accept="application/vnd.ms-excel"
+          class="inputfile"
+          @change="fileChange"
+        >
+        <label
+          for="myfile"
+          class="btn btn-success">点击这里上传文件</label>
+        <br>
+        <span
+          v-if="fileData.name"
+          class="dialog-span"
+        >{{ fileData.name }}</span>
+        <span
+          slot="footer"
+          class="dialog-footer">
+          <el-button @click="centerDialogVisible = false">取 消</el-button>
+          <el-button
+            type="primary"
+            @click="fileUpload">确 定</el-button>
+        </span>
+      </el-dialog>
     </template>
   </AppList>
 
@@ -128,4 +206,32 @@ export default {
   width: 60px;
   height: 60px;
 }
+a{
+  text-decoration: none;
+}
+.inputfile{
+  opacity: 0;
+}
+.btn-success{
+ padding: 4px 32px;
+  height: 30px;
+  line-height: 20px;
+  margin-left: 170px;
+  position: relative;
+  cursor: pointer;
+  color: #888;
+  background: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+  display: inline-block;
+  *display: inline;
+  *zoom: 1
+}
+.dialog-span{
+    text-align: center;
+    display: inherit;
+    margin-top: 10px;
+}
+
 </style>
