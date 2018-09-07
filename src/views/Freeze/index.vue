@@ -230,12 +230,12 @@ export default {
             <el-button
               v-if="scope.row.freeze_status === 2"
               size="small"
-              @click="changeClass(scope.row,scope.row.id)"
+              @click="changeClass(scope.row,scope.row.hour_id)"
             >转班</el-button>
             <el-button
               v-if="scope.row.freeze_status === 2"
               size="small"
-              @click="quitDeal(scope.row.id)"
+              @click="quitDeal(scope.row.hour_id)"
             >退班</el-button>
             <el-button
               v-if="scope.row.freeze_status === 1 &&checkPermission('deal')"
