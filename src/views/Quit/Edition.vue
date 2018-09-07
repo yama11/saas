@@ -1,7 +1,16 @@
 <script>
+/**
+ * @overview 退班管理 - 退班列表 - 退班弹框
+ *
+ * @author yehaifeng
+ */
+import { form } from '@/mixins';
+
 export default{
 
   name: 'QuitEdition',
+
+  mixins: [form],
 
   props: {
     id: {
@@ -23,7 +32,32 @@ export default{
 
   data() {
     return {
-
+      rules: {
+        curriculum_name: [
+          this.$rules.required('课程名称'),
+        ],
+        price: [
+          this.$rules.required('单价'),
+        ],
+        refund_rate: [
+          this.$rules.required('扣课折扣', 'number'),
+        ],
+        hour_total: [
+          this.$rules.required('总课时', 'number'),
+        ],
+        paid_money: [
+          this.$rules.required('实付金额', 'number'),
+        ],
+        hour_finish: [
+          this.$rules.required('已耗课时', 'number'),
+        ],
+        discount: [
+          this.$rules.required('原订单优惠金额', 'number'),
+        ],
+        refund_money: [
+          this.$rules.required('退费金额', 'number'),
+        ],
+      },
     };
   },
 
@@ -39,9 +73,10 @@ export default{
   <AppFormDialog
     :visible="visible"
     :model="formData"
+    :rules ="rules"
     url="/quit"
     object="退班"
-    label-width="8em"
+    label-width="9em"
     class="process-edition"
     width="550px"
     @on-submit="submitEdition"

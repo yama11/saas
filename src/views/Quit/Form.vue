@@ -95,6 +95,9 @@ export default {
       this.$http.post('/quit/create', { id })
         .then((res) => {
           this.editionInfo.formData = { ...res };
+        })
+        .catch(({ message }) => {
+          this.$message.error(message);
         });
     },
 
@@ -152,7 +155,3 @@ export default {
     </template>
   </AppList>
 </template>
-
-<style>
-
-</style>

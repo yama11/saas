@@ -1,5 +1,9 @@
 <script>
-
+/**
+ * @overview 转班管理 - 转班列表 - 转班弹框
+ *
+ * @author yehaifeng
+ */
 import { form } from '@/mixins';
 
 export default{
