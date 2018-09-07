@@ -43,7 +43,7 @@ export default {
         id: null,
         visible: false,
         formData: {
-          original: {
+          primordial: {
             classes: {
               scheme: {
                 start_date: '',
@@ -104,7 +104,7 @@ export default {
         id: null,
         visible: false,
         formData: {
-          original: {
+          primordial: {
             classes: {
               scheme: {
                 start_date: '',
@@ -123,20 +123,20 @@ export default {
 
       this.$http.post('/change/create', { id })
         .then((res) => {
-          this.editionInfo.formData.original = res.original;
-          this.editionInfo.formData.original.class_id = res.original.classes.id;
-          this.editionInfo.formData.original.curriculum_id = res.original.curriculum_id;
-          this.editionInfo.formData.original.scheme_id = res.original.classes.scheme.id;
+          this.editionInfo.formData.primordial = res.primordial;
+          this.editionInfo.formData.primordial.class_id = res.primordial.classes.id;
+          this.editionInfo.formData.primordial.curriculum_id = res.primordial.curriculum_id;
+          this.editionInfo.formData.primordial.scheme_id = res.primordial.classes.scheme.id;
 
           this.editionInfo.formData.current = { ...res.current };
           this.editionInfo.formData.student_id = res.student_id;
           this.editionInfo.formData.parent_id = res.parent_id;
           this.editionInfo.formData.hour_id = res.hour_id;
 
-          this.editionInfo.formData.original.classes.scheme = res.original.classes.scheme;
+          this.editionInfo.formData.primordial.classes.scheme = res.primordial.classes.scheme;
 
           const currCourse = res.current
-            .find(item => item.id === this.editionInfo.formData.original.curriculum_id);
+            .find(item => item.id === this.editionInfo.formData.primordial.curriculum_id);
           if (currCourse) {
             this.editionInfo.formData.current.curriculum_id = currCourse.id;
 
