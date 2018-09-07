@@ -19,9 +19,9 @@ export default {
         { prop: 'student_name', label: '学习姓名' },
         { prop: 'phone', label: '家长电话' },
         { prop: 'department_name', label: '培训机构' },
-        { prop: 'original.curriculum_name', label: '课程名称' },
-        { prop: 'original.class_name', label: '转出班级' },
-        { prop: 'original.hour_remain', label: '转出班级剩余课时' },
+        { prop: 'primordial.curriculum_name', label: '课程名称' },
+        { prop: 'primordial.class_name', label: '转出班级' },
+        { prop: 'primordial.hour_remain', label: '转出班级剩余课时' },
         { prop: 'current.class_name', label: '转入班级' },
         { prop: 'current.hour_remain', label: '转入班级所需课时' },
         { prop: 'done_date', label: '转班时间' },
@@ -41,7 +41,7 @@ export default {
         { prop: 'student_name', label: '学习姓名' },
         { prop: 'phone', label: '家长电话' },
         { prop: 'department_name', label: '培训机构' },
-        { prop: 'original.curriculum_name', label: '课程名称' },
+        { prop: 'primordial.curriculum_name', label: '课程名称' },
       ];
       const department = this.$store.state.user.department_tree;
 

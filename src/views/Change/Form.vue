@@ -46,7 +46,7 @@ export default {
         id: null,
         class_id: null,
         scheme_id: null,
-        original: {
+        primordial: {
           classes: {
             scheme: {
               start_date: '',
@@ -94,27 +94,27 @@ export default {
       this.formData = {
         class_id: null,
         scheme_id: null,
-        original: { classes: { scheme: { start_date: '', end_date: '' } } },
+        primordial: { classes: { scheme: { start_date: '', end_date: '' } } },
         current: { scheme: {} },
         schemeArr: [],
       };
 
       this.$http.post('/change/create', { id })
         .then((res) => {
-          this.formData.original = res.original;
-          this.formData.original.class_id = res.original.classes.id;
-          this.formData.original.curriculum_id = res.original.curriculum_id;
-          this.formData.original.scheme_id = res.original.classes.scheme.id;
+          this.formData.primordial = res.primordial;
+          this.formData.primordial.class_id = res.primordial.classes.id;
+          this.formData.primordial.curriculum_id = res.primordial.curriculum_id;
+          this.formData.primordial.scheme_id = res.primordial.classes.scheme.id;
 
           this.formData.current = { ...res.current };
           this.formData.student_id = res.student_id;
           this.formData.parent_id = res.parent_id;
           this.formData.hour_id = res.hour_id;
 
-          this.formData.original.classes.scheme = res.original.classes.scheme;
+          this.formData.primordial.classes.scheme = res.primordial.classes.scheme;
 
           const currCourse = res.current
-            .find(item => item.id === this.formData.original.curriculum_id);
+            .find(item => item.id === this.formData.primordial.curriculum_id);
           if (currCourse) {
             this.formData.current.curriculum_id = currCourse.id;
 

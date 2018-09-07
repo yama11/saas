@@ -118,27 +118,27 @@ export default{
       prop="curriculum_name"
     >
       <span
-        v-if="formData.original.curriculum_name"
-      >{{ formData.original.curriculum_name }}</span>
+        v-if="formData.primordial.curriculum_name"
+      >{{ formData.primordial.curriculum_name }}</span>
     </el-form-item>
     <el-form-item
-      v-model="formData.original.class_id"
+      v-model="formData.primordial.class_id"
       label="转出班级"
       prop="name"
     >
-      <span>{{ formData.original.classes.name }}</span>
+      <span>{{ formData.primordial.classes.name }}</span>
     </el-form-item>
     <el-form-item
       label="转出上课时间"
     >
-      <span>{{ formData.original.classes.scheme.start_date.split(' ')[0] }}
-        ~{{ formData.original.classes.scheme.end_date.split(' ')[0] }}</span>
+      <span>{{ formData.primordial.classes.scheme.start_date.split(' ')[0] }}
+        ~{{ formData.primordial.classes.scheme.end_date.split(' ')[0] }}</span>
       <br>
       <span
         class="change-edition__classtime"
       >
         <span
-          v-for="(calendar,index) in formData.original.classes.scheme.calendar"
+          v-for="(calendar,index) in formData.primordial.classes.scheme.calendar"
           :key="index"
           class="change-edition__classtime-span"
         >
@@ -149,7 +149,7 @@ export default{
     <el-form-item
       label="转出剩余课时"
     >
-      <span>{{ formData.original.hour_remain }}</span>
+      <span>{{ formData.primordial.hour_remain }}</span>
     </el-form-item>
     <el-form-item
       label="转入上课时间"

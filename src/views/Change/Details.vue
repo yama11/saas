@@ -57,7 +57,7 @@ export default{
         curriculum_name: curriculumName,
         class_name: className,
         hour_remain: hourRemain,
-      } = this.data.original;
+      } = this.data.primordial;
 
       const {
         curriculum_name: CurriculumName,
@@ -152,9 +152,9 @@ export default{
       this.$http.get(url)
         .then((body) => {
           this.data = body;
-          this.errand = this.data.original.hour_remain - this.data.current.hour_remain;
+          this.errand = this.data.primordial.hour_remain - this.data.current.hour_remain;
           this.scheme = body.current.scheme;
-          this.schemeArr = body.original.scheme;
+          this.schemeArr = body.primordial.scheme;
         })
         .catch((err) => {
           this.$message.error(err.message);
