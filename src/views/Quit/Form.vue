@@ -137,7 +137,7 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
-              v-if="checkPermission('audit')"
+              v-if="checkPermission('deal')"
               size="small"
               @click="formQuitClass(scope.row.id)"
             >退班</el-button>

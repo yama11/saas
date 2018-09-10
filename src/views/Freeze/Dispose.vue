@@ -128,7 +128,7 @@ export default{
 <template>
   <div class="freeze-deal">
     <header class="freeze-deal__header">
-      <h2 class="freeze-deal__title">转班处理</h2>
+      <h2 class="freeze-deal__title">冻结处理</h2>
     </header>
     <div
       v-if="data"
@@ -149,26 +149,29 @@ export default{
         <span>{{ scheme.start_date.split(' ')[0] }}
           ~{{ scheme.end_date.split(' ')[0] }}</span><br>
         <span
-          v-for="(calendar,index) in scheme.calendar"
-          :key="index"
-          class="freeze-deal__classtime__week"
+          class="freeze-deal__classtime__span"
         >
-          {{ toDay[calendar.day-1] }}{{ calendar.start_time }}~{{ calendar.end_time }}
+          <span
+            v-for="(calendar,index) in scheme.calendar"
+            :key="index"
+            class="freeze-deal__classtime__week"
+          >
+            {{ toDay[calendar.day-1] }}{{ calendar.start_time }}~{{ calendar.end_time }}
+          </span>
         </span>
-
       </div>
       <div class="freeze-deal__but">
         <el-button
           type="primary"
           @click="freezeAudit"
         >
-          确定转班
+          确定冻结
         </el-button>
         <el-button
           type="primary"
           @click="freezeCancel"
         >
-          取消转班
+          取消冻结
         </el-button>
       </div>
 
@@ -186,10 +189,17 @@ export default{
   padding-left: 4em;
   padding-bottom:30px;
 }
-.freeze-deal__classtime__week{
-  padding-left: 80px;
-  margin-top: 10px;
+.freeze-deal__classtime__span{
   display: block;
+  width: 60%;
+  height: 270px;
+  overflow-y: scroll;
+  margin-left: 60px;
+  margin-right: 10px;
+}
+.freeze-deal__classtime__week{
+  display: inline-block;
+  margin:10px 10px;
 }
 .freeze-deal__buyer{
   margin-top: 30px;

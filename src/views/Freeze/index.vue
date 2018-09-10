@@ -238,7 +238,7 @@ export default {
               @click="quitDeal(scope.row.hour_id)"
             >退班</el-button>
             <el-button
-              v-if="scope.row.freeze_status === 1 &&checkPermission('deal')"
+              v-if="scope.row.freeze_status === 1 &&checkPermission('audit')"
               size="small"
               @click="freezeDeal(scope.row.id)"
             >挂起处理</el-button>

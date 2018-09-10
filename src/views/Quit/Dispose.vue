@@ -193,13 +193,16 @@ export default{
         <span>{{ scheme.start_date.split(' ')[0] }}
           ~{{ scheme.end_date.split(' ')[0] }}</span><br>
         <span
-          v-for="(calendar,index) in scheme.calendar"
-          :key="index"
-          class="quit-info__classtime__week"
+          class="quit-info__classtime__span"
         >
-          {{ toDay[calendar.day-1] }}{{ calendar.start_time }}~{{ calendar.end_time }}
+          <span
+            v-for="(calendar,index) in scheme.calendar"
+            :key="index"
+            class="quit-info__classtime__week"
+          >
+            {{ toDay[calendar.day-1] }}{{ calendar.start_time }}~{{ calendar.end_time }}
+          </span>
         </span>
-
       </div>
       <div class="quit-info__but">
         <el-button
@@ -238,10 +241,17 @@ export default{
   padding-bottom:30px;
 
 }
-.quit-info__classtime__week{
-  padding-left: 110px;
-  margin-top: 10px;
+.quit-info__classtime__span{
   display: block;
+  width: 40%;
+  height: 270px;
+  overflow-y: scroll;
+  margin-left: 60px;
+  margin-right: 10px;
+}
+.quit-info__classtime__week{
+  display: inline-block;
+  margin:10px 10px;
 }
 .quit-info__buyer .order-info-note{
     width: 50%;

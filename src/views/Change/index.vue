@@ -124,7 +124,7 @@ export default {
               @click="editPackage(scope.row.id)"
             >查看</el-button>
             <el-button
-              v-else-if="checkPermission('deal')"
+              v-else-if="checkPermission('audit')"
               size="small"
               @click="disposePackage(scope.row.id)"
             >转班处理</el-button>

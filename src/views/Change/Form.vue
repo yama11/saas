@@ -167,7 +167,7 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
-              v-if="checkPermission('audit')"
+              v-if="checkPermission('deal')"
               size="small"
               @click="changeClass(scope.row,scope.row.id)"
             >转班</el-button>

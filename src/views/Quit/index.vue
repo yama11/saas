@@ -124,7 +124,7 @@ export default {
               @click="quitInfo(scope.row.id)"
             >查看</el-button>
             <el-button
-              v-else-if="checkPermission('deal')"
+              v-else-if="checkPermission('audit')"
               size="small"
               @click="quitDeal(scope.row.id)"
             >退班处理</el-button>

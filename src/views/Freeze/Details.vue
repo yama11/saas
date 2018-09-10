@@ -144,13 +144,16 @@ export default{
         <span>{{ scheme.start_date.split(' ')[0] }}
           ~{{ scheme.end_date.split(' ')[0] }}</span><br>
         <span
-          v-for="(calendar,index) in scheme.calendar"
-          :key="index"
-          class="freeze-info__classtime__week"
+          class="freeze-info__classtime__span"
         >
-          {{ toDay[calendar.day-1] }}{{ calendar.start_time }}~{{ calendar.end_time }}
+          <span
+            v-for="(calendar,index) in scheme.calendar"
+            :key="index"
+            class="freeze-info__classtime__week"
+          >
+            {{ toDay[calendar.day-1] }}{{ calendar.start_time }}~{{ calendar.end_time }}
+          </span>
         </span>
-
       </div>
       <div class="freeze-info__but">
         <el-button
@@ -175,10 +178,17 @@ export default{
   padding-left: 4em;
   padding-bottom:30px;
 }
-.freeze-info__classtime__week{
-  padding-left: 80px;
-  margin-top: 10px;
+.freeze-info__classtime__span{
   display: block;
+  width: 60%;
+  height: 270px;
+  overflow-y: scroll;
+  margin-left: 60px;
+  margin-right: 10px;
+}
+.freeze-info__classtime__week{
+  display: inline-block;
+  margin:10px 10px;
 }
 .freeze-info__buyer{
   margin-top: 30px;
