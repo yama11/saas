@@ -128,7 +128,7 @@ export default{
 <template>
   <div class="freeze-deal">
     <header class="freeze-deal__header">
-      <h2 class="freeze-deal__title">冻结处理</h2>
+      <h2 class="freeze-deal__title">挂起处理</h2>
     </header>
     <div
       v-if="data"
@@ -165,13 +165,13 @@ export default{
           type="primary"
           @click="freezeAudit"
         >
-          确定冻结
+          确定挂起
         </el-button>
         <el-button
           type="primary"
           @click="freezeCancel"
         >
-          取消冻结
+          取消挂起
         </el-button>
       </div>
 

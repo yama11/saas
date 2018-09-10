@@ -40,13 +40,13 @@ export default{
           this.$rules.required('单价'),
         ],
         refund_rate: [
-          this.$rules.required('扣课折扣', 'number'),
+          this.$rules.required('扣课折扣'),
         ],
         hour_total: [
           this.$rules.required('总课时', 'number'),
         ],
         paid_money: [
-          this.$rules.required('实付金额', 'number'),
+          this.$rules.required('实付金额'),
         ],
         hour_finish: [
           this.$rules.required('已耗课时', 'number'),
