@@ -21,7 +21,7 @@ export default {
       },
       {
         prop: 'name',
-        label: '登陆账号',
+        label: '登录账号',
       },
       {
         prop: 'phone',
@@ -33,7 +33,7 @@ export default {
       },
       {
         prop: 'updated_at',
-        label: '最近登陆时间',
+        label: '最近登录时间',
       },
       {
         prop: 'user_status_name',
