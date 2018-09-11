@@ -236,10 +236,8 @@ export default{
   flex-wrap: wrap;
 }
 .quit-info__classtime{
-  width: 50%;
   padding-left: 4em;
   padding-bottom:30px;
-
 }
 .quit-info__classtime__span{
   display: block;
