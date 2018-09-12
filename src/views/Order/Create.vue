@@ -141,6 +141,19 @@ export default {
     },
 
     changeProductList(val) {
+      if (val.clear) {
+        const classArr = this.classTableList
+          .map(item => ({
+            ...item,
+            department: val.department,
+            class: {},
+            scheme: {},
+          }));
+        this.classTableList = classArr;
+
+        return;
+      }
+
       const classes = this.classTableList
         .find(item => item.curriculum_id === val.id);
 

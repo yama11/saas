@@ -97,6 +97,14 @@ export default {
     },
   },
 
+  created() {
+    this.curriculumId = this.classTableList[0].curriculum_id;
+
+    const id = this.classTableList[0].department.id;
+
+    this.getDepartmentList(this.curriculumId, id);
+  },
+
   methods: {
 
     getSchemeList(id) {
@@ -112,38 +120,57 @@ export default {
         });
     },
 
-    getDepartmentList(id) {
+    getDepartmentList(id, departmentId) {
       this.$http.get(`/order/batch/department?equal[curriculum_id]=${id}`)
         .then((res) => {
           this.departmentList = res;
+
+          if (departmentId) {
+            this.formData.departmentId = departmentId;
+
+            this.getClassList(departmentId);
+          }
         });
     },
 
     getClassList(id) {
-      this.formData.classId = null;
+      let data = `equal[curriculum_id]=${this.curriculumId}`;
 
-      const data = `equal[curriculum_id]=${this.curriculumId}&equal[department_id]=${id}`;
+      if (id) {
+        data += `&equal[department_id]=${id}`;
+      }
 
       this.$http.get(`/order/batch/class?${data}`)
         .then((res) => {
           this.classList = res;
         });
+
+      const department = this.departmentList
+        .find(item => item.id === this.formData.departmentId);
+
+      const proData = {
+        clear: true,
+        department: department || {},
+      };
+
+      this.$emit('changeProduct', proData);
     },
 
     arrangeClass(index, data, id) {
       this.visible = true;
+
+      this.timeStr = '';
 
       this.curriculumId = id;
 
       this.curriculumIndex = index;
 
       const schemeId = data.scheme.id;
-      const departmentId = data.department.id;
       const classId = data.class.id;
 
       this.formData = {
+        ...this.formData,
         schemeId: schemeId || null,
-        departmentId: departmentId || null,
         classId: classId || null,
       };
 
@@ -154,8 +181,6 @@ export default {
             this.getClassTime(schemeId);
           }
         });
-
-      this.getDepartmentList(id);
     },
 
     getClassTime(id) {
@@ -251,6 +276,22 @@ export default {
       <span>售价： {{ productInfo.price }}</span>
     </div>
 
+    <div class="arrange-class__depart">
+      约课机构
+      <el-select
+        v-model="formData.departmentId"
+        placeholder="请选择上课机构"
+        @change="getClassList(formData.departmentId)">
+
+        <el-option
+          v-for="item in departmentList"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id"/>
+
+      </el-select>
+    </div>
+
     <el-table
       :data="classTableList"
     >
@@ -309,26 +350,10 @@ export default {
       <el-form-item
         prop="time"
         label="上课时间"
+        width="800"
       >
         {{ timeStr }}
       </el-form-item>
-
-      <el-form-item
-        prop="departmentId"
-        label="上课机构"
-      >
-        <el-select
-          v-model="formData.departmentId"
-          placeholder="请选择上课机构"
-          @change="getClassList(formData.departmentId)">
-
-          <el-option
-            v-for="item in departmentList"
-            :key="item.id"
-            :label="item.name"
-            :value="item.id"/>
-
-      </el-select></el-form-item>
 
       <el-form-item
         prop="classId"
@@ -361,5 +386,9 @@ export default {
 
 .arrange-class__info span{
   margin-right: 80px;
+}
+
+.arrange-class__depart{
+  margin: 25px 0;
 }
 </style>
