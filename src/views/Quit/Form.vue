@@ -90,6 +90,7 @@ export default {
     },
 
     formQuitClass(id) {
+      this.editionInfo.formData = {};
       this.editionInfo.visible = true;
       this.editionInfo.id = id;
       this.$http.post('/quit/create', { id })
