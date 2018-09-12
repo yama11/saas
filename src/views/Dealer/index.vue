@@ -17,7 +17,7 @@ export default {
 
       columns: [
         { prop: 'name', label: '经销商名称' },
-        { prop: 'partner.name', label: '所属合伙人' },
+        { prop: 'partner.name', label: '所属运营商' },
         { prop: 'account', label: '管理员账号' },
         { label: '地区',
           formatter: (row) => {
@@ -239,13 +239,13 @@ export default {
           />
         </el-form-item>
         <el-form-item
-          label="所属合伙人"
+          label="所属运营商"
           prop="partner_id"
         >
           <el-select
             v-model="formData.partner_id"
             filterable
-            placeholder="请选择或者输入所属合伙人"
+            placeholder="请选择或者输入所属运营商"
           >
             <el-option
               v-for="item in partners"

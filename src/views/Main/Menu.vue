@@ -131,7 +131,7 @@ export default {
             index: '/dealer-list',
           },
           {
-            name: '城市合伙人管理',
+            name: '城市运营商管理',
             permission: 'system.partner',
             index: '/partner-list',
           },
