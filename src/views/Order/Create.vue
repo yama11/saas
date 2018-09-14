@@ -108,7 +108,11 @@ export default {
           class_id: item.class.id,
         }));
 
-      const dataObj = { student, merchandise_id, curriculum };
+      const department_id = this.classTableList[0].department.id
+        ? this.classTableList[0].department.id
+        : null;
+
+      const dataObj = { student, merchandise_id, curriculum, department_id };
 
       this.$http.post('/order/batch', dataObj)
         .then(() => this.cancelForm())
