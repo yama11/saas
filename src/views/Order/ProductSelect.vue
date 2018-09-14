@@ -81,6 +81,7 @@ export default {
         this.searchObj = {
           page: 1,
           per_page: this.searchObj.per_page,
+          'equal[status]': 2,
         };
 
         this.searchObj[`like[${this.selectValue}]`] = this.inputValue;
@@ -90,6 +91,7 @@ export default {
         this.searchObj = {
           page: this.searchObj.page,
           per_page: this.searchObj.per_page,
+          'equal[status]': 2,
         };
       }
 
