@@ -141,6 +141,7 @@ export default {
     },
 
     editNode(id) {
+      this.formData = {};
       this.editTargetID = id;
 
       this.dialogVisible = true;
