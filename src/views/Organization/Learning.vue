@@ -84,11 +84,11 @@ export default {
         this.formData.phone = phone;
         this.formData.password = password;
         this.formData.department_id = this.id;
-      } else {
-        this.title = '添加辅师';
-        this.formData = {};
-        this.formData.department_id = this.id;
+        return;
       }
+      this.title = '添加辅师';
+      this.formData = {};
+      this.formData.department_id = this.id;
     },
 
     disabledTeacher(id) {
@@ -128,7 +128,6 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
-    :id="id"
     :api="`/department/${id}/manager_teacher`"
     :create-label="checkPermission('store')?'添加辅师':null"
     title="辅师管理"
