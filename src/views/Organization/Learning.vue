@@ -86,6 +86,7 @@ export default {
         this.formData.department_id = this.id;
         return;
       }
+      this.managerId = null;
       this.title = '添加辅师';
       this.formData = {};
       this.formData.department_id = this.id;
