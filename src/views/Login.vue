@@ -141,7 +141,7 @@ export default {
     <div
       class="login__panel"
     >
-      <header>作用中心管理后台</header>
+      <header>麦克斯韦管理后台</header>
 
       <el-form
         ref="form"
