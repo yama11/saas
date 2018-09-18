@@ -39,6 +39,9 @@ export default {
         version: [
           this.$rules.required('版本号'),
         ],
+        content: [
+          this.$rules.required('更新内容'),
+        ],
       },
 
       packStoreBefore: {

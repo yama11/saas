@@ -59,9 +59,11 @@ export default {
     },
 
     editTargetID: null,
+
   }),
 
   computed: {
+
     subjectID() {
       return Number(this.$route.params.id);
     },
@@ -160,6 +162,10 @@ export default {
           };
         });
     },
+
+    getCoverUrl(url) {
+      this.formData.cover = url;
+    },
   },
 };
 </script>
@@ -225,6 +231,7 @@ export default {
       label-width="6em"
       width="800px"
       url="/structure"
+      class="subject-dialog"
       @on-submit="structureCreate"
     >
       <el-form-item
@@ -232,6 +239,15 @@ export default {
         prop="name"
       >
         <el-input v-model="formData.name" />
+      </el-form-item>
+      <el-form-item
+        label="菜单图片"
+        prop="cover"
+      >
+        <AppUploader
+          v-model="formData.cover"
+          @on-success="getCoverUrl"
+        />
       </el-form-item>
       <el-form-item
         label="简介"
@@ -248,7 +264,7 @@ export default {
       <el-form-item
         label="详细介绍"
         prop="describe"
-        class="student-describe"
+        class="subject-describe"
       >
         <editor-bar
           v-model="formData.describe"
@@ -263,24 +279,22 @@ export default {
 .subject-edition {
   padding-top: 0;
 }
-
 .subject-edition > h2 {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-
 .subject-edition__node {
   display: inline-flex;
   width: 700px;
   align-items: center;
   justify-content: space-between;
 }
-
-.subject-edition__node-control {
-
-}
-.student-describe textarea{
+.subject-describe textarea{
   width: 100%;
 }
+.v-modal{
+    width: 0;
+    height: 0;
+  }
 </style>

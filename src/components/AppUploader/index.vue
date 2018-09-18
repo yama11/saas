@@ -189,8 +189,9 @@ export default {
       :visible.sync="dialogVisible"
       :loading="loading"
       :close-on-click-modal="false"
-      title="头像裁剪"
+      title="图片裁剪"
       width="400px"
+      z-index="99999"
       @close="cancelUpload"
     >
 

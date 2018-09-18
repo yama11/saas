@@ -48,9 +48,15 @@ export default {
   },
 
   methods: {
-    getClassHistory(id, schemeId) {
+
+    // eslint-disable-next-line
+    getClassHistory(id, schemeId, statusName) {
+      if (!statusName) {
+        return this.$message.error('班级未开课!');
+      }
       this.$router.push(`/course-history/${id}_${schemeId}`);
     },
+
   },
 };
 </script>
@@ -97,7 +103,7 @@ export default {
           <template slot-scope="scope">
             <el-button
               size="small"
-              @click="getClassHistory(id,scope.row.scheme_id)"
+              @click="getClassHistory(id,scope.row.scheme_id,scope.row.class_status_name)"
             >查看上课历史</el-button>
           </template>
         </el-table-column>
