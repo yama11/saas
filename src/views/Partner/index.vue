@@ -63,9 +63,6 @@ export default {
           this.$rules.required('联系电话'),
           { ...this.$rules.mobile },
         ],
-        dealer_ids: [
-          this.$rules.required('所负责经销商', 'array'),
-        ],
         account: [
           this.$rules.required('账号'),
         ],

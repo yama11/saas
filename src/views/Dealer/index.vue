@@ -64,6 +64,9 @@ export default {
         places: [
           this.$rules.required('所在地区', 'array'),
         ],
+        partner_id: [
+          this.$rules.required('所属运营商', 'number'),
+        ],
         address: [
           this.$rules.required('地址'),
         ],
