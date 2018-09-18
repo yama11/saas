@@ -35,6 +35,7 @@ export default {
       parent_id: 0,
       describe: '',
       introduce: '',
+      cover: '',
     },
 
     editor: {
@@ -104,6 +105,7 @@ export default {
         subject_id: this.subjectID,
         parent_id: parentID,
         introduce: '',
+        cover: '',
       };
 
       this.dialogVisible = true;
@@ -159,6 +161,7 @@ export default {
             parent_id: 0,
             describe: '',
             introduce: '',
+            cover: '',
           };
         });
     },
