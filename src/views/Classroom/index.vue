@@ -135,6 +135,8 @@ export default {
     getDepartmentPlaces(value) {
       this.departmentList = [];
 
+      this.formData.department_id = null;
+
       if (value.length === 0) return;
 
       const addName = ['province_code', 'city_code', 'district_code'];
