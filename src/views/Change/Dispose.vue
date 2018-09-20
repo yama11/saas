@@ -136,11 +136,11 @@ export default{
 
     confirmTurn() {
       this.$http.post(`/change/audit/${this.$route.params.id}`)
-        .then(this.cancelForm());
+        .then(this.cancelForm);
     },
     cancelTurn() {
       this.$http.post(`/change/cancel/${this.$route.params.id}`)
-        .then(this.cancelForm());
+        .then(this.cancelForm);
     },
   },
 };
