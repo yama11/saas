@@ -21,7 +21,7 @@ export default {
     return {
 
       columns: [
-        { prop: 'student_name', label: '学习姓名' },
+        { prop: 'student_name', label: '学生姓名' },
         { prop: 'phone', label: '家长电话' },
         { prop: 'curriculum_name', label: '课程名称' },
         { label: '上课时间',
@@ -67,7 +67,7 @@ export default {
 
     searchArr() {
       const column = [
-        { prop: 'student_name', label: '学习姓名' },
+        { prop: 'student_name', label: '学生姓名' },
         { prop: 'phone', label: '家长电话' },
         { prop: 'curriculum_name', label: '课程名称' },
         { prop: 'department_name', label: '机构名称' },

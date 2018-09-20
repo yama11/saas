@@ -15,7 +15,7 @@ export default {
   data() {
     return {
       columns: [
-        { prop: 'student_name', label: '学习姓名' },
+        { prop: 'student_name', label: '学生姓名' },
         { prop: 'phone', label: '家长电话' },
         { prop: 'curriculum_name', label: '课程名称' },
         { label: '上课时间',
@@ -51,7 +51,7 @@ export default {
 
   computed: {
     searchArr() {
-      const column = [{ prop: 'name', label: '学习姓名' }];
+      const column = [{ prop: 'name', label: '学生姓名' }];
 
       const searchList = [
         { componentType: 'AppSearchColumn', searchType: column },
