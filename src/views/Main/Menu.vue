@@ -91,7 +91,7 @@ export default {
             index: '/classroom-list',
           },
           {
-            name: '直播室管理',
+            name: '直播间管理',
             permission: 'system.liveroom',
             index: '/liveroom-list',
           },

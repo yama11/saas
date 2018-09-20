@@ -38,7 +38,7 @@ export default {
           `,
         },
         { prop: 'class_status_name', label: '状态' },
-        { prop: 'studio_name', label: '直播室' },
+        { prop: 'studio_name', label: '直播间' },
         { prop: 'anchor_name', label: '直播教师' },
         { prop: 'classroom_name', label: '教室' },
         { prop: 'audience_name', label: '辅师' },
@@ -226,12 +226,12 @@ export default {
         @on-submit="submitEdition"
       >
         <el-form-item
-          label="直播室"
+          label="直播间"
           prop="studio"
         >
           <el-select
             v-model="formData.studio_id"
-            placeholder="请选择直播室"
+            placeholder="请选择直播间"
           >
             <el-option
               v-for="role in editionInfo.studio"

@@ -1,6 +1,6 @@
 <script>
 /**
- * @overview 系统中心 - 直播室管理
+ * @overview 系统中心 - 直播间管理
  *
  * @author huojinzhao
  */
@@ -21,11 +21,11 @@ export default {
       columns: [
         {
           prop: 'name',
-          label: '直播室名称',
+          label: '直播间名称',
         },
         {
           prop: 'account',
-          label: '直播室账号',
+          label: '直播间账号',
         },
         {
           prop: 'created_at',
@@ -45,12 +45,12 @@ export default {
 
       rules: {
         name: [
-          this.$rules.required('直播室名称'),
+          this.$rules.required('直播间名称'),
           { max: 10, message: '长度10个字符以内', trigger: 'blur' },
         ],
 
         account: [
-          this.$rules.required('直播室账号'),
+          this.$rules.required('直播间账号'),
           { max: 10, message: '长度10个字符以内', trigger: 'blur' },
         ],
 
@@ -65,11 +65,11 @@ export default {
         {
           searchType: [
             {
-              label: '直播室名称',
+              label: '直播间名称',
               prop: 'name',
             },
             {
-              label: '直播室账号',
+              label: '直播间账号',
               prop: 'account',
             },
           ],
@@ -87,7 +87,7 @@ export default {
 
     liveroomDelete(id) {
       this.$_listMixin_alertDeleteItem(
-        id, this.list.data, '直播室', '/liveroom',
+        id, this.list.data, '直播间', '/liveroom',
       );
     },
 
@@ -116,7 +116,7 @@ export default {
     :list.sync="list"
     :create-label="checkPermission('store', '添加直播间')"
     api="/liveroom"
-    title="直播室管理"
+    title="直播间管理"
     class="liveroomList"
     @create="liveroomPreEdit"
   >
@@ -173,19 +173,19 @@ export default {
     >
       <el-form-item
         prop="name"
-        label="直播室名称"
+        label="直播间名称"
       >
         <el-input v-model="formData.name"/>
       </el-form-item>
       <el-form-item
         prop="account"
-        label="直播室账号"
+        label="直播间账号"
       >
         <el-input v-model="formData.account"/>
       </el-form-item>
       <el-form-item
         prop="password"
-        label="直播室密码"
+        label="直播间密码"
       >
         <el-input v-model="formData.password"/>
       </el-form-item>
