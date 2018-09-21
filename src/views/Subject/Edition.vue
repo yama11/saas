@@ -247,8 +247,9 @@ export default {
         label="菜单图片"
         prop="cover"
       >
-        <AppUploader
+        <AppUploadScale
           v-model="formData.cover"
+          class="subject-dialog__img"
           @on-success="getCoverUrl"
         />
       </el-form-item>
@@ -300,4 +301,7 @@ export default {
     width: 0;
     height: 0;
   }
+.subject-dialog__img .app-upload-scale__block img{
+  height: 100%;
+}
 </style>
