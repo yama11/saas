@@ -136,11 +136,17 @@ export default{
 
     confirmTurn() {
       this.$http.post(`/change/audit/${this.$route.params.id}`)
-        .then(this.cancelForm);
+        .then(this.cancelForm)
+        .cantch((err) => {
+          this.$message.error(err.message);
+        });
     },
     cancelTurn() {
       this.$http.post(`/change/cancel/${this.$route.params.id}`)
-        .then(this.cancelForm);
+        .then(this.cancelForm)
+        .cantch((err) => {
+          this.$message.error(err.message);
+        });
     },
   },
 };

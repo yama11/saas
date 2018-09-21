@@ -96,7 +96,6 @@ export default {
     api="/quit"
     title="退班管理"
     @create="toQuitClass"
-
   >
     <AppSearch
       v-if="checkPermission('index')"
@@ -134,7 +133,3 @@ export default {
     </template>
   </AppList>
 </template>
-
-<style>
-
-</style>

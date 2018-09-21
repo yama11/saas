@@ -114,11 +114,17 @@ export default{
 
     freezeAudit() {
       this.$http.post(`/freeze/audit/${this.$route.params.id}`)
-        .then(this.cancelForm());
+        .then(this.cancelForm)
+        .cantch((err) => {
+          this.$message.error(err.message);
+        });
     },
     freezeCancel() {
       this.$http.post(`/freeze/cancel/${this.$route.params.id}`)
-        .then(this.cancelForm());
+        .then(this.cancelForm)
+        .cantch((err) => {
+          this.$message.error(err.message);
+        });
     },
 
   },

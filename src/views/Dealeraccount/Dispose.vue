@@ -111,7 +111,10 @@ export default{
 
     returnAudit() {
       this.$http.patch(`/finance/dealer/accounted/${this.$route.params.id}`, { certify: this.data.certify })
-        .then(this.cancelForm());
+        .then(this.cancelForm)
+        .cantch((err) => {
+          this.$message.error(err.message);
+        });
     },
 
     returnCancel() {

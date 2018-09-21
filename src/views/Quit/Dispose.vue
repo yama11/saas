@@ -158,12 +158,18 @@ export default{
 
     returnAudit() {
       this.$http.post(`/quit/audit/${this.$route.params.id}`)
-        .then(this.cancelForm());
+        .then(this.cancelForm)
+        .cantch((err) => {
+          this.$message.error(err.message);
+        });
     },
 
     returnCancel() {
       this.$http.post(`/quit/cancel/${this.$route.params.id}`)
-        .then(this.cancelForm());
+        .then(this.cancelForm)
+        .cantch((err) => {
+          this.$message.error(err.message);
+        });
     },
   },
 };
