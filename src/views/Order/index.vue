@@ -83,8 +83,7 @@ export default {
         .map(key => `${key}=${this.$route.query[key]}`)
         .join('&');
 
-      const url = 'https://final-admin-api.caihonggou.com/order/export?';
-
+      const url = `${this.$http.baseURI}/order/export?`;
 
       window.location.href = `${url}${query}&token=${tokens}`;
     },
