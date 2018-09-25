@@ -163,7 +163,7 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
-    create-label="添加经销商"
+    :create-label="checkPermission('store', '添加经销商')"
     api="/dealer"
     title="经销商管理"
     @create="editDealer"
@@ -192,6 +192,7 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
+              v-if="checkPermission('update')"
               size="small"
               @click="editDealer(scope.row.id,scope.row.name,
                                  scope.row.places,scope.row.address,
@@ -199,6 +200,7 @@ export default {
                                  scope.row.partner_id)"
             >编辑</el-button>
             <el-button
+              v-if="checkPermission('delete')"
               type="danger"
               size="small"
               @click="deleteDealer(scope.row.id)"

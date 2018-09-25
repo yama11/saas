@@ -49,10 +49,14 @@ export default {
   methods: {
 
     checkInfo(value) {
-      if (value.account_type_name === '退班') {
-        this.$router.push(`/quit-info/${value.id}`);
-      } else {
-        this.$router.push(`/draw-info/${value.id}`);
+      if (value.account_type === 5) {
+        this.$router.push(`/quit-info/${value.instance_id}`);
+      }
+      if (value.account_type === 1 || value.account_type === 2) {
+        this.$router.push(`/draw-info/${value.instance_id}`);
+      }
+      if (value.account_type === 3 || value.account_type === 4) {
+        this.$router.push(`/order/${value.instance_id}`);
       }
     },
 

@@ -120,6 +120,7 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
+              v-if="checkPermission('update')"
               size="small"
               @click="managerTeacher(scope.row.id)"
             >辅师管理</el-button>
