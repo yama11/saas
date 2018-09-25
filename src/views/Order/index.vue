@@ -96,10 +96,10 @@ export default {
     ref="list"
     :list.sync="list"
     :create-label="checkPermission('batch_store') ? '批量创建订单' : null"
+    :skip-label="checkPermission('export') ? '导出excel' : null"
     class="order-list"
     api="/order"
     title="订单管理"
-    skip-label="导出excel"
     @create="createOrder"
     @skipPage="exportExcel"
   >
