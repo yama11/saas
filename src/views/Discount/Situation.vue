@@ -38,7 +38,7 @@ export default {
     searchArr() {
       const searchList = [
         { componentType: 'AppSearchDate', searchType: 'created_at' },
-        { selectValue: this.status, componentType: 'AppSearchStatus', searchType: 'client_coupon_status' },
+        { selectValue: this.status, componentType: 'AppSearchStatus', searchType: 'status' },
       ];
 
       return searchList;
