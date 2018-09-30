@@ -149,6 +149,9 @@ export default {
                 date: `${item.start_date.split(' ')[0]}~${item.end_date.split(' ')[0]}`,
               }));
           }
+        })
+        .catch(() => {
+          this.$message.error('数据出错，请稍后在试！');
         });
     },
 
@@ -159,8 +162,8 @@ export default {
         .then((res) => {
           this.editionQuit.formData = { ...res };
         })
-        .catch(({ message }) => {
-          this.$message.error(message);
+        .catch(() => {
+          this.$message.error('数据出错，请稍后在试！');
         });
     },
 

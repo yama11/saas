@@ -215,7 +215,7 @@ export default{
 <style>
 .change-edition .change-edition__classtime{
   display: block;
-  height: 200px;
+  height: 150px;
   overflow-y: scroll;
   margin-top: 10px;
 }
