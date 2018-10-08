@@ -247,12 +247,6 @@ export default {
     },
 
     submitForm(submit) {
-      if (this.lookId) {
-        submit();
-
-        return;
-      }
-
       if (this.discountForm.type === 4 && !this.discountForm.audition_price) {
         this.discountForm.audition_price = 0.00;
       }
@@ -313,6 +307,18 @@ export default {
       this.discountForm.expire_expire_time = null;
 
       this.$refs[discountForm].clearValidate(['useDate', 'expire_day']);
+    },
+
+    backPage() {
+      if (this.from.matched.length) {
+        return this.$router.back();
+      }
+
+      const prefix = this.$route.path.match(/^\/\w+-/)[0];
+
+      const location = (prefix && prefix.concat('list')) || '/';
+
+      return this.$router.push(location);
     },
 
   },
@@ -623,6 +629,17 @@ export default {
         placeholder="请输入内容"/>
     </el-form-item>
 
+    <div
+      v-if="lookId"
+      slot="footer"
+      class="discount-form__footer">
+      <el-button
+        type="primary"
+        @click="backPage">
+        返回
+      </el-button>
+    </div>
+
   </AppFormPage>
 </template>
 
@@ -635,5 +652,10 @@ export default {
   & .el-tag{
     margin-left: 5px;
   }
+}
+
+.discount-form__footer button{
+  display: block;
+  margin: 0 auto;
 }
 </style>
