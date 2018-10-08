@@ -75,6 +75,10 @@ export default {
       this.$router.push('/discount-create');
     },
 
+    lookDiscount(id) {
+      this.$router.push(`/discount-look/${id}_${id}`);
+    },
+
     editDiscount(id) {
       this.$router.push(`/discount-edit/${id}`);
     },
@@ -139,7 +143,7 @@ export default {
 
         <el-table-column
           label="操作"
-          width="350px"
+          width="400px"
         >
           <template slot-scope="scope">
             <el-button
@@ -164,6 +168,15 @@ export default {
               @click="discountSituation(scope.row.id)"
             >
               领取情况
+            </el-button>
+
+            <el-button
+              v-if="checkPermission('show')"
+              size="small"
+              type="primary"
+              @click="lookDiscount(scope.row.id)"
+            >
+              查看
             </el-button>
 
             <el-button

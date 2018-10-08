@@ -19,7 +19,9 @@ export default {
 
   data() {
     return {
-      id: this.$route.params.id,
+      id: this.$route.params.id
+        ? this.$route.params.id.split('_')[0]
+        : undefined,
 
       pickerTime: {
         disabledDate(time) {
@@ -136,6 +138,26 @@ export default {
     };
   },
 
+  computed: {
+    title() {
+      if (this.lookId) return '查看优惠劵';
+
+      if (this.id) return '编辑优惠劵';
+
+      return '添加优惠券';
+    },
+
+    lookId() {
+      const idExit = this.$route.params.id;
+
+      if (!idExit) return false;
+
+      if (!idExit.split('_')[1]) return false;
+
+      return true;
+    },
+  },
+
   created() {
     this.getCreateBefore();
 
@@ -225,6 +247,12 @@ export default {
     },
 
     submitForm(submit) {
+      if (this.lookId) {
+        submit();
+
+        return;
+      }
+
       if (this.discountForm.type === 4 && !this.discountForm.audition_price) {
         this.discountForm.audition_price = 0.00;
       }
@@ -297,7 +325,7 @@ export default {
     :model="discountForm"
     :rules="rules"
     :from="from"
-    :object="id ? '编辑优惠券' : '添加优惠券'"
+    :object="title"
     url="/coupon"
     class="discount-form"
     label-width="100px"
@@ -309,6 +337,7 @@ export default {
     >
       <el-input
         v-model="discountForm.name"
+        :disabled="lookId"
         maxlength="20"
         placeholder="请输入优惠券名称"
         style="width:400px;"
@@ -319,7 +348,9 @@ export default {
       label="优惠券类别"
       prop="type"
     >
-      <el-radio-group v-model="discountForm.type">
+      <el-radio-group
+        v-model="discountForm.type"
+        :disabled="lookId">
         <el-radio
           v-for="item in formBefore.couponType"
           :key="item.value"
@@ -337,6 +368,7 @@ export default {
     >
       <el-input
         v-model="discountForm.discount_money"
+        :disabled="lookId"
         placeholder="请输入优惠券面值金额"
         style="width:200px;"
       /> 元
@@ -349,6 +381,7 @@ export default {
     >
       <el-input
         v-model="discountForm.discount_rate"
+        :disabled="lookId"
         placeholder="请输入0~1间折扣数值"
         style="width:200px;"
       /> 折
@@ -361,6 +394,7 @@ export default {
     >
       <el-input
         v-model="discountForm.give_class_hour"
+        :disabled="lookId"
         placeholder="请输入赠送课时数"
         style="width:200px;"
       />
@@ -373,6 +407,7 @@ export default {
     >
       <el-input
         v-model="discountForm.give_class_hour"
+        :disabled="lookId"
         placeholder="请输入该券可体验课时数"
         style="width:200px;"
       />
@@ -385,6 +420,7 @@ export default {
     >
       <el-input
         v-model="discountForm.audition_price"
+        :disabled="lookId"
         placeholder="请输入该券购买金额"
         style="width:400px;"
       />
@@ -394,7 +430,19 @@ export default {
       label="优惠地域"
       prop="administrative_division_code"
     >
+
+      <div
+        v-if="lookId"
+        class="discount-form__show">
+        <el-tag
+          v-for="tag in addressTags"
+          :key="tag.value">
+          {{ tag.name }}
+        </el-tag>
+      </div>
+
       <AddressMulti
+        v-else
         :division="division"
         :address-tags="addressTags"
         @divisionCode="getDivisionCode"/>
@@ -407,6 +455,7 @@ export default {
     >
       <el-input
         v-model="discountForm.total_quantity"
+        :disabled="lookId"
         placeholder="请输入优惠券总发放数量"
         style="width:400px;"
       />
@@ -419,7 +468,9 @@ export default {
       label="领取条件"
       prop="condition"
     >
-      <el-radio-group v-model="discountForm.condition">
+      <el-radio-group
+        v-model="discountForm.condition"
+        :disabled="lookId">
         <el-radio
           v-for="item in formBefore.couponCondition"
           :key="item.value"
@@ -437,6 +488,7 @@ export default {
     >
       <el-date-picker
         v-model="discountForm.validityDate"
+        :disabled="lookId"
         :picker-options="pickerTime"
         type="daterange"
         start-placeholder="开始日期"
@@ -453,6 +505,7 @@ export default {
     >
       <el-input
         v-model="discountForm.minimum_price"
+        :disabled="lookId"
         placeholder="请输入最低消费金额"
         style="width:200px;"
       />
@@ -466,6 +519,7 @@ export default {
       <el-radio-group v-model="discountForm.expire_type">
         <el-radio
           v-for="item in formBefore.couponExpireType"
+          :disabled="lookId"
           :key="item.value"
           :label="item.value"
           @change="resetFormUse('discountForm')">
@@ -481,6 +535,7 @@ export default {
     >
       <el-date-picker
         v-model="discountForm.useDate"
+        :disabled="lookId"
         :picker-options="pickerTime"
         type="daterange"
         start-placeholder="开始日期"
@@ -495,6 +550,7 @@ export default {
     >
       <el-input
         v-model="discountForm.expire_day"
+        :disabled="lookId"
         placeholder="请输入有效天数"
         style="width:400px;"
       />
@@ -507,6 +563,7 @@ export default {
     >
       <el-select
         v-model="discountForm.coupon_applicable['App\\Models\\Merchandise']"
+        :disabled="lookId"
         multiple
         placeholder="请选择可使用商品"
         style="width:400px;">
@@ -525,6 +582,7 @@ export default {
     >
       <el-select
         v-model="discountForm.coupon_applicable['App\\Models\\Curriculum']"
+        :disabled="lookId"
         multiple
         placeholder="请选择可使用课程"
         style="width:400px;">
@@ -540,7 +598,9 @@ export default {
       label="是否叠加使用"
       prop="can_superposition"
     >
-      <el-radio-group v-model="discountForm.can_superposition">
+      <el-radio-group
+        v-model="discountForm.can_superposition"
+        :disabled="lookId">
         <el-radio
           v-for="item in formBefore.couponCanSuperposition"
           :key="item.value"
@@ -558,6 +618,7 @@ export default {
       <el-input
         :rows="6"
         v-model="discountForm.rule_description"
+        :disabled="lookId"
         type="textarea"
         placeholder="请输入内容"/>
     </el-form-item>
@@ -566,5 +627,13 @@ export default {
 </template>
 
 <style lang="postcss">
-
+.discount-form__show{
+  width: 400px;
+  min-height: 40px;
+  border: 1px solid gainsboro;
+  border-radius: 5px;
+  & .el-tag{
+    margin-left: 5px;
+  }
+}
 </style>

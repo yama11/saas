@@ -15,6 +15,12 @@ export default [
     name: 'DiscountCreate',
     component: DiscountForm,
   },
+  // 优惠券查看
+  {
+    path: 'discount-look/:id',
+    name: 'DiscountLook',
+    component: DiscountForm,
+  },
   // 优惠券编辑
   {
     path: 'discount-edit/:id',
