@@ -101,7 +101,7 @@ export default{
           content:
             `
               ${startDate.split(' ')[0]}
-             至${endDate.split(' ')[0]}
+             至 ${endDate.split(' ')[0]}
             `,
 
         },
@@ -200,10 +200,14 @@ export default{
         >上课时间</span>
         ：
         <span
-          v-for="(calendar,index) in calendar"
-          :key="index"
-          class="class-info-head_classtime_span"
-        >{{ toDay[calendar.day-1] }}{{ calendar.start_time }}~{{ calendar.end_time }}</span>
+          class="class-info-head_classtime_span">
+          <span
+            v-for="(calendar,index) in calendar"
+            :key="index"
+            class="class-info-head_classtime_week">
+            {{ toDay[calendar.day-1] }}&nbsp;{{ calendar.start_time }}~{{ calendar.end_time }}
+          </span>
+        </span>
       </div>
       <div class="class-info-head">
         班级信息
@@ -320,10 +324,16 @@ export default{
     padding-top: 15px;
 }
 .class-info-head_classtime_span{
-    margin-left: 90px;
     display: block;
-    padding-bottom: 30px;
-    margin-top: -16px;
+    height: 200px;
+    overflow-y: scroll;
+    margin-left: 60px;
+    margin-right: 10px;
+    width: 450px;
+}
+.class-info-head_classtime_week{
+  display: inline-block;
+  margin:10px 10px;
 }
 </style>
 

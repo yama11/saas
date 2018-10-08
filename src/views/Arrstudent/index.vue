@@ -268,9 +268,10 @@ export default {
               :model="formData"
               :rules="rules"
               label-width="8em"
+              width="550px"
               url="/intention"
               object="调度学生"
-              class="process-edition"
+              class="arrstudent"
               @on-submit="submitEdition"
             >
               <el-form-item
@@ -294,14 +295,18 @@ export default {
                 label="上课时间"
               >
                 <div
-                  v-for="(calendar,index) in calendar"
-                  :key="index"
+                  class="arrstudent-edition__classtime"
                 >
-                  {{ toDay[calendar.day-1] }}{{ calendar.start_time }}~{{ calendar.end_time }}
+                  <div
+                    v-for="(calendar,index) in calendar"
+                    v-if="calendar"
+                    :key="index"
+                    class="arrstudent-edition__classtime-span">
+                    <!-- eslint-disable-next-line -->
+                    {{ toDay[calendar.day-1] }}&nbsp;{{ calendar.start_time }}~{{ calendar.end_time }}
+                  </div>
                 </div>
-
               </el-form-item>
-
               <el-form-item
                 label="班级"
                 prop="class_id"
@@ -340,6 +345,17 @@ export default {
 </template>
 
 <style>
-
+.arrstudent-edition__classtime{
+  display: block;
+  height: 150px;
+  overflow-y: scroll;
+}
+.arrstudent-edition__classtime-span{
+  display: inline-block;
+  margin-right: 20px;
+}
+.arrstudent .el-input__inner{
+  width: 220px;
+}
 </style>
 

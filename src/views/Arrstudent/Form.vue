@@ -148,8 +148,7 @@ export default{
           :
           <span
             v-if="scheme"
-          >{{ scheme.start_date.split(' ')[0] }}
-            ~{{ scheme.end_date.split(' ')[0] }}</span>
+          >{{ scheme.start_date.split(' ')[0] }} 至 {{ scheme.end_date.split(' ')[0] }}</span>
       </div></div>
       <div
         class="intention-info__classtime order-info-note"
@@ -158,6 +157,7 @@ export default{
         :
         <span
           v-if="scheme"
+          class="intention-info__classtime__span"
         >
           <span
             v-for="(calendar,index) in scheme.calendar"
@@ -204,10 +204,16 @@ export default{
   padding-left: 8px;
   padding-bottom:30px;
 }
-.intention-info__classtime__week{
-  padding-left: 80px;
-  margin-top: 10px;
+.intention-info__classtime__span{
   display: block;
+  height: 270px;
+  overflow-y: scroll;
+  margin-left: 60px;
+  margin-right: 10px;
+}
+.intention-info__classtime__week{
+  display: inline-block;
+  margin:10px 30px;
 }
 .intention-info__buyer{
     display: flex;

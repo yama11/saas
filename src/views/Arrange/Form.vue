@@ -117,8 +117,7 @@ export default{
           label: '上课时间段',
           content:
             `
-              ${startDate.split(' ')[0]}
-             至${endDate.split(' ')[0]}
+              ${startDate.split(' ')[0]} 至 ${endDate.split(' ')[0]}
             `,
         },
       ];
@@ -213,14 +212,16 @@ export default{
         />
       </section>
       <div class="arrange-info-head_classtime">
-        <span
-        >上课时间</span>
+        <span>上课时间</span>
         ：
         <span
-          v-for="(calendar,index) in calendar"
-          :key="index"
-          class="arrange-info-head_classtime_span"
-        >{{ toDay[calendar.day-1] }}{{ calendar.start_time }}~{{ calendar.end_time }}</span>
+          class="arrange-info-head_classtime_span">
+          <span
+            v-for="(calendar,index) in calendar"
+            :key="index"
+            class="arrange-info-head_classtime_week"
+          >{{ toDay[calendar.day-1] }}&nbsp;{{ calendar.start_time }}~{{ calendar.end_time }}</span>
+        </span>
       </div>
       <div class="arrange-info-head">
         班级信息
@@ -353,10 +354,16 @@ export default{
     padding-top: 15px;
 }
 .arrange-info-head_classtime_span{
-    margin-left: 90px;
     display: block;
-    padding-bottom: 30px;
-    margin-top: -16px;
+    height: 200px;
+    overflow-y: scroll;
+    margin-left: 70px;
+    margin-right: 10px;
+    width: 450px;
+}
+.arrange-info-head_classtime_week{
+  display: inline-block;
+  margin:10px 10px;
 }
 </style>
 
