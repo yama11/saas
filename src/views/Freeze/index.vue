@@ -37,7 +37,7 @@ export default {
 
       freeze_status: [],
 
-      statusType: 1,
+      visible: false,
 
       editionInfo: {
         id: null,
@@ -100,6 +100,8 @@ export default {
     },
 
     changeClass(value, id) {
+      this.visible = true;
+
       this.editionInfo = {
         id: null,
         visible: false,
@@ -118,7 +120,6 @@ export default {
           schemeArr: [],
         },
       };
-      this.editionInfo.id = value.id;
       this.editionInfo.visible = true;
 
       this.$http.post('/change/create', { id })
@@ -150,9 +151,10 @@ export default {
               }));
           }
         })
-        .catch(() => {
-          this.$message.error('数据出错，请稍后在试！');
+        .catch((error) => {
+          this.$message.error(error.errors.id.toString());
         });
+      this.editionInfo.id = value.id;
     },
 
     quitDeal(id) {
@@ -162,8 +164,8 @@ export default {
         .then((res) => {
           this.editionQuit.formData = { ...res };
         })
-        .catch(() => {
-          this.$message.error('数据出错，请稍后在试！');
+        .catch(({ message }) => {
+          this.$message.error(message);
         });
     },
 
@@ -248,7 +250,7 @@ export default {
 
             <!-- 转班 -->
             <ChangeEdition
-              :visible.sync="editionInfo.visible"
+              :visible.sync="visible"
               :id="editionInfo.id"
               :form-data="editionInfo.formData"
               width="458px"

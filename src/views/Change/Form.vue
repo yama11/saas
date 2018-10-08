@@ -127,6 +127,9 @@ export default {
                 date: `${item.start_date.split(' ')[0]}~${item.end_date.split(' ')[0]}`,
               }));
           }
+        })
+        .catch((error) => {
+          this.$message.error(error.errors.id.toString());
         });
       this.id = value.id;
     },

@@ -41,7 +41,7 @@ export default {
         { prop: 'student_name', label: '学生姓名' },
         { prop: 'phone', label: '家长电话' },
         { prop: 'department_name', label: '培训机构' },
-        { prop: 'primordial.curriculum_name', label: '课程名称' },
+        { prop: 'curriculum_name', label: '课程名称' },
       ];
       const department = this.$store.state.user.department_tree;
 
@@ -78,6 +78,9 @@ export default {
       this.$http.get('/change/index_before')
         .then((res) => {
           this.change_status = res.change_status;
+        })
+        .catch((error) => {
+          this.$message.error(error.message);
         });
     },
 
