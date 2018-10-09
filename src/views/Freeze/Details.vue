@@ -142,7 +142,7 @@ export default{
         <span>上课时间</span>
         :
         <span>{{ scheme.start_date.split(' ')[0] }}
-          ~{{ scheme.end_date.split(' ')[0] }}</span><br>
+          至 {{ scheme.end_date.split(' ')[0] }}</span><br>
         <span
           class="freeze-info__classtime__span"
         >

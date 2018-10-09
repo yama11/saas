@@ -293,7 +293,7 @@ export default{
   height: 270px;
   overflow-y: scroll;
   margin-left: 60px;
-  margin-right: 10px;
+  margin-right: 55px;
 }
 .change-info__classtime__week{
   display: inline-block;

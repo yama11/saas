@@ -133,7 +133,6 @@ export default{
     >
       <span>{{ formData.primordial.classes.scheme.start_date.split(' ')[0] }}
         ~{{ formData.primordial.classes.scheme.end_date.split(' ')[0] }}</span>
-      <br>
       <span
         class="change-edition__classtime"
       >
@@ -215,7 +214,7 @@ export default{
 <style>
 .change-edition .change-edition__classtime{
   display: block;
-  height: 150px;
+  height: 140px;
   overflow-y: scroll;
   margin-top: 10px;
 }
