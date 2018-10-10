@@ -87,13 +87,13 @@ export default {
       const column = [
         { prop: 'curriculum_name', label: '课程名称' },
         { prop: 'department_name', label: '校区' },
-        { prop: 'classroom_name', label: '班级' },
+        { prop: 'name', label: '班级' },
       ];
 
       const department = this.$store.state.user.department_tree;
 
       const searchList = [
-        { selectValue: department, componentType: 'AppSearchAddress', searchType: 'scope', placeholder: '选择机构' },
+        { selectValue: department, componentType: 'AppSearchAddress', searchType: 'scope', placeholder: '请选择机构' },
         { selectValue: this.arrangeStatus,
           componentType: 'AppSearchStatus',
           searchType: 'class_status' },

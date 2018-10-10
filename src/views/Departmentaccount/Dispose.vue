@@ -59,11 +59,11 @@ export default{
         },
         {
           label: '课耗数',
-          details: decreaseCount ? decreaseCount.toString() : '',
+          details: decreaseCount ? decreaseCount.toString() : '0',
         },
         {
           label: '结算金额',
-          details: decreaseMoney ? decreaseMoney.toString() : '',
+          details: decreaseMoney ? decreaseMoney.toString() : '0',
         },
         {
           label: '状态',
