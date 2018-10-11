@@ -831,6 +831,7 @@ export default {
         <AppList
           ref="list"
           :list.sync="list"
+          :exit-url="false"
           api="/curriculum"
           title=""
         >

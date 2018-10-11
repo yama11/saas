@@ -353,8 +353,8 @@ export default {
               placeholder="请选择品类"
               @change="getProduct(formData.category_name)">
               <el-option
-                v-for="item in formBefore.categories"
-                :key="item.category_name"
+                v-for="(item,index) in formBefore.categories"
+                :key="item.category_name + index"
                 :label="item.category_name"
                 :value="item.category_name"/>
             </el-select>
@@ -365,8 +365,8 @@ export default {
               style="margin-left:5px;"
               @change="getPrice(formData.product_name)">
               <el-option
-                v-for="item in formBefore.product"
-                :key="item.product_name"
+                v-for="(item,index) in formBefore.product"
+                :key="item.product_name + index"
                 :label="item.product_name"
                 :value="item.product_name"/>
             </el-select>

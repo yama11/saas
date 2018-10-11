@@ -1,6 +1,6 @@
 <script>
 /**
- * @overview 商品中心 - 排班 - 选择时间
+ * @overview 课程管理 - 排班 - 选择时间
  *
  * @author suyanping
  */
@@ -288,6 +288,7 @@ export default {
         <AppList
           ref="list"
           :list.sync="list"
+          :exit-url="false"
           class="scheme-timeTable-list"
           api="/timetable"
           title=""
