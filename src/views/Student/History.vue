@@ -14,7 +14,7 @@ export default {
       curriculumId: this.$route.params.id.split('_')[1],
 
       columns: [
-        { prop: 'name', label: '课件名称' },
+        { prop: 'name', label: '课程名称' },
         { label: '上课时间',
           formatter: row => `
             ${row.date} ${row.start_time}-${row.end_time}

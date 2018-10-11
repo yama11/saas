@@ -51,7 +51,7 @@ export default {
 
   computed: {
     searchArr() {
-      const column = [{ prop: 'name', label: '学生姓名' }];
+      const column = [{ prop: 'student_name', label: '学生姓名' }];
 
       const searchList = [
         { componentType: 'AppSearchColumn', searchType: column },

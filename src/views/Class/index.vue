@@ -52,7 +52,7 @@ export default {
       const column = [
         { prop: 'curriculum_name', label: '课程名称' },
         { prop: 'department_name', label: '校区' },
-        { prop: 'name', label: '班级' },
+        { prop: 'name', label: '班级名称' },
       ];
       const department = this.$store.state.user.department_tree;
 
