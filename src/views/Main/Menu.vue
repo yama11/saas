@@ -225,8 +225,19 @@ export default {
   }),
 
   computed: {
+    children() {
+      return this.menus.flatMap(item => item.children);
+    },
+
     defaultActive() {
-      return this.$route.path;
+      const { path } = this.$route;
+      const pattern = /(\/\w+)/;
+
+      const match = (pattern.exec(path) || [])[0];
+      const target = this.children
+        .find(({ index }) => index.startsWith(match));
+
+      return target ? target.index : '';
     },
   },
 

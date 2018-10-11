@@ -113,9 +113,7 @@ export default {
 
     structureCreate(submit) {
       submit()
-        .then(() => {
-          this.getData();
-        });
+        .then(this.getData);
     },
 
     deleteNode(node, data) {
@@ -200,7 +198,7 @@ export default {
           <el-button
             type="text"
             size="mini"
-            @click="() => editNode(data.id)"
+            @click="() => editNode(data.id, node, data)"
           >
             编辑
           </el-button>
