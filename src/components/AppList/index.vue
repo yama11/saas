@@ -17,6 +17,12 @@ export default {
       default: '',
     },
 
+    // 是否将请求条件放在url上
+    exitUrl: {
+      type: Boolean,
+      default: true,
+    },
+
     // 固定的请求条件
     fixedQuery: {
       type: String,
@@ -46,11 +52,22 @@ export default {
     return {
       // 控制页面加载状态
       loading: false,
+
+      searchObj: {
+        page: 1,
+        per_page: 10,
+      },
     };
   },
 
   created() {
     if (!this.api) return;
+
+    if (!this.exitUrl) {
+      this.getData();
+
+      return;
+    }
 
     this.getList();
 
@@ -86,11 +103,41 @@ export default {
         });
     },
 
+    getData() {
+      this.loading = true;
+
+      const query = Object.keys(this.searchObj)
+        .map(key => `${key}=${this.searchObj[key]}`)
+        .join('&');
+
+      this.$http.get(`${this.api}?${query}`)
+        .then((data) => {
+          this.$emit('update:list', data);
+        })
+        .catch(() => {
+          this.$message.error('数据请求发生错误');
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+
     /**
      * 改变每页条数
      * @param {number} per_page 每页条数
      */
     onSizeChange(per_page) {
+      if (!this.exitUrl) {
+        this.searchObj = {
+          page: 1,
+          per_page,
+        };
+
+        this.getData();
+
+        return;
+      }
+
       this.$router.push({
         query: {
           ...this.$route.query,
@@ -105,6 +152,17 @@ export default {
      * @param {number} page 当前页数
      */
     onCurrentChange(page) {
+      if (!this.exitUrl) {
+        this.searchObj = {
+          ...this.searchObj,
+          page,
+        };
+
+        this.getData();
+
+        return;
+      }
+
       this.$router.push({
         query: {
           ...this.$route.query,
