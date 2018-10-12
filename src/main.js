@@ -1,4 +1,5 @@
 import ElementUI from 'element-ui';
+import 'core-js/fn/array/flat-map';
 import 'element-ui/lib/theme-chalk/index.css';
 import Vue from 'vue';
 import '@/style/index.css';
