@@ -89,7 +89,15 @@ export default{
     },
 
     returnHome() {
-      return this.$router.push('/draw-list');
+      if (this.from.matched.length) {
+        return this.$router.back();
+      }
+
+      const prefix = this.$route.path.match(/^\/\w+-/)[0];
+
+      const location = (prefix && prefix.concat('list')) || '/';
+
+      return this.$router.push(location);
     },
   },
 };

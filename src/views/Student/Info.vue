@@ -114,7 +114,15 @@ export default{
     },
 
     disreguardRefund() {
-      return this.$router.push('/student-list');
+      if (this.from.matched.length) {
+        return this.$router.back();
+      }
+
+      const prefix = this.$route.path.match(/^\/\w+-/)[0];
+
+      const location = (prefix && prefix.concat('list')) || '/';
+
+      return this.$router.push(location);
     },
   },
 };
