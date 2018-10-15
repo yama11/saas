@@ -3,6 +3,7 @@
     <el-cascader
       v-model="selectValue"
       :options="searchList"
+      :placeholder="placeholder"
       clearable
       size="small"
       change-on-select
@@ -34,6 +35,11 @@ export default {
     type: {
       type: Array,
       default: () => [],
+    },
+
+    placeholder: {
+      type: String,
+      default: '请选择',
     },
   },
 

@@ -80,10 +80,10 @@ export default {
       const department = this.$store.state.user.department_tree;
 
       const searchList = [
-        { selectValue: department, componentType: 'AppSearchAddress', searchType: 'scope', placeholder: '选择机构' },
+        { selectValue: department, componentType: 'AppSearchAddress', searchType: 'scope', placeholder: '请选择机构' },
         { componentType: 'AppSearchDate', searchType: 'created_at' },
+        { selectValue: this.freeze_status, componentType: 'AppSearchStatus', searchType: 'freeze_status', placeholder: '请选择状态' },
         { componentType: 'AppSearchColumn', searchType: column },
-        { selectValue: this.freeze_status, componentType: 'AppSearchStatus', searchType: 'freeze_status' },
       ];
       return searchList;
     },

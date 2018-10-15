@@ -92,10 +92,11 @@ export default {
       const department = this.$store.state.user.department_tree;
 
       const searchList = [
-        { selectValue: department, componentType: 'AppSearchAddress', searchType: 'scope', placeholder: '选择机构' },
+        { selectValue: department, componentType: 'AppSearchAddress', searchType: 'scope', placeholder: '请选择机构' },
         { selectValue: this.categories,
           componentType: 'AppSearchCascader',
-          searchType: ['category_name', 'product_name'] },
+          searchType: ['category_name', 'product_name'],
+          placeholder: '请选择品类' },
         { componentType: 'AppSearchColumn', searchType: column },
       ];
       return searchList;

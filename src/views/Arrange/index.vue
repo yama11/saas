@@ -21,8 +21,8 @@ export default {
         { prop: 'curriculum_name', label: '课程名称' },
         { prop: 'schedule_total', label: '课时数' },
         { prop: 'categories_name', label: '品类' },
-        { prop: 'department_name', label: '机构' },
-        { prop: 'name', label: '班级' },
+        { prop: 'department_name', label: '机构名称' },
+        { prop: 'name', label: '班级名称' },
         { label: '上课时间',
           formatter: row =>
             `
@@ -86,7 +86,7 @@ export default {
     searchArr() {
       const column = [
         { prop: 'curriculum_name', label: '课程名称' },
-        { prop: 'department_name', label: '校区' },
+        { prop: 'department_name', label: '机构名称' },
         { prop: 'name', label: '班级名称' },
       ];
 
@@ -96,10 +96,12 @@ export default {
         { selectValue: department, componentType: 'AppSearchAddress', searchType: 'scope', placeholder: '请选择机构' },
         { selectValue: this.arrangeStatus,
           componentType: 'AppSearchStatus',
-          searchType: 'class_status' },
+          searchType: 'class_status',
+          placeholder: '请选择状态' },
         { selectValue: this.categories,
           componentType: 'AppSearchCascader',
-          searchType: ['category_name', 'product_name'] },
+          searchType: ['category_name', 'product_name'],
+          placeholder: '请选择品类' },
         { componentType: 'AppSearchColumn', searchType: column },
       ];
 

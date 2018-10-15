@@ -3,9 +3,9 @@
     <el-select
       v-model="selectValue"
       :style="{ width: selectStatusWidth }"
+      :placeholder="placeholder"
       clearable
       size="small"
-      placeholder="请选择"
     >
       <el-option
         v-for="state in searchList"
@@ -41,6 +41,11 @@ export default {
     type: {
       type: String,
       default: '',
+    },
+
+    placeholder: {
+      type: String,
+      default: '请选择',
     },
   },
 

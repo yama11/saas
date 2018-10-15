@@ -35,6 +35,7 @@ export default {
         { selectValue: this.package_productions,
           componentType: 'AppSearchStatus',
           searchType: 'package_production',
+          placeholder: '请选择产品',
         },
       ];
       return searchList;
