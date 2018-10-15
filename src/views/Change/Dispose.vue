@@ -37,23 +37,23 @@ export default{
         student_id: null,
         parent_id: null,
         hour_id: null,
-        primordial:{
-          curriculum_id:null,
-          class_id:null,
-          department_id:null,
-          scheme_id:null,
+        primordial: {
+          curriculum_id: null,
+          class_id: null,
+          department_id: null,
+          scheme_id: null,
           hour_total: null,
           hour_remain: null,
-          hour_finish: null
+          hour_finish: null,
         },
-          current:{
-            curriculum_id:null,
-            class_id:null,
-            department_id:null,
-            scheme_id:null,
-            hour_total: null,
-            hour_remain:null
-          }
+        current: {
+          curriculum_id: null,
+          class_id: null,
+          department_id: null,
+          scheme_id: null,
+          hour_total: null,
+          hour_remain: null,
+        },
       },
     };
   },
@@ -160,27 +160,27 @@ export default{
     },
 
     confirmTurn() {
-      this.formData ={
+      this.formData = {
         student_id: null,
         parent_id: null,
         hour_id: null,
-        primordial:{
-          curriculum_id:null,
-          class_id:null,
-          department_id:null,
-          scheme_id:null,
+        primordial: {
+          curriculum_id: null,
+          class_id: null,
+          department_id: null,
+          scheme_id: null,
           hour_total: null,
           hour_remain: null,
-          hour_finish: null
+          hour_finish: null,
         },
-          current:{
-            curriculum_id:null,
-            class_id:null,
-            department_id:null,
-            scheme_id:null,
-            hour_total: null,
-            hour_remain:null
-          }
+        current: {
+          curriculum_id: null,
+          class_id: null,
+          department_id: null,
+          scheme_id: null,
+          hour_total: null,
+          hour_remain: null,
+        },
       };
       this.visible = true;
       this.$http.get(`/change/deal/${this.$route.params.id}`)
@@ -190,7 +190,6 @@ export default{
         .catch(({ message }) => {
           this.$message.error(message);
         });
-
     },
     cancelTurn() {
       this.$http.post(`/change/cancel/${this.$route.params.id}`)
@@ -290,16 +289,16 @@ export default{
           @on-submit="submitEdition"
         >
           <span
-          v-if="this.formData.primordial.hour_remain>=this.formData.current.hour_remain"
-           class="change-popup__span"
+            v-if="formData.primordial.hour_remain>=formData.current.hour_remain"
+            class="change-popup__span"
           >
-          转出课时数较多，多余课时将挂起
+            转出课时数较多，多余课时将挂起
           </span>
           <span
-           v-else
-           class="change-popup__span"
+            v-else
+            class="change-popup__span"
           >
-          转出课时数少,将为该家长生产差价订单,支付后转班成功
+            转出课时数少,将为该家长生产差价订单,支付后转班成功
           </span>
         </AppFormDialog>
       </div>
