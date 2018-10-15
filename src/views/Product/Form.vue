@@ -619,6 +619,18 @@ export default {
         });
     },
 
+    backPage() {
+      if (this.from.matched.length) {
+        return this.$router.back();
+      }
+
+      const prefix = this.$route.path.match(/^\/\w+-/)[0];
+
+      const location = (prefix && prefix.concat('list')) || '/';
+
+      return this.$router.push(location);
+    },
+
   },
 };
 </script>
@@ -804,6 +816,17 @@ export default {
         @focus="initTime"/>
     </el-form-item>
 
+    <div
+      v-if="lookId"
+      slot="footer"
+      class="product-form__footer">
+      <el-button
+        type="primary"
+        @click="backPage">
+        返回
+      </el-button>
+    </div>
+
     <AppFormDialog
       :visible.sync="visible"
       :rules="courseRules"
@@ -940,5 +963,10 @@ export default {
 
 .product-form__dialog .el-dialog__body{
   padding-top: 0px;
+}
+
+.product-form__footer button{
+  display: block;
+  margin: 0 auto;
 }
 </style>
