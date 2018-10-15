@@ -30,7 +30,7 @@ export default {
             至${row.end_date}
             `,
         },
-        { label: '约课/满课人数',
+        { label: '约课/满班人数',
           formatter: row =>
             `
           ${row.student_number}

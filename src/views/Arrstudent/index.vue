@@ -83,8 +83,10 @@ export default {
 
     searchArr() {
       const column = [
+        { prop: 'student_name', label: '学生姓名' },
+        { prop: 'phone', label: '家长电话' },
         { prop: 'curriculum_name', label: '课程名称' },
-        { prop: 'department_name', label: '培训机构' },
+        { prop: 'department_name', label: '约课机构' },
         { prop: 'class_name', label: '约课班级' },
       ];
       const department = this.$store.state.user.department_tree;

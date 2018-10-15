@@ -30,6 +30,31 @@ export default{
       toDay: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
 
       currentScheme: {},
+
+      visible: false,
+
+      formData: {
+        student_id: null,
+        parent_id: null,
+        hour_id: null,
+        primordial:{
+          curriculum_id:null,
+          class_id:null,
+          department_id:null,
+          scheme_id:null,
+          hour_total: null,
+          hour_remain: null,
+          hour_finish: null
+        },
+          current:{
+            curriculum_id:null,
+            class_id:null,
+            department_id:null,
+            scheme_id:null,
+            hour_total: null,
+            hour_remain:null
+          }
+      },
     };
   },
 
@@ -135,14 +160,47 @@ export default{
     },
 
     confirmTurn() {
-      this.$http.post(`/change/audit/${this.$route.params.id}`)
+      this.formData ={
+        student_id: null,
+        parent_id: null,
+        hour_id: null,
+        primordial:{
+          curriculum_id:null,
+          class_id:null,
+          department_id:null,
+          scheme_id:null,
+          hour_total: null,
+          hour_remain: null,
+          hour_finish: null
+        },
+          current:{
+            curriculum_id:null,
+            class_id:null,
+            department_id:null,
+            scheme_id:null,
+            hour_total: null,
+            hour_remain:null
+          }
+      };
+      this.visible = true;
+      this.$http.get(`/change/deal/${this.$route.params.id}`)
+        .then((res) => {
+          this.formData = { ...res };
+        })
+        .catch(({ message }) => {
+          this.$message.error(message);
+        });
+
+    },
+    cancelTurn() {
+      this.$http.post(`/change/cancel/${this.$route.params.id}`)
         .then(this.cancelForm)
         .cantch((err) => {
           this.$message.error(err.message);
         });
     },
-    cancelTurn() {
-      this.$http.post(`/change/cancel/${this.$route.params.id}`)
+    submitEdition() {
+      this.$http.post(`/change/audit/${this.$route.params.id}`)
         .then(this.cancelForm)
         .cantch((err) => {
           this.$message.error(err.message);
@@ -221,6 +279,29 @@ export default{
         >
           取消转班
         </el-button>
+        <AppFormDialog
+          :visible.sync="visible"
+          :model="formData"
+          url="/change"
+          label-width="5em"
+          object="转班"
+          width="500px"
+          class="change-popup"
+          @on-submit="submitEdition"
+        >
+          <span
+          v-if="this.formData.primordial.hour_remain>=this.formData.current.hour_remain"
+           class="change-popup__span"
+          >
+          转出课时数较多，多余课时将挂起
+          </span>
+          <span
+           v-else
+           class="change-popup__span"
+          >
+          转出课时数少,将为该家长生产差价订单,支付后转班成功
+          </span>
+        </AppFormDialog>
       </div>
 
     </div>
@@ -270,6 +351,16 @@ export default{
 }
 .change-info-note{
   margin-bottom: 30px;
+}
+.change-popup .el-form-item__content{
+text-align: center;
+}
+.change-popup__span{
+    height: 147px;
+    display: block;
+    font-size: 18px;
+    text-align: center;
+    padding-top: 20px;
 }
 </style>
 
