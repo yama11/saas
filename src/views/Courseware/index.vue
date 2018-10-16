@@ -52,9 +52,19 @@ export default {
   },
 
   beforeRouteUpdate(to, from, next) {
-    this.getCourseList(to);
+    const { subject, 'equal[structure_id]': structure } = to.query;
 
-    next();
+    const isQueryCorrect = structure && subject;
+
+    if (isQueryCorrect) {
+      this.getCourseList(to);
+      next();
+    } else {
+      const toRoute = this.courseInitQuery(to);
+      const treeKey = Number(toRoute.query['equal[structure_id]']);
+      this.$refs.tree.setCurrentKey(treeKey);
+      this.$router.push(toRoute);
+    }
   },
 
   methods: {
@@ -72,7 +82,8 @@ export default {
           ) {
             this.getCourseList();
           } else {
-            this.courseInit();
+            const route = this.courseInitQuery();
+            this.$router.push(route);
           }
         })
         .then(() => {
@@ -85,8 +96,8 @@ export default {
         });
     },
 
-    courseInit() {
-      if (this.subjects.length === 0) return;
+    courseInitQuery(route = this.$route) {
+      if (this.subjects.length === 0) return {};
 
       const subject = this.subjects[0].id;
       const structure =
@@ -97,17 +108,17 @@ export default {
       const query = structure && structure.id
         ?
         {
-          ...this.$route.query,
+          ...route.query,
           subject,
           'equal[structure_id]': structure.id,
         }
         :
         {
-          ...this.$route.query,
+          ...route.query,
           subject,
         };
 
-      this.$router.push({ query });
+      return { query };
     },
 
     getCourseList(route = this.$route) {
