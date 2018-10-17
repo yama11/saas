@@ -52,7 +52,7 @@ export default {
       return this.$permissions(`member_center.student.${key}`, text);
     },
     getPerformance(id) {
-      this.$router.push(`/course-performance/${this.studentId}_${id}`);
+      this.$router.push(`/student-performance/${this.studentId}_${id}`);
     },
   },
 };

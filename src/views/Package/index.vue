@@ -128,7 +128,7 @@ export default {
               @click="infoPackage(scope.row.id)"
             >查看</el-button>
             <el-button
-              v-if="scope.row.package_status !== 2&&checkPermission('unpublish')"
+              v-if="scope.row.package_status === 1&&checkPermission('unpublish')"
               type="danger"
               size="small"
               @click="deleteClass(scope.row.id)"
@@ -136,7 +136,7 @@ export default {
               停止
             </el-button>
             <el-button
-              v-else-if="checkPermission('publish')"
+              v-else-if="scope.row.package_status === 2&&checkPermission('publish')"
               type="danger"
               size="small"
               @click="publishClass(scope.row.id)"

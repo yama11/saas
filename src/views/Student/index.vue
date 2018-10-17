@@ -76,7 +76,7 @@ export default {
     },
 
     lookCourse(id, name) {
-      this.$router.push(`/course-info/${id}_${name}`);
+      this.$router.push(`/student-course/${id}_${name}`);
     },
 
     exportExcel() {

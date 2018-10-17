@@ -32,20 +32,20 @@ export default [
   },
   // 查看课程
   {
-    path: 'course-info/:id',
-    name: 'CourseLook',
+    path: 'student-course/:id',
+    name: 'StudentLook',
     component: StudentCourse,
   },
   // 上课历史
   {
-    path: 'course-history/:id',
-    name: 'CourseHistory',
+    path: 'student-history/:id',
+    name: 'StudentHistory',
     component: CourseHistory,
   },
   // 学习报告
   {
-    path: 'course-performance/:id',
-    name: 'CoursePerformance',
+    path: 'student-performance/:id',
+    name: 'StudentPerformance',
     component: CoursePerformance,
   },
 ];

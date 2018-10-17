@@ -54,7 +54,7 @@ export default {
       if (!statusName) {
         return this.$message.error('班级未开课!');
       }
-      this.$router.push(`/course-history/${id}_${schemeId}`);
+      this.$router.push(`/student-history/${id}_${schemeId}`);
     },
 
   },
