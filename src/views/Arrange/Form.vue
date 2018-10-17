@@ -149,7 +149,7 @@ export default{
           content: Code,
         },
         {
-          label: '约课/满课人数',
+          label: '约课/满班人数',
           content: `${studentNumber}/${Capacity}`,
         },
         {

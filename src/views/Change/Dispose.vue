@@ -160,37 +160,16 @@ export default{
     },
 
     confirmTurn() {
-      this.formData = {
-        student_id: null,
-        parent_id: null,
-        hour_id: null,
-        primordial: {
-          curriculum_id: null,
-          class_id: null,
-          department_id: null,
-          scheme_id: null,
-          hour_total: null,
-          hour_remain: null,
-          hour_finish: null,
-        },
-        current: {
-          curriculum_id: null,
-          class_id: null,
-          department_id: null,
-          scheme_id: null,
-          hour_total: null,
-          hour_remain: null,
-        },
-      };
-      this.visible = true;
       this.$http.get(`/change/deal/${this.$route.params.id}`)
         .then((res) => {
           this.formData = { ...res };
+          this.visible = true;
         })
         .catch(({ message }) => {
           this.$message.error(message);
         });
     },
+
     cancelTurn() {
       this.$http.post(`/change/cancel/${this.$route.params.id}`)
         .then(this.cancelForm)
@@ -198,6 +177,7 @@ export default{
           this.$message.error(err.message);
         });
     },
+
     submitEdition() {
       this.$http.post(`/change/audit/${this.$route.params.id}`)
         .then(this.cancelForm)
@@ -205,6 +185,7 @@ export default{
           this.$message.error(err.message);
         });
     },
+
   },
 };
 </script>
@@ -289,16 +270,22 @@ export default{
           @on-submit="submitEdition"
         >
           <span
-            v-if="formData.primordial.hour_remain>=formData.current.hour_remain"
+            v-if="formData.primordial.hour_remain > formData.current.hour_remain"
             class="change-popup__span"
           >
-            转出课时数较多，多余课时将挂起
+            转出课时数较多,多余课时将挂起
           </span>
           <span
-            v-else
+            v-if="formData.primordial.hour_remain<formData.current.hour_remain"
             class="change-popup__span"
           >
             转出课时数少,将为该家长生产差价订单,支付后转班成功
+          </span>
+          <span
+            v-if="formData.primordial.hour_remain === formData.current.hour_remain"
+            class="change-popup__span"
+          >
+            转出课时数与转入所需课时数相等,是否确认转班
           </span>
         </AppFormDialog>
       </div>
