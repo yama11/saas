@@ -163,6 +163,11 @@ export default {
 
       const curriculumArr = [...new Set(curriculumId)];
 
+      if (curriculumArr.length === 0) {
+        this.$message.error('请选择约课学生');
+        return;
+      }
+
       if (curriculumArr.length !== 1) {
         this.$message.error('请选择相同课程的学生');
         return;
