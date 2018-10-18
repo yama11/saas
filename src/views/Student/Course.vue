@@ -8,7 +8,7 @@ import list from '@/mixins/list';
 
 export default {
 
-  name: 'StudentInfo',
+  name: 'StudentCourse',
 
   mixins: [list],
 

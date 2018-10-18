@@ -33,7 +33,7 @@ export default [
   // 查看课程
   {
     path: 'student-course/:id',
-    name: 'StudentLook',
+    name: 'StudentCourse',
     component: StudentCourse,
   },
   // 上课历史
