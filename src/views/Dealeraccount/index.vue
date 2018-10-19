@@ -1,6 +1,6 @@
 <script>
 /**
- * @overview  经销商结算  - 经销商列表
+ * @overview  区域运营商结算  - 区域运营商列表
  *
  * @author yehaifeng
  */
@@ -17,7 +17,7 @@ export default {
       list: {},
 
       columns: [
-        { prop: 'dealer_name', label: '经销商' },
+        { prop: 'dealer_name', label: '区域运营商' },
         { label: '结算月份',
           formatter: row => `
         ${row.year}-${row.month}
@@ -66,7 +66,7 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
-    title="经销商结算"
+    title="区域运营商结算"
     api="/finance/dealer/index"
   >
     <AppSearch

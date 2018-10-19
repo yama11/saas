@@ -25,7 +25,7 @@ export default {
         },
         { prop: 'address', label: '详细地址' },
         { prop: 'phone', label: '联系电话' },
-        { prop: 'dealers_name', label: '所负责经销商' },
+        { prop: 'dealers_name', label: '所负责区域运营商' },
       ],
 
       list: {},
@@ -261,14 +261,14 @@ export default {
             />
           </el-form-item>
           <el-form-item
-            label="所负责经销商"
+            label="所负责区域运营商"
             prop="dealer_ids"
           >
             <el-select
               v-model="formData.dealer_ids"
               multiple
               filterable
-              placeholder="请选择所负责经销商"
+              placeholder="请选择所负责区域运营商"
             >
               <el-option
                 v-for="item in delaers"

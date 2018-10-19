@@ -1,6 +1,6 @@
 <script>
 /**
- * @overview 经销商结算  - 结算处理
+ * @overview 区域运营商结算  - 结算处理
  *
  * @author yehaifeng
  */
@@ -45,7 +45,7 @@ export default{
 
       return [
         {
-          label: '经销商',
+          label: '区域运营商',
           details: dealerName,
         },
         {

@@ -164,14 +164,14 @@ export default{
 </script>
 
 <template>
-  <div class="quit-info">
-    <header class="quit-info__header">
-      <h2 class="quit-info__title">退班详情</h2>
+  <div class="quit-details">
+    <header class="quit-details__header">
+      <h2 class="quit-details__title">退班详情</h2>
     </header>
     <div
       v-if="data"
     >
-      <section class="quit-info__buyer">
+      <section class="quit-details__buyer">
         <InfoNote
           v-for="note in buyer"
           :key="note.label"
@@ -180,7 +180,7 @@ export default{
         />
       </section>
       <div
-        class="quit-info__classtime"
+        class="quit-details__classtime"
       >
         <span>退班上课时间</span>
         :
@@ -188,18 +188,18 @@ export default{
         <span>{{ scheme.start_date.split(' ')[0] }}
           ~{{ scheme.end_date.split(' ')[0] }}</span><br>
         <span
-          class="quit-info__classtime__span"
+          class="quit-details__classtime__span"
         >
           <span
             v-for="(calendar,index) in scheme.calendar"
             :key="index"
-            class="quit-info__classtime__week"
+            class="quit-details__classtime__week"
           >
             {{ toDay[calendar.day-1] }}{{ calendar.start_time }}~{{ calendar.end_time }}
           </span>
         </span>
       </div>
-      <div class="quit-info__but">
+      <div class="quit-details__but">
         <el-button
           type="primary"
           @click="disreguardRefund"
@@ -213,42 +213,42 @@ export default{
 </template>
 
 <style lang="postcss">
-.quit-info__title{
+.quit-details__title{
   padding-left: 1em;
 
 }
-.quit-info__classtime{
+.quit-details__classtime{
   padding-left: 4em;
   padding-bottom:30px;
 }
-.quit-info__classtime__span{
+.quit-details__classtime__span{
   display: block;
   width: 40%;
-  height: 270px;
+  height: 225px;
   overflow-y: scroll;
   margin-left: 60px;
   margin-right: 10px;
 }
-.quit-info__classtime__week{
+.quit-details__classtime__week{
   display: inline-block;
   margin:10px 10px;
 }
-.quit-info__buyer{
+.quit-details__buyer{
   margin-top: 30px;
   padding-left: 4em;
   font-size: 16px;
   display: flex;
   flex-wrap: wrap;
 }
-.quit-info__buyer .order-info-note{
+.quit-details__buyer .order-info-note{
     width: 50%;
     margin-bottom: 30px;
   }
-.quit-info__but{
+.quit-details__but{
   display: flex;
   justify-content: center;
 }
-.quit-info-note{
+.quit-details-note{
   margin-bottom: 30px;
 }
 </style>

@@ -204,12 +204,12 @@ export default{
           <span>{{ schemeArr.start_date.split(' ')[0] }}
             ~{{ schemeArr.end_date.split(' ')[0] }}</span><br>
           <span
-            class="change-info__classtime__span"
+            class="change-info__time__span"
           >
             <span
               v-for="(calendar,index) in scheme.calendar"
               :key="index"
-              class="change-info__classtime__week"
+              class="change-info__time__week"
             >
               {{ toDay[calendar.day-1] }}&nbsp;{{ calendar.start_time }}~{{ calendar.end_time }}
             </span>
@@ -223,12 +223,12 @@ export default{
           <span>{{ scheme.start_date.split(' ')[0] }}
             ~{{ scheme.end_date.split(' ')[0] }}</span><br>
           <span
-            class="change-info__classtime__span"
+            class="change-info__time__span"
           >
             <span
               v-for="(calendar,index) in scheme.calendar"
               :key="index"
-              class="change-info__classtime__week"
+              class="change-info__time__week"
             >
               {{ toDay[calendar.day-1] }}&nbsp;{{ calendar.start_time }}~{{ calendar.end_time }}
             </span>
@@ -296,14 +296,14 @@ export default{
 .change-info__comeTime{
   width: 50%;
 }
-.change-info__classtime__span{
+.change-info__time__span{
   display: block;
-  height: 270px;
+  height: 225px;
   overflow-y: scroll;
   margin-left: 60px;
   margin-right: 55px;
 }
-.change-info__classtime__week{
+.change-info__time__week{
   display: inline-block;
   margin:10px 10px;
 }

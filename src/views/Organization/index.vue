@@ -16,7 +16,7 @@ export default {
       columns: [
         { prop: 'name', label: '机构名称' },
         { prop: 'number', label: '机构编码' },
-        { prop: 'dealer.name', label: '所属经销商' },
+        { prop: 'dealer.name', label: '所属区域运营商' },
         { prop: 'account', label: '管理员账号' },
         { label: '地区',
           formatter: (row) => {
@@ -52,7 +52,7 @@ export default {
       const column = [
         { prop: 'name', label: '机构名称' },
         { prop: 'number', label: '机构编码' },
-        { prop: 'dealer_name', label: '所属经销商' },
+        { prop: 'dealer_name', label: '所属区域运营商' },
         { prop: 'account', label: '账号' },
       ];
 

@@ -1,6 +1,6 @@
 <script>
 /**
- * @overview  经销商结算  - 经销商明细
+ * @overview  区域运营商结算  - 区域运营商明细
  *
  * @author yehaifeng
  */
@@ -53,7 +53,7 @@ export default {
     <template
       v-if="checkPermission('index')"
       slot-scope="props">
-      <span style="margin-left:10px;">经销商 : {{ list.dealerName }}</span>
+      <span style="margin-left:10px;">区域运营商 : {{ list.dealerName }}</span>
       <span style="margin-left:80px;">结算月份 : {{ list.date }}</span>
       <span style="margin-left:80px;">课耗数 : {{ list.decreaseCount }}</span>
       <span style="margin-left:80px;">结算金额 : {{ list.decreaseMoney }}</span>

@@ -253,7 +253,7 @@ export default{
 .quit-info__classtime__span{
   display: block;
   width: 40%;
-  height: 270px;
+  height: 225px;
   overflow-y: scroll;
   margin-left: 60px;
   margin-right: 10px;

@@ -126,7 +126,7 @@ export default {
             index: '/organization-list',
           },
           {
-            name: '经销商管理',
+            name: '区域运营商管理',
             permission: 'system.dealer',
             index: '/dealer-list',
           },
@@ -210,7 +210,7 @@ export default {
             index: '/draw-list',
           },
           {
-            name: '经销商结算',
+            name: '区域运营商结算',
             permission: 'finance.dealer',
             index: '/account-list',
           },

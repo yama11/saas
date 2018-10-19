@@ -1,6 +1,6 @@
 <script>
 /**
- * @overview 经销商管理  - 经销商列表
+ * @overview 区域运营商管理  - 区域运营商列表
  *
  * @author yehaifeng
  */
@@ -16,7 +16,7 @@ export default {
     return {
 
       columns: [
-        { prop: 'name', label: '经销商名称' },
+        { prop: 'name', label: '区域运营商名称' },
         { prop: 'partner.name', label: '所属运营商' },
         { prop: 'account', label: '管理员账号' },
         { label: '地区',
@@ -59,7 +59,7 @@ export default {
 
       rules: {
         name: [
-          this.$rules.required('经销商名称'),
+          this.$rules.required('区域运营商名称'),
         ],
         places: [
           this.$rules.required('所在地区', 'array'),
@@ -90,7 +90,7 @@ export default {
 
     searchArr() {
       const column = [
-        { prop: 'name', label: '经销商名称' },
+        { prop: 'name', label: '区域运营商名称' },
         { prop: 'account', label: '管理员账号' },
         { prop: 'phone', label: '联系电话' },
       ];
@@ -121,7 +121,7 @@ export default {
       this.indexBefore();
 
       if (id) {
-        this.title = '编辑经销商';
+        this.title = '编辑区域运营商';
         this.formData = {
           id,
           name,
@@ -135,7 +135,7 @@ export default {
         return;
       }
 
-      this.title = '添加经销商';
+      this.title = '添加区域运营商';
       this.formData = {
         name: '',
         places: [],
@@ -148,7 +148,7 @@ export default {
     },
 
     deleteDealer(id) {
-      this.$_listMixin_alertDeleteItem(id, this.list.data, '经销商', '/dealer');
+      this.$_listMixin_alertDeleteItem(id, this.list.data, '区域运营商', '/dealer');
     },
 
     submitEdition(submit) {
@@ -163,9 +163,9 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
-    :create-label="checkPermission('store', '添加经销商')"
+    :create-label="checkPermission('store', '添加区域运营商')"
     api="/dealer"
-    title="经销商管理"
+    title="区域运营商管理"
     @create="editDealer"
   >
     <AppSearch
@@ -224,13 +224,13 @@ export default {
         @on-submit="submitEdition"
       >
         <el-form-item
-          label="经销商名称"
+          label="区域运营商名称"
           prop="name"
         >
           <el-input
             v-model="formData.name"
             maxlength="20"
-            placeholder="请输入经销商名称"
+            placeholder="请输入区域运营商名称"
           />
         </el-form-item>
         <el-form-item

@@ -43,7 +43,7 @@ export default {
           this.$rules.required('机构编码'),
         ],
         dealer_id: [
-          this.$rules.required('所属经销商', 'number'),
+          this.$rules.required('所属区域运营商', 'number'),
         ],
         phone: [
           this.$rules.required('联系电话'),
@@ -163,13 +163,13 @@ export default {
           />
         </el-form-item>
         <el-form-item
-          label="所属经销商"
+          label="所属区域运营商"
           prop="dealer_id"
           class="organization-form__dealer"
         >
           <el-select
             v-model="formDate.dealer_id"
-            placeholder="请输入所属经销商"
+            placeholder="请输入所属区域运营商"
           >
             <el-option
               v-for="role in deBefore"

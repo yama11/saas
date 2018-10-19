@@ -1,7 +1,7 @@
 import DealerList from './index.vue';
 
 export default [
-  // 经销商管理 - 经销商列表
+  // 区域运营商管理 - 区域运营商列表
   {
     path: 'dealer-list',
     name: 'DealerList',

@@ -237,14 +237,14 @@ export default {
 
         <el-form-item
           prop="dealer_id"
-          label="所属经销商"
+          label="所属区域运营商"
           style="margin-left:50px;"
         >
           <el-select
             v-model="departmentObj.dealer_id"
             filterable
             clearable
-            placeholder="选择经销商"
+            placeholder="选择区域运营商"
             style="width:300px;"
             @change="getDepartmentDealers(departmentObj.dealer_id)"
           >
@@ -285,7 +285,7 @@ export default {
             label="详细地址"/>
           <el-table-column
             prop="dealer.name"
-            label="所属经销商"/>
+            label="所属区域运营商"/>
         </el-table>
       </el-form-item>
 

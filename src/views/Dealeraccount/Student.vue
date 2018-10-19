@@ -1,6 +1,6 @@
 <script>
 /**
- * @overview  经销商结算  - 经销商明细 - 机构明细
+ * @overview  区域运营商结算  - 区域运营商明细 - 机构明细
  *
  * @author yehaifeng
  */

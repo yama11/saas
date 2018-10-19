@@ -19,7 +19,7 @@ export default {
 
       columns: [
         { prop: 'department_name', label: '培训机构' },
-        { prop: 'dealer_name', label: '所属经销商' },
+        { prop: 'dealer_name', label: '所属区域运营商' },
         { label: '结算月份',
           formatter: row => `
         ${row.year}-${row.month}

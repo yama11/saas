@@ -50,7 +50,7 @@ export default{
           details: departmentName,
         },
         {
-          label: '经销商',
+          label: '区域运营商',
           details: dealerName,
         },
         {
