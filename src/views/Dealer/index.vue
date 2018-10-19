@@ -17,7 +17,7 @@ export default {
 
       columns: [
         { prop: 'name', label: '区域运营商名称' },
-        { prop: 'partner.name', label: '所属运营商' },
+        { prop: 'partner.name', label: '平台' },
         { prop: 'account', label: '管理员账号' },
         { label: '地区',
           formatter: (row) => {
@@ -65,7 +65,7 @@ export default {
           this.$rules.required('所在地区', 'array'),
         ],
         partner_id: [
-          this.$rules.required('所属运营商', 'number'),
+          this.$rules.required('所属平台', 'number'),
         ],
         address: [
           this.$rules.required('地址'),
@@ -218,7 +218,7 @@ export default {
         :id="formData.id"
         :rules ="rules"
         url="/dealer"
-        label-width="7em"
+        label-width="10em"
         width="650px"
         class="dealer-form"
         @on-submit="submitEdition"
@@ -244,13 +244,13 @@ export default {
           />
         </el-form-item>
         <el-form-item
-          label="所属运营商"
+          label="所属平台"
           prop="partner_id"
         >
           <el-select
             v-model="formData.partner_id"
             filterable
-            placeholder="请选择或者输入所属运营商"
+            placeholder="请选择或者输入所属平台"
           >
             <el-option
               v-for="item in partners"

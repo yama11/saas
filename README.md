@@ -48,7 +48,7 @@ vue + vue-router + vuex + element-ui
         |-- Organization        // 系统维护 -> 机构管理   -   叶海峰
         |-- Package             // 系统维护 -> 版本管理   -   叶海峰
         |-- School              // 系统维护 -> 生源学校   -   叶海峰
-        |-- Partner             // 系统维护 -> 城市运营商管理   -   叶海峰
+        |-- Partner             // 系统维护 -> 麦克斯韦平台   -   叶海峰
         |-- Arrange             // 排班上课 -> 上课安排   -   叶海峰
         |-- Arrstudent          // 排班上课 -> 约课学生   -   叶海峰
         |-- Class               // 排班上课 -> 约课班级   -   叶海峰

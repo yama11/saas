@@ -131,7 +131,7 @@ export default {
     :rules="rules"
     :id="id"
     :object="id ?'编辑机构':'添加机构'"
-    label-width="7em"
+    label-width="9em"
     url="/department"
     @on-submit="submitEdition"
     @on-cancel="cancelForm"

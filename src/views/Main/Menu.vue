@@ -131,7 +131,7 @@ export default {
             index: '/dealer-list',
           },
           {
-            name: '城市运营商管理',
+            name: '麦克斯韦平台',
             permission: 'system.partner',
             index: '/partner-list',
           },

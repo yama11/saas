@@ -1,6 +1,6 @@
 <script>
 /**
- * @overview 城市运营商 - 运营商列表
+ * @overview 麦克斯韦平台 - 运营商列表
  *
  * @author yehaifeng
 */
@@ -16,7 +16,7 @@ export default {
     return {
 
       columns: [
-        { prop: 'name', label: '运营商名称' },
+        { prop: 'name', label: '平台' },
         { prop: 'account', label: '账号' },
         { label: '地区',
           formatter: row => `
@@ -112,36 +112,36 @@ export default {
       return this.$permissions(`system.partner.${key}`, text);
     },
 
-    toCreatePartner(id, name, phone, address, places, account, dealer_ids) {
-      this.visible = true;
+    // toCreatePartner(id, name, phone, address, places, account, dealer_ids) {
+    //   this.visible = true;
 
-      if (id) {
-        this.title = '编辑运营商';
-        this.formData = {
-          id,
-          name,
-          phone,
-          address,
-          places,
-          account,
-          dealer_ids,
-        };
-        this.indexBefore(id);
-        return;
-      }
+    //   if (id) {
+    //     this.title = '编辑运营商';
+    //     this.formData = {
+    //       id,
+    //       name,
+    //       phone,
+    //       address,
+    //       places,
+    //       account,
+    //       dealer_ids,
+    //     };
+    //     this.indexBefore(id);
+    //     return;
+    //   }
 
-      this.title = '添加运营商';
-      this.formData = {
-        name: '',
-        places: [],
-        address: '',
-        phone: '',
-        account: '',
-        password: '',
-        dealer_ids: [],
-      };
-      this.indexBefore();
-    },
+    //   this.title = '添加运营商';
+    //   this.formData = {
+    //     name: '',
+    //     places: [],
+    //     address: '',
+    //     phone: '',
+    //     account: '',
+    //     password: '',
+    //     dealer_ids: [],
+    //   };
+    //   this.indexBefore();
+    // },
 
     partnerDelete(id) {
       this.$_listMixin_alertDeleteItem(
@@ -167,10 +167,8 @@ export default {
     <AppList
       ref="list"
       :list.sync="list"
-      :create-label="checkPermission('store')?'添加运营商':null"
       api="/partner"
-      title="城市运营商列表"
-      @create="toCreatePartner"
+      title="麦克斯韦平台"
     >
       <AppSearch
         v-if="checkPermission('index')"
@@ -217,7 +215,7 @@ export default {
           :id="formData.id"
           :rules ="rules"
           url="/partner"
-          label-width="8em"
+          label-width="9em"
           width="650px"
           class="partner-form"
           @on-submit="submitEdition"
