@@ -4,6 +4,7 @@
  *
  * @author yehaifeng
  */
+import errorHandler from '@/components/AppFormAlert/errorHandler';
 import list from '@/mixins/list';
 import ChangeEdition from '../Change/Edition';
 import QuitEdition from '../Quit/Edition';
@@ -152,7 +153,9 @@ export default {
           }
         })
         .catch((error) => {
-          this.$message.error(error.errors.id.toString());
+          const errorMessage = errorHandler(error);
+
+          this.$message.error(errorMessage[0]);
         });
       this.editionInfo.id = value.id;
     },
@@ -164,8 +167,10 @@ export default {
         .then((res) => {
           this.editionQuit.formData = { ...res };
         })
-        .catch(({ message }) => {
-          this.$message.error(message);
+        .catch((error) => {
+          const errorMessage = errorHandler(error);
+
+          this.$message.error(errorMessage[0]);
         });
     },
 

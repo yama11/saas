@@ -4,6 +4,7 @@
  *
  * @author yehaifeng
  */
+import errorHandler from '@/components/AppFormAlert/errorHandler';
 import { form } from '@/mixins';
 import InfoNote from '../components/InfoNote';
 
@@ -115,15 +116,19 @@ export default{
     freezeAudit() {
       this.$http.post(`/freeze/audit/${this.$route.params.id}`)
         .then(this.cancelForm)
-        .cantch((err) => {
-          this.$message.error(err.message);
+        .catch((error) => {
+          const errorMessage = errorHandler(error);
+
+          this.$message.error(errorMessage[0]);
         });
     },
     freezeCancel() {
       this.$http.post(`/freeze/cancel/${this.$route.params.id}`)
         .then(this.cancelForm)
-        .cantch((err) => {
-          this.$message.error(err.message);
+        .catch((error) => {
+          const errorMessage = errorHandler(error);
+
+          this.$message.error(errorMessage[0]);
         });
     },
 

@@ -4,6 +4,7 @@
  *
  * @author yehaifeng
  */
+import errorHandler from '@/components/AppFormAlert/errorHandler';
 import list from '@/mixins/list';
 import ChangeEdition from './Edition';
 
@@ -129,7 +130,9 @@ export default {
           }
         })
         .catch((error) => {
-          this.$message.error(error.errors.id.toString());
+          const errorMessage = errorHandler(error);
+
+          this.$message.error(errorMessage[0]);
         });
       this.id = value.id;
     },

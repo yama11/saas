@@ -4,9 +4,9 @@
  *
  * @author yehaifeng
  */
+import errorHandler from '@/components/AppFormAlert/errorHandler';
 import list from '@/mixins/list';
 import QuitEdition from './Edition';
-
 
 export default {
 
@@ -97,8 +97,10 @@ export default {
         .then((res) => {
           this.editionInfo.formData = { ...res };
         })
-        .catch(({ message }) => {
-          this.$message.error(message);
+        .catch((error) => {
+          const errorMessage = errorHandler(error);
+
+          this.$message.error(errorMessage[0]);
         });
     },
 

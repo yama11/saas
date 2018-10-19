@@ -4,6 +4,7 @@
  *
  * @author  yehaifeng
  */
+import errorHandler from '@/components/AppFormAlert/errorHandler';
 import list from '@/mixins/list';
 
 export default {
@@ -110,8 +111,10 @@ export default {
         .then(() => {
           this.$refs.list.getList();
         })
-        .catch((err) => {
-          this.$message.error(err.message);
+        .catch((error) => {
+          const errorMessage = errorHandler(error);
+
+          this.$message.error(errorMessage[0]);
         });
     },
 

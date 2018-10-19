@@ -4,6 +4,7 @@
  *
  * @author yehaifeng
  */
+import errorHandler from '@/components/AppFormAlert/errorHandler';
 import { form } from '@/mixins';
 import InfoNote from '../components/InfoNote';
 
@@ -173,16 +174,20 @@ export default{
     cancelTurn() {
       this.$http.post(`/change/cancel/${this.$route.params.id}`)
         .then(this.cancelForm)
-        .cantch((err) => {
-          this.$message.error(err.message);
+        .catch((error) => {
+          const errorMessage = errorHandler(error);
+
+          this.$message.error(errorMessage[0]);
         });
     },
 
     submitEdition() {
       this.$http.post(`/change/audit/${this.$route.params.id}`)
         .then(this.cancelForm)
-        .cantch((err) => {
-          this.$message.error(err.message);
+        .catch((error) => {
+          const errorMessage = errorHandler(error);
+
+          this.$message.error(errorMessage[0]);
         });
     },
 
