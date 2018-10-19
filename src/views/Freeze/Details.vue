@@ -4,6 +4,7 @@
  *
  * @author yehaifeng
  */
+import errorHandler from '@/components/AppFormAlert/errorHandler';
 import { form } from '@/mixins';
 import InfoNote from '../components/InfoNote';
 
@@ -112,6 +113,15 @@ export default{
         });
     },
 
+    cancelForm() {
+      if (this.from.matched.length) {
+        return this.$router.back();
+      }
+      const prefix = this.$route.path.match(/^\/\w+-/)[0];
+      const location = (prefix && prefix.concat('list')) || '/';
+      return this.$router.push(location);
+    },
+
     disreguardRefund() {
       if (this.from.matched.length) {
         return this.$router.back();
@@ -122,6 +132,16 @@ export default{
       const location = (prefix && prefix.concat('list')) || '/';
 
       return this.$router.push(location);
+    },
+
+    disreguardCancel() {
+      this.$http.post(`/freeze/cancel/${this.$route.params.id}`)
+        .then(this.cancelForm)
+        .catch((error) => {
+          const errorMessage = errorHandler(error);
+
+          this.$message.error(errorMessage[0]);
+        });
     },
   },
 };
@@ -169,6 +189,12 @@ export default{
           @click="disreguardRefund"
         >
           确定
+        </el-button>
+        <el-button
+          v-if="data.freeze_status ===2"
+          @click="disreguardCancel"
+        >
+          取消
         </el-button>
       </div>
 
