@@ -38,10 +38,7 @@ export default {
           `,
         },
         { prop: 'class_status_name', label: '状态' },
-        { prop: 'studio_name', label: '直播间' },
-        { prop: 'anchor_name', label: '直播教师' },
         { prop: 'classroom_name', label: '教室' },
-        { prop: 'audience_name', label: '辅师' },
       ],
 
       list: {},
@@ -88,6 +85,7 @@ export default {
         { prop: 'curriculum_name', label: '课程名称' },
         { prop: 'department_name', label: '机构名称' },
         { prop: 'name', label: '班级名称' },
+        { prop: 'studio_name', label: '直播间' },
       ];
 
       const department = this.$store.state.user.department_tree;
