@@ -17,8 +17,7 @@ export default {
       list: {},
 
       columns: [
-        { prop: 'client_phone', label: '购买手机号' },
-        { prop: 'student_name', label: '小孩' },
+        { prop: 'order_sn', label: '订单编号' },
         { prop: 'department_name', label: '机构' },
         { prop: 'merchandise_name', label: '商品名称' },
         { prop: 'order_time', label: '下单时间' },
@@ -34,8 +33,7 @@ export default {
   computed: {
     searchArr() {
       const column = [
-        { prop: 'client_phone', label: '手机号' },
-        { prop: 'student_name', label: '小孩姓名' },
+        { prop: 'order_sn', label: '订单编号' },
         { prop: 'merchandise_name', label: '商品名称' },
       ];
 
