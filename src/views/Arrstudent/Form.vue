@@ -40,7 +40,6 @@ export default{
 
       const {
         student_name: studentName,
-        phone: Phone,
         curriculum_name: curriculumName,
         course_number: courseNumber,
         categories_name: categoriesName,
@@ -52,10 +51,6 @@ export default{
         {
           label: '约课学生',
           content: studentName,
-        },
-        {
-          label: '家长电话',
-          content: Phone,
         },
         {
           label: '课程名称',

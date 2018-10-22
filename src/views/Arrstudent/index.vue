@@ -71,7 +71,6 @@ export default {
     columns() {
       return [
         { prop: 'student_name', label: '学生姓名' },
-        { prop: 'phone', label: '家长电话' },
         { prop: 'curriculum_name', label: '约课课程' },
         { prop: 'course_number', label: '课时数' },
         { prop: 'categories_name', label: '品类' },
@@ -84,7 +83,7 @@ export default {
     searchArr() {
       const column = [
         { prop: 'student_name', label: '学生姓名' },
-        { prop: 'phone', label: '家长电话' },
+        { prop: 'order_number', label: '订单编号' },
         { prop: 'curriculum_name', label: '课程名称' },
         { prop: 'department_name', label: '约课机构' },
         { prop: 'class_name', label: '约课班级' },
@@ -227,7 +226,7 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
-    create-label="调度"
+    :create-label="checkPermission('dispatching')?'调度':null"
     title="约课学生"
     api="/intention"
     @create="updateProcess"
