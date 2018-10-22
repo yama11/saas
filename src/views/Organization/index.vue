@@ -52,7 +52,6 @@ export default {
       const column = [
         { prop: 'name', label: '机构名称' },
         { prop: 'number', label: '机构编码' },
-        { prop: 'dealer_name', label: '所属区域运营商' },
         { prop: 'account', label: '账号' },
       ];
 
@@ -69,6 +68,9 @@ export default {
   methods: {
     checkPermission(key, text) {
       return this.$permissions(`system.department.${key}`, text);
+    },
+    Permission(key, text) {
+      return this.$permissions(`system.manager_teacher.${key}`, text);
     },
 
     toCreate() {
@@ -120,7 +122,7 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
-              v-if="checkPermission('update')"
+              v-if="Permission('index')"
               size="small"
               @click="managerTeacher(scope.row.id)"
             >辅师管理</el-button>
