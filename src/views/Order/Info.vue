@@ -38,23 +38,6 @@ export default {
   },
 
   computed: {
-    buyer() {
-      const {
-        student_name: studentName,
-        client_phone: clientPhone,
-      } = this.data;
-
-      return [
-        {
-          label: '小孩姓名',
-          content: studentName,
-        },
-        {
-          label: '手机号码',
-          content: clientPhone,
-        },
-      ];
-    },
 
     order() {
       const {
@@ -67,6 +50,7 @@ export default {
         discount_money: discountMoney,
         pay_type_name: payTypeName,
         paid_money: paidMoney,
+        department_name: departmentName,
       } = this.data;
 
       return [
@@ -105,6 +89,10 @@ export default {
         {
           label: '实付金额',
           content: paidMoney ? `￥${paidMoney}` : '',
+        },
+        {
+          label: '所属机构',
+          content: departmentName,
         },
       ];
     },
@@ -149,17 +137,6 @@ export default {
       v-if="data"
       class="order-info__body"
     >
-      <div class="order-info__section-header">
-        买家信息
-      </div>
-
-      <section class="order-info__buyer">
-        <InfoNote
-          v-for="note in buyer"
-          :key="note.label"
-          v-bind="note"
-        />
-      </section>
 
       <div class="order-info__section-header">
         订单详情
