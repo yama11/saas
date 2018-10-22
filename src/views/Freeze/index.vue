@@ -65,6 +65,21 @@ export default {
         formData: {},
       },
 
+      unvisible: false,
+
+      unformData: {
+        hour_id: null,
+        student_id: null,
+        parent_id: null,
+        curriculum_id: null,
+        department_id: null,
+        scheme_id: null,
+        hour_total: null,
+        hour_remain: null,
+        hour_finish: null,
+        refund_money: null,
+      },
+
     };
   },
 
@@ -174,6 +189,21 @@ export default {
         });
     },
 
+    unfreeze(id) {
+      this.unvisible = false;
+      this.unformData = {};
+      this.$http.post('/freeze/create', { id })
+        .then((res) => {
+          this.unformData = { ...res };
+          this.unvisible = true;
+        })
+        .catch((error) => {
+          const errorMessage = errorHandler(error);
+
+          this.$message.error(errorMessage[0]);
+        });
+    },
+
     freezeInfo(id) {
       this.$router.push(`/freeze-info/${id}`);
     },
@@ -198,6 +228,19 @@ export default {
 
     submitEdition(submit) {
       submit().then(() => this.$refs.list.getList());
+    },
+
+    submitUnfreeze(id) {
+      this.$http.post(`/freeze/cancel/${id}`)
+        .then(() => this.$refs.list.getList())
+        .catch((error) => {
+          const errorMessage = errorHandler(error);
+
+          this.$message.error(errorMessage[0]);
+        })
+        .finally(() => {
+          this.unvisible = false;
+        });
     },
   },
 };
@@ -229,7 +272,7 @@ export default {
         />
         <el-table-column
           label="操作"
-          width="230px"
+          width="300px"
         >
           <template slot-scope="scope">
             <el-button
@@ -247,6 +290,11 @@ export default {
               size="small"
               @click="quitDeal(scope.row.hour_id)"
             >退班</el-button>
+            <el-button
+              v-if="scope.row.freeze_status === 2"
+              size="small"
+              @click="unfreeze(scope.row.id)"
+            >解冻</el-button>
             <el-button
               v-if="scope.row.freeze_status === 1 &&checkPermission('audit')"
               size="small"
@@ -269,6 +317,20 @@ export default {
               width="458px"
               @on-submit="submitEdition"
             />
+            <AppFormDialog
+              :visible.sync="unvisible"
+              :model="unformData"
+              url="/freeze"
+              label-width="5em"
+              object="解冻"
+              width="500px"
+              class="freeze-popup"
+              @on-submit="submitUnfreeze(unformData.hour_id)"
+            >
+              <span
+                class="freeze-popup__span"
+              >确定解冻该学生该课程?</span>
+            </AppFormDialog>
           </template>
         </el-table-column>
       </el-table>
