@@ -52,13 +52,11 @@ export default {
     searchArr() {
       const column = [
         { prop: 'curriculum_name', label: '课程名称' },
-        { prop: 'department_name', label: '机构名称' },
+        { prop: 'code', label: '班级编码' },
         { prop: 'name', label: '班级名称' },
       ];
-      const department = this.$store.state.user.department_tree;
 
       const searchList = [
-        { selectValue: department, componentType: 'AppSearchAddress', searchType: 'scope', placeholder: '请选择机构' },
         { selectValue: this.status, componentType: 'AppSearchStatus', searchType: 'class_status', placeholder: '请选择状态' },
         { selectValue: this.categories,
           componentType: 'AppSearchCascader',
