@@ -48,6 +48,10 @@ export default {
 
   methods: {
 
+    checkPermission(key, text) {
+      return this.$permissions(`finance.account_detail.${key}`, text);
+    },
+
     checkInfo(value) {
       if (value.account_type === 5) {
         this.$router.push(`/quit-info/${value.instance_id}`);
@@ -86,6 +90,7 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
+              v-if="checkPermission('show')"
               size="small"
               @click="checkInfo(scope.row)"
             >

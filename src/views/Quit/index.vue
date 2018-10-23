@@ -92,7 +92,7 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
-    create-label="退班"
+    :create-label="checkPermission('store')?'退班':null"
     api="/quit"
     title="退班管理"
     @create="toQuitClass"

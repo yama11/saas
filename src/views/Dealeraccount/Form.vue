@@ -51,7 +51,7 @@ export default {
     title="机构结算"
   >
     <template
-      v-if="checkPermission('index')"
+      v-if="checkPermission('department_index')"
       slot-scope="props">
       <span style="margin-left:10px;">区域运营商 : {{ list.dealerName }}</span>
       <span style="margin-left:80px;">结算月份 : {{ list.date }}</span>

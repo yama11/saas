@@ -250,7 +250,7 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
-    create-label="挂起"
+    :create-label="checkPermission('store')?'挂起':null"
     api="/freeze"
     title="挂起管理"
     @create="toCreateFreeze"
@@ -291,7 +291,7 @@ export default {
               @click="quitDeal(scope.row.hour_id)"
             >退班</el-button>
             <el-button
-              v-if="scope.row.freeze_status === 2"
+              v-if="scope.row.freeze_status === 2&&checkPermission('cancel')"
               size="small"
               @click="unfreeze(scope.row.id)"
             >解冻</el-button>

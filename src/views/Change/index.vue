@@ -97,7 +97,7 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
-    create-label="转班"
+    :create-label="checkPermission('student')?'转班':null"
     api="/change"
     title="转班管理"
     @create="toCreateUser"

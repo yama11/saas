@@ -91,6 +91,7 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
+              v--if="checkPermission('student_index')"
               size="small"
               @click="dealerDetail(scope.row.dealer_id,scope.row.year,scope.row.month)"
             >

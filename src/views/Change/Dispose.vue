@@ -138,6 +138,10 @@ export default{
 
   methods: {
 
+    checkPermission(key, text) {
+      return this.$permissions(`dispatch_center.change.${key}`, text);
+    },
+
     getOrderInfo() {
       const url = `/change/deal/${this.$route.params.id}`;
       this.$http.get(url)
@@ -259,6 +263,7 @@ export default{
           确定转班
         </el-button>
         <el-button
+          v-if="checkPermission('cancel')"
           type="primary"
           @click="cancelTurn"
         >

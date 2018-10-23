@@ -49,6 +49,10 @@ export default {
 
   methods: {
 
+    checkPermission(key, text) {
+      return this.$permissions(`member_center.student.${key}`, text);
+    },
+
     // eslint-disable-next-line
     getClassHistory(id, schemeId, statusName) {
       if (!statusName) {
@@ -102,6 +106,7 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
+              v-if="checkPermission('schedule')"
               size="small"
               @click="getClassHistory(id,scope.row.scheme_id,scope.row.class_status_name)"
             >查看上课历史</el-button>
