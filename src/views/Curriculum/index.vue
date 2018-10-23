@@ -115,6 +115,10 @@ export default {
       return this.$permissions(`curriculum_center.curriculum.${key}`, text);
     },
 
+    checkTime(key, text) {
+      return this.$permissions(`curriculum_center.timetable.${key}`, text);
+    },
+
     onSkipPage() {
       this.$router.push('curriculum-timeTable');
     },
@@ -254,7 +258,7 @@ export default {
     ref="list"
     :list.sync="list"
     :create-label="checkPermission('store', '课程创建')"
-    skip-label= "时间模板"
+    :skip-label="checkTime('index', '时间模板')"
     class="curriculum-list"
     api="/curriculum"
     title="课程管理"
