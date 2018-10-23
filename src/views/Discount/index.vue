@@ -180,9 +180,9 @@ export default {
             </el-button>
 
             <el-button
-              v-if="scope.row.can_edit"
+              v-if="scope.row.can_edit && checkPermission('update')"
               size="small"
-              @click="editDiscount(scope.row.id) && checkPermission('update')"
+              @click="editDiscount(scope.row.id)"
             >
               编辑
             </el-button>
