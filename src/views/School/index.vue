@@ -83,7 +83,7 @@ export default {
       const region = this.$assets.chinaJSON;
 
       const searchList = [
-        { selectValue: region, componentType: 'AppSearchAddress', searchType: 'scope', placeholder: '请选择地区' },
+        { selectValue: region, componentType: 'AppSearchAddress', searchType: 'code', placeholder: '请选择地区' },
         { componentType: 'AppSearchColumn', searchType: column },
       ];
 
