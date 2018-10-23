@@ -49,8 +49,9 @@ export default {
           { ...this.$rules.moreSchoolName },
           {
             validator(rule, value, callback) {
-              const schoolNameArr = value.split('\n');
-              const schoolIndex = schoolNameArr.findIndex(item => item.length > 30);
+              const schoolNameArr = value ? value.split('\n') : null;
+              const schoolIndex = schoolNameArr ?
+                schoolNameArr.findIndex(item => item.length > 30) : -1;
               return (schoolIndex !== -1)
                 ? callback('学校名称的长度不能超过30个字符')
                 : callback();
