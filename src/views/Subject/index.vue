@@ -107,7 +107,7 @@ export default {
   >
     <h2 class="subject-list__title">学科管理</h2>
     <div
-      v-if="checkPermission('delete')"
+      v-if="checkPermission('index')"
       class="subject-list__body"
     >
       <div
