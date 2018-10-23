@@ -33,7 +33,7 @@ export default {
   methods: {
 
     checkPermission(key, text) {
-      return this.$permissions(`finance.department.${key}`, text);
+      return this.$permissions(`finance.dealer.${key}`, text);
     },
 
     checkInfo(id, year, month) {
