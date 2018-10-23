@@ -80,7 +80,10 @@ export default {
         { prop: 'name', label: '学校名称' },
       ];
 
+      const region = this.$assets.chinaJSON;
+
       const searchList = [
+        { selectValue: region, componentType: 'AppSearchAddress', searchType: 'scope', placeholder: '请选择地区' },
         { componentType: 'AppSearchColumn', searchType: column },
       ];
 
