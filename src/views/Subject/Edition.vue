@@ -79,6 +79,10 @@ export default {
 
   methods: {
 
+    checkPermission(key, text) {
+      return this.$permissions(`curriculum_center.structure.${key}`, text);
+    },
+
     getBefore() {
       this.$http.get('/structure/index_before')
         .then(({ subject: subjects }) => {
@@ -172,10 +176,14 @@ export default {
 </script>
 
 <template>
-  <div class="global-main subject-edition">
+  <div
+    v-if="checkPermission('index')"
+    class="global-main subject-edition"
+  >
     <h2>
       <span>{{ subject.name }}</span>
       <el-button
+        v-if="checkPermission('store')"
         type="primary"
         @click="() => preLeafCreate()"
       >
@@ -196,6 +204,7 @@ export default {
         <span>{{ node.label }}</span>
         <span class="subject-edition__node-control">
           <el-button
+            v-if="checkPermission('update')"
             type="text"
             size="mini"
             @click="() => editNode(data.id, node, data)"
@@ -203,6 +212,7 @@ export default {
             编辑
           </el-button>
           <el-button
+            v-if="checkPermission('delete')"
             :style="{
               visibility: node.isLeaf ? 'visible' : 'hidden'
             }"
@@ -213,6 +223,7 @@ export default {
             删除
           </el-button>
           <el-button
+            v-if="checkPermission('store')"
             type="text"
             size="mini"
             @click="() => appendNode(node, data)"
