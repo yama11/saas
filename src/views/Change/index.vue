@@ -17,9 +17,9 @@ export default {
 
       columns: [
         { prop: 'student_name', label: '学生姓名' },
-        { prop: 'phone', label: '家长电话' },
         { prop: 'department_name', label: '培训机构' },
         { prop: 'primordial.curriculum_name', label: '课程名称' },
+        { prop: 'primordial.curriculum_code', label: '课程编码' },
         { prop: 'primordial.class_name', label: '转出班级' },
         { prop: 'primordial.hour_remain', label: '转出班级剩余课时' },
         { prop: 'current.class_name', label: '转入班级' },
@@ -39,7 +39,7 @@ export default {
     searchArr() {
       const column = [
         { prop: 'student_name', label: '学生姓名' },
-        { prop: 'phone', label: '家长电话' },
+        { prop: 'curriculum_code', label: '课程编码' },
         { prop: 'department_name', label: '培训机构' },
         { prop: 'curriculum_name', label: '课程名称' },
       ];
