@@ -113,6 +113,10 @@ export default {
 
   methods: {
 
+    checkPermission(key, text) {
+      return this.$permissions(`schedule_center.class.${key}`, text);
+    },
+
     indexBefore() {
       this.$http.get('/class/arrange_before')
         .then((res) => {
@@ -183,10 +187,14 @@ export default {
     title="上课安排"
   >
     <AppSearch
+      v-if="checkPermission('arrange_index')"
       slot="search"
       :search-arr="searchArr"
     />
-    <template slot-scope="props">
+    <template
+      v-if="checkPermission('arrange_index')"
+      slot-scope="props"
+    >
       <el-table :data="props.listData">
         <el-table-column
           v-for="column in columns"
@@ -201,11 +209,12 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
+              v-if="checkPermission('show')"
               size="small"
               @click="arrangeInfo(scope.row.id)"
             >查看</el-button>
             <el-button
-              v-if="scope.row.class_status_name!=='已结束'"
+              v-if="scope.row.class_status_name!=='已结束' &&checkPermission('rota')"
               type="small"
               size="small"
               @click="setClass(scope.row.id,scope.row.department_id)"
