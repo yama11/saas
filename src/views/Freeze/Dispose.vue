@@ -92,6 +92,10 @@ export default{
 
   methods: {
 
+    checkPermission(key, text) {
+      return this.$permissions(`dispatch_center.freeze.${key}`, text);
+    },
+
     getFreezeInfo() {
       const url = `/freeze/${this.$route.params.id}`;
       this.$http.get(url)
@@ -173,12 +177,14 @@ export default{
       </div>
       <div class="freeze-deal__but">
         <el-button
+          v-if="checkPermission('audit')"
           type="primary"
           @click="freezeAudit"
         >
           确定挂起
         </el-button>
         <el-button
+          v-if="checkPermission('cancel')"
           type="primary"
           @click="freezeCancel"
         >

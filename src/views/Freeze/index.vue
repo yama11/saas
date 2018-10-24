@@ -296,7 +296,7 @@ export default {
               @click="unfreeze(scope.row.id)"
             >解冻</el-button>
             <el-button
-              v-if="scope.row.freeze_status === 1 &&checkPermission('audit')"
+              v-if="scope.row.freeze_status === 1 &&checkPermission('deal')"
               size="small"
               @click="freezeDeal(scope.row.id)"
             >挂起处理</el-button>

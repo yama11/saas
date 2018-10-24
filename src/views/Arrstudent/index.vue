@@ -264,13 +264,13 @@ export default {
               @click="toDeleteUser(scope.row.id)"
             >查看</el-button>
             <el-button
-              v-if="checkPermission('dispatcher')"
+              v-if="checkPermission('dispatching')"
               size="small"
               @click="updateProcess(scope.row.id,scope.row.curriculum_id)"
             >调度</el-button>
 
             <AppFormDialog
-              v-if="checkPermission('dispatching')"
+              v-if="checkPermission('dispatch')"
               :visible.sync="visible"
               :model="formData"
               :rules="rules"

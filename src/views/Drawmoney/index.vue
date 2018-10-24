@@ -90,7 +90,7 @@ export default {
               查看
             </el-button>
             <el-button
-              v-if="scope.row.draw_status === 1"
+              v-if="scope.row.draw_status === 1&&checkPermission('show')"
               size="small"
               @click="drawDeal(scope.row.id)"
             >

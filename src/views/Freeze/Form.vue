@@ -125,7 +125,7 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
-              v-if="checkPermission('deal')"
+              v-if="checkPermission('audit')"
               size="small"
               @click="freezeClass(scope.row.id)"
             >挂起</el-button>

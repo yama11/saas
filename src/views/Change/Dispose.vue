@@ -257,6 +257,7 @@ export default{
       </div>
       <div class="change-info__but">
         <el-button
+          v-if="checkPermission('audit')"
           type="primary"
           @click="confirmTurn"
         >
