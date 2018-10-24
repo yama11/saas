@@ -47,7 +47,7 @@ export default {
   methods: {
 
     checkPermission(key, text) {
-      return this.$permissions(`finance.account_detail.${key}`, text);
+      return this.$permissions(`member_center.client.${key}`, text);
     },
 
     datailInfo(id) {
