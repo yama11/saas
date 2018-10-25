@@ -45,15 +45,24 @@ export default {
       formData: {},
 
       list: {},
+
+      roleType: this.$store.state.roleType,
+
     };
   },
   computed: {
     searchArr() {
-      const column = [
+      const column = this.roleType === 31 ? [
         { prop: 'name', label: '机构名称' },
         { prop: 'number', label: '机构编码' },
         { prop: 'account', label: '账号' },
-      ];
+      ] :
+        [
+          { prop: 'name', label: '机构名称' },
+          { prop: 'number', label: '机构编码' },
+          { prop: 'dealer_name', label: '所属区域运营商' },
+          { prop: 'account', label: '账号' },
+        ];
 
       const department = this.$store.state.user.department_tree;
 

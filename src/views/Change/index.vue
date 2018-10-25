@@ -15,21 +15,11 @@ export default {
   data() {
     return {
 
-      columns: [
-        { prop: 'student_name', label: '学生姓名' },
-        { prop: 'department_name', label: '培训机构' },
-        { prop: 'primordial.curriculum_name', label: '课程名称' },
-        { prop: 'primordial.curriculum_code', label: '课程编码' },
-        { prop: 'primordial.class_name', label: '转出班级' },
-        { prop: 'primordial.hour_remain', label: '转出班级剩余课时' },
-        { prop: 'current.class_name', label: '转入班级' },
-        { prop: 'current.hour_remain', label: '转入班级所需课时' },
-        { prop: 'done_date', label: '转班时间' },
-      ],
-
       list: {},
 
       change_status: [],
+
+      roleType: this.$store.state.roleType,
 
     };
   },
@@ -37,9 +27,14 @@ export default {
   computed: {
 
     searchArr() {
-      const column = [
+      const column = this.roleType === 32 ? [
         { prop: 'student_name', label: '学生姓名' },
         { prop: 'curriculum_code', label: '课程编码' },
+        { prop: 'department_name', label: '培训机构' },
+        { prop: 'curriculum_name', label: '课程名称' },
+      ] : [
+        { prop: 'student_name', label: '学生姓名' },
+        { prop: 'phone', label: '家长电话' },
         { prop: 'department_name', label: '培训机构' },
         { prop: 'curriculum_name', label: '课程名称' },
       ];
@@ -53,6 +48,32 @@ export default {
       ];
 
       return searchList;
+    },
+
+    columns() {
+      const RoleType = this.roleType === 32 ?
+        [
+          { prop: 'student_name', label: '学生姓名' },
+          { prop: 'department_name', label: '培训机构' },
+          { prop: 'primordial.curriculum_name', label: '课程名称' },
+          { prop: 'primordial.curriculum_code', label: '课程编码' },
+          { prop: 'primordial.class_name', label: '转出班级' },
+          { prop: 'primordial.hour_remain', label: '转出班级剩余课时' },
+          { prop: 'current.class_name', label: '转入班级' },
+          { prop: 'current.hour_remain', label: '转入班级所需课时' },
+          { prop: 'done_date', label: '转班时间' },
+        ] : [
+          { prop: 'student_name', label: '学生姓名' },
+          { prop: 'phone', label: '家长电话' },
+          { prop: 'department_name', label: '培训机构' },
+          { prop: 'primordial.curriculum_name', label: '课程名称' },
+          { prop: 'primordial.class_name', label: '转出班级' },
+          { prop: 'primordial.hour_remain', label: '转出班级剩余课时' },
+          { prop: 'current.class_name', label: '转入班级' },
+          { prop: 'current.hour_remain', label: '转入班级所需课时' },
+          { prop: 'done_date', label: '转班时间' },
+        ];
+      return RoleType;
     },
 
   },
