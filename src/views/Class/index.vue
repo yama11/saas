@@ -43,27 +43,43 @@ export default {
       ],
 
       status: [],
+
       categories: [],
+
+      roleType: this.$store.state.roleType,
 
     };
   },
 
   computed: {
     searchArr() {
-      const column = [
+      const column = this.roleType === 32 ? [
         { prop: 'curriculum_name', label: '课程名称' },
         { prop: 'code', label: '班级编码' },
         { prop: 'name', label: '班级名称' },
+      ] : [
+        { prop: 'curriculum_name', label: '课程名称' },
+        { prop: 'department_name', label: '机构名称' },
+        { prop: 'name', label: '班级名称' },
       ];
 
-      const searchList = [
+      const searchList = this.roleType === 32 ? [
         { selectValue: this.status, componentType: 'AppSearchStatus', searchType: 'class_status', placeholder: '请选择状态' },
         { selectValue: this.categories,
           componentType: 'AppSearchCascader',
           searchType: ['category_name', 'product_name'],
           placeholder: '请选择品类' },
         { componentType: 'AppSearchColumn', searchType: column },
-      ];
+      ] :
+        [
+          { selectValue: this.$store.state.user.department_tree, componentType: 'AppSearchAddress', searchType: 'scope', placeholder: '请选择机构' },
+          { selectValue: this.status, componentType: 'AppSearchStatus', searchType: 'class_status', placeholder: '请选择状态' },
+          { selectValue: this.categories,
+            componentType: 'AppSearchCascader',
+            searchType: ['category_name', 'product_name'],
+            placeholder: '请选择品类' },
+          { componentType: 'AppSearchColumn', searchType: column },
+        ];
       return searchList;
     },
   },
