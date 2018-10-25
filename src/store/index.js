@@ -10,11 +10,15 @@ export default new Vuex.Store({
       permissions: [],
       user: {},
     },
+
+    roleType: null,
   },
 
   mutations: {
     initUserInfo(state, user) {
       state.user = user;
+
+      state.roleType = user.user.role.role_type;
     },
   },
 
