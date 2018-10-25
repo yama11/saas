@@ -59,6 +59,8 @@ export default {
         ],
       },
 
+      roleType: this.$store.state.roleType,
+
     };
   },
 
@@ -69,7 +71,7 @@ export default {
     },
 
     columns() {
-      return [
+      const RoleType = this.roleType === 31 ? [
         { prop: 'student_name', label: '学生姓名' },
         { prop: 'curriculum_name', label: '约课课程' },
         { prop: 'course_number', label: '课时数' },
@@ -77,13 +79,29 @@ export default {
         { prop: 'department_name', label: '约课机构' },
         { prop: 'start_date', label: '上课时间' },
         { prop: 'class_name', label: '约课班级' },
+      ] : [
+        { prop: 'student_name', label: '学生姓名' },
+        { prop: 'phone', label: '家长电话' },
+        { prop: 'curriculum_name', label: '约课课程' },
+        { prop: 'course_number', label: '课时数' },
+        { prop: 'categories_name', label: '品类' },
+        { prop: 'department_name', label: '约课机构' },
+        { prop: 'start_date', label: '上课时间' },
+        { prop: 'class_name', label: '约课班级' },
       ];
+      return RoleType;
     },
 
     searchArr() {
-      const column = [
+      const column = this.roleType === 31 ? [
         { prop: 'student_name', label: '学生姓名' },
         { prop: 'order_number', label: '订单编号' },
+        { prop: 'curriculum_name', label: '课程名称' },
+        { prop: 'department_name', label: '约课机构' },
+        { prop: 'class_name', label: '约课班级' },
+      ] : [
+        { prop: 'student_name', label: '学生姓名' },
+        { prop: 'phone', label: '家长电话' },
         { prop: 'curriculum_name', label: '课程名称' },
         { prop: 'department_name', label: '约课机构' },
         { prop: 'class_name', label: '约课班级' },

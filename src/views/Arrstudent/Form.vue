@@ -30,6 +30,8 @@ export default{
 
       // 定义星期
       toDay: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+
+      roleType: this.$store.state.roleType,
     };
   },
 
@@ -40,6 +42,7 @@ export default{
 
       const {
         student_name: studentName,
+        phone: Phone,
         curriculum_name: curriculumName,
         course_number: courseNumber,
         categories_name: categoriesName,
@@ -51,6 +54,10 @@ export default{
         {
           label: '约课学生',
           content: studentName,
+        },
+        {
+          label: '家长电话',
+          content: Phone,
         },
         {
           label: '课程名称',

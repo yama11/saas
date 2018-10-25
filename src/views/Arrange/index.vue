@@ -16,31 +16,6 @@ export default {
   data() {
     return {
 
-      columns: [
-        { prop: 'code', label: '班级编码' },
-        { prop: 'curriculum_name', label: '课程名称' },
-        { prop: 'schedule_total', label: '课时数' },
-        { prop: 'categories_name', label: '品类' },
-        { prop: 'department_name', label: '机构名称' },
-        { prop: 'name', label: '班级名称' },
-        { label: '上课时间',
-          formatter: row =>
-            `
-            ${row.start_date}
-            至${row.end_date}
-            `,
-        },
-        { label: '约课/满班人数',
-          formatter: row =>
-            `
-          ${row.student_number}
-          /${row.capacity}
-          `,
-        },
-        { prop: 'class_status_name', label: '状态' },
-        { prop: 'classroom_name', label: '教室' },
-      ],
-
       list: {},
 
       id: null,
@@ -75,6 +50,7 @@ export default {
 
       categories: [],
 
+      roleType: this.$store.state.roleType,
 
     };
   },
@@ -105,6 +81,65 @@ export default {
 
       return searchList;
     },
+
+    columns() {
+      const RoleType = this.roleType === 31 ?
+        [
+          { prop: 'code', label: '班级编码' },
+          { prop: 'curriculum_name', label: '课程名称' },
+          { prop: 'schedule_total', label: '课时数' },
+          { prop: 'categories_name', label: '品类' },
+          { prop: 'department_name', label: '机构名称' },
+          { prop: 'name', label: '班级名称' },
+          { label: '上课时间',
+            formatter: row =>
+              `
+            ${row.start_date}
+            至${row.end_date}
+            `,
+          },
+          { label: '约课/满班人数',
+            formatter: row =>
+              `
+          ${row.student_number}
+          /${row.capacity}
+          `,
+          },
+          { prop: 'class_status_name', label: '状态' },
+          { prop: 'classroom_name', label: '教室' },
+        ] :
+        [
+          { prop: 'code', label: '班级编码' },
+          { prop: 'curriculum_name', label: '课程名称' },
+          { prop: 'schedule_total', label: '课时数' },
+          { prop: 'categories_name', label: '品类' },
+          { prop: 'department_name', label: '机构名称' },
+          { prop: 'name', label: '班级名称' },
+          { label: '上课时间',
+            formatter: row =>
+              `
+            ${row.start_date}
+            至${row.end_date}
+            `,
+          },
+          { label: '约课/满班人数',
+            formatter: row =>
+              `
+          ${row.student_number}
+          /${row.capacity}
+          `,
+          },
+          { prop: 'class_status_name', label: '状态' },
+          { prop: 'studio_name', label: '直播间' },
+          { prop: 'anchor_name', label: '直播教师' },
+          { prop: 'classroom_name', label: '教室' },
+          { prop: 'audience_name', label: '辅师' },
+        ];
+
+      return RoleType;
+    },
+
+
   },
 
   created() {
