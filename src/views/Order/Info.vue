@@ -38,63 +38,104 @@ export default {
   },
 
   computed: {
+    roleShow() {
+      const roleType = this.$store.state.roleType;
 
-    order() {
+      return roleType === 31;
+    },
+
+    buyer() {
       const {
-        merchandise_name: merchandiseName,
-        order_sn: orderNumber,
-        status_name: statusName,
-        order_time: orderTime,
-        original_price: originalPrice,
-        paid_time: paidTime,
-        discount_money: discountMoney,
-        pay_type_name: payTypeName,
-        paid_money: paidMoney,
-        department_name: departmentName,
+        student_name: studentName,
+        client_phone: clientPhone,
       } = this.data;
 
       return [
         {
+          label: '小孩姓名',
+          content: studentName,
+        },
+        {
+          label: '手机号码',
+          content: clientPhone,
+        },
+      ];
+    },
+
+    order() {
+      const initOrder = {
+        merchandiseName: this.data.merchandise_name,
+        orderNumber: this.data.order_sn,
+        statusName: this.data.status_name,
+        orderTime: this.data.order_time,
+        originalPrice: this.data.original_price,
+        paidTime: this.data.paid_time,
+        discountMoney: this.data.discount_money,
+        payTypeName: this.data.pay_type_name,
+        paidMoney: this.data.paid_money,
+      };
+
+      const showOrder = this.roleShow
+        ? {
+          ...initOrder,
+          departmentName: this.data.department_name,
+        }
+        : { ...initOrder };
+
+      const orderList = [
+        {
           label: '商品名称',
-          content: merchandiseName,
+          content: showOrder.merchandiseName,
         },
         {
           label: '订单编号',
-          content: orderNumber,
+          content: showOrder.orderNumber,
         },
         {
           label: '订单状态',
-          content: statusName,
+          content: showOrder.statusName,
         },
         {
           label: '下单时间',
-          content: orderTime,
+          content: showOrder.orderTime,
         },
         {
           label: '商品金额',
-          content: originalPrice ? `￥${originalPrice}` : '',
+          content: showOrder.originalPrice
+            ? `￥${showOrder.originalPrice}`
+            : '',
         },
         {
           label: '付款时间',
-          content: paidTime || '',
+          content: showOrder.paidTime || '',
         },
         {
           label: '优惠金额',
-          content: discountMoney ? `￥${discountMoney}` : '',
+          content: showOrder.discountMoney
+            ? `￥${showOrder.discountMoney}`
+            : '',
         },
         {
           label: '支付方式',
-          content: payTypeName,
+          content: showOrder.payTypeName,
         },
         {
           label: '实付金额',
-          content: paidMoney ? `￥${paidMoney}` : '',
-        },
-        {
-          label: '所属机构',
-          content: departmentName,
+          content: showOrder.paidMoney
+            ? `￥${showOrder.paidMoney}`
+            : '',
         },
       ];
+
+      return this.roleShow
+        ? [
+          ...orderList,
+          {
+            label: '所属机构',
+            content: showOrder.departmentName,
+          },
+        ]
+        : [...orderList];
     },
 
   },
@@ -137,6 +178,23 @@ export default {
       v-if="data"
       class="order-info__body"
     >
+
+      <div
+        v-if="!roleShow"
+        class="order-info__section-header">
+        买家信息
+      </div>
+
+      <section
+        v-if="!roleShow"
+        class="order-info__buyer"
+      >
+        <InfoNote
+          v-for="note in buyer"
+          :key="note.label"
+          v-bind="note"
+        />
+      </section>
 
       <div class="order-info__section-header">
         订单详情
