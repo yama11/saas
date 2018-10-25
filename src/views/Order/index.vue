@@ -16,26 +16,25 @@ export default {
     return {
       list: {},
 
-      columns: [
-        { prop: 'order_sn', label: '订单编号' },
-        { prop: 'department_name', label: '机构' },
-        { prop: 'merchandise_name', label: '商品名称' },
-        { prop: 'order_time', label: '下单时间' },
-        { prop: 'paid_money', label: '实付金额' },
-        { prop: 'status_name', label: '订单状态' },
-        { prop: 'order_source_name', label: '来源' },
-      ],
 
       order_status: [],
+
+      roleType: this.$store.state.roleType,
     };
   },
 
   computed: {
     searchArr() {
-      const column = [
-        { prop: 'order_sn', label: '订单编号' },
-        { prop: 'merchandise_name', label: '商品名称' },
-      ];
+      const column = this.roleType === 31
+        ? [
+          { prop: 'order_sn', label: '订单编号' },
+          { prop: 'merchandise_name', label: '商品名称' },
+        ]
+        : [
+          { prop: 'client_phone', label: '手机号' },
+          { prop: 'student_name', label: '小孩姓名' },
+          { prop: 'merchandise_name', label: '商品名称' },
+        ];
 
       const department = this.$store.state.user.department_tree;
 
@@ -47,6 +46,30 @@ export default {
       ];
 
       return searchList;
+    },
+
+    columns() {
+      const initList = [
+        { prop: 'department_name', label: '机构' },
+        { prop: 'merchandise_name', label: '商品名称' },
+        { prop: 'order_time', label: '下单时间' },
+        { prop: 'paid_money', label: '实付金额' },
+        { prop: 'status_name', label: '订单状态' },
+        { prop: 'order_source_name', label: '来源' },
+      ];
+
+      const columnsList = this.roleType === 31
+        ? [
+          { prop: 'order_sn', label: '订单编号' },
+          ...initList,
+        ]
+        : [
+          { prop: 'client_phone', label: '手机号' },
+          { prop: 'student_name', label: '小孩姓名' },
+          ...initList,
+        ];
+
+      return columnsList;
     },
   },
 
