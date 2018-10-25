@@ -249,7 +249,9 @@ export default {
       title="品类管理"
     >
 
-      <template slot-scope="{ listData }">
+      <template
+        v-if="checkCategory('index')"
+        slot-scope="{ listData }">
         <el-button
           v-if="checkCategory('store')"
           type="primary"
