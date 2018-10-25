@@ -1,8 +1,13 @@
 <script>
 /* eslint-disable camelcase */
+import errorHandler from '../AppFormAlert/errorHandler';
 
 export default {
   name: 'AppList',
+
+  components: {
+    errorHandler,
+  },
 
   props: {
     // 后端返回的列表数据
@@ -95,8 +100,8 @@ export default {
         .then((data) => {
           this.$emit('update:list', data);
         })
-        .catch(() => {
-          this.$message.error('数据请求发生错误');
+        .catch((error) => {
+          this.$message.error(errorHandler(error)[0]);
         })
         .finally(() => {
           this.loading = false;
