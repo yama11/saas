@@ -119,8 +119,8 @@ export default {
         .then((data) => {
           this.$emit('update:list', data);
         })
-        .catch(() => {
-          this.$message.error('数据请求发生错误');
+        .catch((error) => {
+          this.$message.error(errorHandler(error)[0]);
         })
         .finally(() => {
           this.loading = false;
