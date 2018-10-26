@@ -287,84 +287,84 @@ export default {
               @click="updateProcess(scope.row.id,scope.row.curriculum_id)"
             >调度</el-button>
 
-            <AppFormDialog
-              v-if="checkPermission('dispatcher')"
-              :visible.sync="visible"
-              :model="formData"
-              :rules="rules"
-              label-width="8em"
-              width="550px"
-              url="/intention"
-              object="调度学生"
-              class="arrstudent"
-              @on-submit="submitEdition"
-            >
-              <el-form-item
-                label="时间"
-                prop="scheme_id"
-              >
-                <el-select
-                  v-model="formData.scheme_id"
-                  placeholder="请选择时间"
-                  @change="changTime(formData.scheme_id)"
-                >
-                  <el-option
-                    v-for="role in editionInfo.schemes"
-                    :key="role.id"
-                    :label="role.date"
-                    :value="role.id"
-                  />
-                </el-select>
-              </el-form-item>
-              <el-form-item
-                label="上课时间"
-              >
-                <div
-                  class="arrstudent-edition__classtime"
-                >
-                  <div
-                    v-for="(calendar,index) in calendar"
-                    v-if="calendar"
-                    :key="index"
-                    class="arrstudent-edition__classtime-span">
-                    <!-- eslint-disable-next-line -->
-                    {{ toDay[calendar.day-1] }}&nbsp;{{ calendar.start_time }}~{{ calendar.end_time }}
-                  </div>
-                </div>
-              </el-form-item>
-              <el-form-item
-                label="班级"
-                prop="class_id"
-              >
-                <el-select
-                  v-model="formData.class_id"
-                  placeholder="请选择班级"
-                  @change="changClass(formData.class_id)"
-                >
-                  <el-option
-                    v-for="role in classes"
-                    :key="role.id"
-                    :label="role.name"
-                    :value="role.id"
-                  />
-                </el-select>
-              </el-form-item>
-
-              <el-form-item
-                v-model="formData.quota"
-                label="班级约课/容量"
-              >
-                <div
-                  v-if="capacity"
-                >
-                  {{ student_number }}/{{ capacity }}
-                </div>
-
-              </el-form-item>
-            </AppFormDialog>
           </template>
         </el-table-column>
       </el-table>
+      <AppFormDialog
+        v-if="checkPermission('dispatcher')"
+        :visible.sync="visible"
+        :model="formData"
+        :rules="rules"
+        label-width="8em"
+        width="550px"
+        url="/intention"
+        object="调度学生"
+        class="arrstudent"
+        @on-submit="submitEdition"
+      >
+        <el-form-item
+          label="时间"
+          prop="scheme_id"
+        >
+          <el-select
+            v-model="formData.scheme_id"
+            placeholder="请选择时间"
+            @change="changTime(formData.scheme_id)"
+          >
+            <el-option
+              v-for="role in editionInfo.schemes"
+              :key="role.id"
+              :label="role.date"
+              :value="role.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item
+          label="上课时间"
+        >
+          <div
+            class="arrstudent-edition__classtime"
+          >
+            <div
+              v-for="(calendar,index) in calendar"
+              v-if="calendar"
+              :key="index"
+              class="arrstudent-edition__classtime-span">
+              <!-- eslint-disable-next-line -->
+                    {{ toDay[calendar.day-1] }}&nbsp;{{ calendar.start_time }}~{{ calendar.end_time }}
+            </div>
+          </div>
+        </el-form-item>
+        <el-form-item
+          label="班级"
+          prop="class_id"
+        >
+          <el-select
+            v-model="formData.class_id"
+            placeholder="请选择班级"
+            @change="changClass(formData.class_id)"
+          >
+            <el-option
+              v-for="role in classes"
+              :key="role.id"
+              :label="role.name"
+              :value="role.id"
+            />
+          </el-select>
+        </el-form-item>
+
+        <el-form-item
+          v-model="formData.quota"
+          label="班级约课/容量"
+        >
+          <div
+            v-if="capacity"
+          >
+            {{ student_number }}/{{ capacity }}
+          </div>
+
+        </el-form-item>
+      </AppFormDialog>
     </template>
   </AppList>
 </template>

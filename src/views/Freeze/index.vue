@@ -301,39 +301,39 @@ export default {
               @click="freezeDeal(scope.row.id)"
             >挂起处理</el-button>
 
-            <!-- 转班 -->
-            <ChangeEdition
-              :visible.sync="visible"
-              :id="editionInfo.id"
-              :form-data="editionInfo.formData"
-              width="458px"
-              @on-submit="submitEdition"
-            />
-            <!-- 退班 -->
-            <QuitEdition
-              :visible.sync="editionQuit.visible"
-              :id="editionQuit.id"
-              :form-data="editionQuit.formData"
-              width="458px"
-              @on-submit="submitEdition"
-            />
-            <AppFormDialog
-              :visible.sync="unvisible"
-              :model="unformData"
-              url="/freeze"
-              label-width="5em"
-              object="解冻"
-              width="500px"
-              class="freeze-popup"
-              @on-submit="submitUnfreeze(unformData.hour_id)"
-            >
-              <span
-                class="freeze-popup__span"
-              >确定解冻该学生该课程?</span>
-            </AppFormDialog>
           </template>
         </el-table-column>
       </el-table>
+      <!-- 转班 -->
+      <ChangeEdition
+        :visible.sync="visible"
+        :id="editionInfo.id"
+        :form-data="editionInfo.formData"
+        width="458px"
+        @on-submit="submitEdition"
+      />
+      <!-- 退班 -->
+      <QuitEdition
+        :visible.sync="editionQuit.visible"
+        :id="editionQuit.id"
+        :form-data="editionQuit.formData"
+        width="458px"
+        @on-submit="submitEdition"
+      />
+      <AppFormDialog
+        :visible.sync="unvisible"
+        :model="unformData"
+        url="/freeze"
+        label-width="5em"
+        object="解冻"
+        width="500px"
+        class="freeze-popup"
+        @on-submit="submitUnfreeze(unformData.hour_id)"
+      >
+        <span
+          class="freeze-popup__span"
+        >确定解冻该学生该课程?</span>
+      </AppFormDialog>
     </template>
   </AppList>
 </template>

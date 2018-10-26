@@ -270,37 +270,37 @@ export default{
         >
           取消转班
         </el-button>
-        <AppFormDialog
-          :visible.sync="visible"
-          :model="formData"
-          url="/change"
-          label-width="5em"
-          object="转班"
-          width="500px"
-          class="change-popup"
-          @on-submit="submitEdition"
-        >
-          <span
-            v-if="formData.primordial.hour_remain > formData.current.hour_remain"
-            class="change-popup__span"
-          >
-            转出课时数较多,多余课时将挂起
-          </span>
-          <span
-            v-if="formData.primordial.hour_remain<formData.current.hour_remain"
-            class="change-popup__span"
-          >
-            转出课时数少,将为该家长生产差价订单,支付后转班成功
-          </span>
-          <span
-            v-if="formData.primordial.hour_remain === formData.current.hour_remain"
-            class="change-popup__span"
-          >
-            转出课时数与转入所需课时数相等,是否确认转班
-          </span>
-        </AppFormDialog>
       </div>
 
+      <AppFormDialog
+        :visible.sync="visible"
+        :model="formData"
+        url="/change"
+        label-width="5em"
+        object="转班"
+        width="500px"
+        class="change-popup"
+        @on-submit="submitEdition"
+      >
+        <span
+          v-if="formData.primordial.hour_remain > formData.current.hour_remain"
+          class="change-popup__span"
+        >
+          转出课时数较多,多余课时将挂起
+        </span>
+        <span
+          v-if="formData.primordial.hour_remain<formData.current.hour_remain"
+          class="change-popup__span"
+        >
+          转出课时数少,将为该家长生产差价订单,支付后转班成功
+        </span>
+        <span
+          v-if="formData.primordial.hour_remain === formData.current.hour_remain"
+          class="change-popup__span"
+        >
+          转出课时数与转入所需课时数相等,是否确认转班
+        </span>
+      </AppFormDialog>
     </div>
   </div>
 </template>

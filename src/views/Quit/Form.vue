@@ -145,16 +145,16 @@ export default {
               @click="formQuitClass(scope.row.id)"
             >退班</el-button>
 
-            <QuitEdition
-              :visible.sync="editionInfo.visible"
-              :id="editionInfo.id"
-              :form-data="editionInfo.formData"
-              width="458px"
-              @on-submit="submitEdition"
-            />
           </template>
         </el-table-column>
       </el-table>
+      <QuitEdition
+        :visible.sync="editionInfo.visible"
+        :id="editionInfo.id"
+        :form-data="editionInfo.formData"
+        width="458px"
+        @on-submit="submitEdition"
+      />
     </template>
   </AppList>
 </template>

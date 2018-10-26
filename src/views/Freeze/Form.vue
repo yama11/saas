@@ -129,23 +129,23 @@ export default {
               size="small"
               @click="freezeClass(scope.row.id)"
             >挂起</el-button>
-            <AppFormDialog
-              :visible.sync="visible"
-              :model="formData"
-              url="/freeze"
-              label-width="5em"
-              object="挂起"
-              width="500px"
-              class="freeze-popup"
-              @on-submit="submitEdition"
-            >
-              <span
-                class="freeze-popup__span"
-              >确定挂起该学生该课程?</span>
-            </AppFormDialog>
           </template>
         </el-table-column>
       </el-table>
+      <AppFormDialog
+        :visible.sync="visible"
+        :model="formData"
+        url="/freeze"
+        label-width="5em"
+        object="挂起"
+        width="500px"
+        class="freeze-popup"
+        @on-submit="submitEdition"
+      >
+        <span
+          class="freeze-popup__span"
+        >确定挂起该学生该课程?</span>
+      </AppFormDialog>
     </template>
   </AppList>
 </template>

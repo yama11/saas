@@ -48,6 +48,8 @@ export default {
 
       roleType: this.$store.state.roleType,
 
+      divide: false,
+
     };
   },
   computed: {
@@ -75,9 +77,11 @@ export default {
   },
 
   methods: {
+
     checkPermission(key, text) {
       return this.$permissions(`system.department.${key}`, text);
     },
+
     Permission(key, text) {
       return this.$permissions(`system.manager_teacher.${key}`, text);
     },
@@ -89,12 +93,21 @@ export default {
     editDepartment(id) {
       this.$router.push(`/organization-edit/${id}`);
     },
+
     managerTeacher(id) {
       this.$router.push(`/organization-teacher/${id}`);
     },
 
     deleteDepartment(id) {
       this.$_listMixin_alertDeleteItem(id, this.list.data, '机构', '/department');
+    },
+
+    divideDepartment() {
+      this.divide = true;
+    },
+
+    submitEdition(submit) {
+      submit().then(() => this.$refs.list.getList());
     },
   },
 };
@@ -136,6 +149,10 @@ export default {
               @click="managerTeacher(scope.row.id)"
             >辅师管理</el-button>
             <el-button
+              size="small"
+              @click="divideDepartment(scope.row.id)"
+            >分成</el-button>
+            <el-button
               v-if="checkPermission('update')"
               size="small"
               @click="editDepartment(scope.row.id)"
@@ -149,8 +166,78 @@ export default {
           </template>
         </el-table-column>
       </el-table>
+      <AppFormDialog
+        :visible.sync="divide"
+        url="/freeze"
+        label-width="5em"
+        object="分成比例"
+        width="500px"
+        @on-submit="submitEdition"
+      >
+        <div class="department-popup">
+          <div class="department_title">总部</div>
+          <div class="department_content">麦克斯韦</div>
+          <div class="department_data">
+            <el-input
+              maxlength="10"
+              placeholder="请输入"
+            />&nbsp;%
+          </div>
+        </div>
+        <div class="department-popup">
+          <div class="department_title">城市合伙人</div>
+          <div class="department_content">厦门城市合伙人</div>
+          <div class="department_data">
+            <el-input
+              maxlength="10"
+              placeholder="请输入"
+            />&nbsp;%
+          </div>
+        </div>
+        <div class="department-popup">
+          <div class="department_title">区域运营商</div>
+          <div class="department_content">思明区运营商</div>
+          <div class="department_data">
+            <el-input
+              maxlength="10"
+              placeholder="请输入"
+            />&nbsp;%
+          </div>
+        </div>
+        <div class="department-popup">
+          <div class="department_title">机构</div>
+          <div class="department_content">心超越枋湖校区</div>
+          <div class="department_data">
+            <el-input
+              maxlength="10"
+              placeholder="请输入"
+            />&nbsp;%
+          </div>
+        </div>
+      </AppFormDialog>
     </template>
   </AppList>
 
 </template>
+<style>
+.department-popup{
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  line-height: 40px;
+  margin-bottom: 15px;
+}
+.department-popup .el-input{
+  width: 80%;
+}
+.department_title{
+  width: 30%
+}
+.department_content{
+  width: 35%
+}
+.department_data{
+  width: 20%
+}
+</style>
 
