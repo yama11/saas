@@ -288,7 +288,7 @@ export default {
             >调度</el-button>
 
             <AppFormDialog
-              v-if="checkPermission('dispatch')"
+              v-if="checkPermission('dispatcher')"
               :visible.sync="visible"
               :model="formData"
               :rules="rules"
