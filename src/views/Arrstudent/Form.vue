@@ -42,7 +42,6 @@ export default{
 
       const {
         student_name: studentName,
-        phone: Phone,
         curriculum_name: curriculumName,
         course_number: courseNumber,
         categories_name: categoriesName,
@@ -56,16 +55,12 @@ export default{
           content: studentName,
         },
         {
-          label: '家长电话',
-          content: Phone,
-        },
-        {
           label: '课程名称',
           content: curriculumName,
         },
         {
           label: '课时数',
-          content: courseNumber ? courseNumber.toString() : '',
+          content: courseNumber ? courseNumber.toString() : '0',
         },
         {
           label: '品类',
@@ -138,6 +133,7 @@ export default{
           v-bind="note"
         />
       </section>
+
       <div
         class="intention-info-order"
       >
@@ -161,22 +157,31 @@ export default{
           >{{ scheme.start_date.split(' ')[0] }} 至 {{ scheme.end_date.split(' ')[0] }}</span>
       </div></div>
       <div
-        class="intention-info__classtime order-info-note"
+        class="order-info-note intention-info__phone"
       >
-        <span>上课时间</span>
-        :
-        <span
-          v-if="scheme"
-          class="intention-info__classtime__span"
-        >
+        <div class="intention-info__time">
+          <span>上课时间</span>
+          :
           <span
-            v-for="(calendar,index) in scheme.calendar"
-            :key="index"
-            class="intention-info__classtime__week"
+            v-if="scheme"
+            class="intention-info__classtime__span"
           >
-            {{ toDay[calendar.day-1] }}&nbsp;{{ calendar.start_time }}~{{ calendar.end_time }}
+            <span
+              v-for="(calendar,index) in scheme.calendar"
+              :key="index"
+              class="intention-info__classtime__week"
+            >
+              {{ toDay[calendar.day-1] }}&nbsp;{{ calendar.start_time }}~{{ calendar.end_time }}
+            </span>
           </span>
-        </span>
+        </div>
+        <div
+          v-if="roleType === 31"
+        >
+          <span>家长电话</span>
+          :
+          <span>{{ data.phone }}</span>
+        </div>
 
       </div>
 
@@ -235,6 +240,14 @@ export default{
     margin: .5em 0;
     width: 40%;
     padding-top: 15px;
+}
+.intention-info__time{
+  width: 40%;
+}
+.intention-info__phone{
+  display: flex;
+  margin-left: 10px;
+  margin-bottom: 50px;
 }
 </style>
 
