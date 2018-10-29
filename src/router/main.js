@@ -34,6 +34,7 @@ import Advertising from '@/views/Advertising';
 import Notifications from '@/views/Notifications';
 import Interlocution from '@/views/Interlocution';
 import Opinion from '@/views/Opinion';
+import Video from '@/views/Video';
 
 
 const routes = [
@@ -69,6 +70,7 @@ const routes = [
   ...Notifications,
   ...Interlocution,
   ...Opinion,
+  ...Video,
 ];
 
 export default routes;

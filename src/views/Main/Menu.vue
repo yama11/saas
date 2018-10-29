@@ -245,6 +245,11 @@ export default {
             permission: 'client.opinion',
             index: '/opinion-list',
           },
+          {
+            name: '视频配置',
+            permission: 'client.video',
+            index: '/video-list',
+          },
         ],
       },
     ],
