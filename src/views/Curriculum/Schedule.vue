@@ -174,8 +174,8 @@ export default {
       }
     },
 
-    getDeleteList(val) {
-      this.departments = val;
+    getDeleteList() {
+      this.getCurriculum('department');
     },
 
     getScheme(id) {
