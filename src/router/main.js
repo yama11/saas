@@ -32,6 +32,7 @@ import Departmentaccount from '@/views/Departmentaccount';
 import Partner from '@/views/Partner';
 import Advertising from '@/views/Advertising';
 import Notifications from '@/views/Notifications';
+import Interlocution from '@/views/Interlocution';
 
 
 const routes = [
@@ -65,6 +66,7 @@ const routes = [
   ...Partner,
   ...Advertising,
   ...Notifications,
+  ...Interlocution,
 ];
 
 export default routes;

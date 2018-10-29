@@ -235,6 +235,11 @@ export default {
             permission: 'client.notifications',
             index: '/notifications-list',
           },
+          {
+            name: '帮助中心',
+            permission: 'client.interlocution',
+            index: '/interlocution-list',
+          },
         ],
       },
     ],
