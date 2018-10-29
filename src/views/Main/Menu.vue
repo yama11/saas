@@ -240,6 +240,11 @@ export default {
             permission: 'client.interlocution',
             index: '/interlocution-list',
           },
+          {
+            name: '意见反馈',
+            permission: 'client.opinion',
+            index: '/opinion-list',
+          },
         ],
       },
     ],
