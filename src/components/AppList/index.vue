@@ -51,6 +51,12 @@ export default {
       type: [String, Boolean],
       default: false,
     },
+
+    // excel按钮的文案
+    excelLabel: {
+      type: [String, Boolean],
+      default: false,
+    },
   },
 
   data() {
@@ -208,6 +214,15 @@ export default {
           @click="$emit('skipPage')"
         >
           {{ skipLabel }}
+        </el-button>
+
+        <el-button
+          v-if="excelLabel"
+          size="small"
+          type="primary"
+          @click="$emit('excelPage')"
+        >
+          {{ excelLabel }}
         </el-button>
       </div>
     </header>

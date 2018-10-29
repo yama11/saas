@@ -3,6 +3,7 @@ import DealerAccountDetails from './Details';
 import DealerAccountForm from './Form';
 import DealerAccountDispose from './Dispose';
 import DealerAccountStudent from './Student';
+import DealerAccountConsumption from './Consumption';
 
 export default [
   // 区域运营商结算  - 区域运营商列表
@@ -34,5 +35,11 @@ export default [
     path: 'account-student/:id',
     name: 'DealerAccountStudent',
     component: DealerAccountStudent,
+  },
+  // 区域运营商结算  - 课耗明细
+  {
+    path: 'account-consumption',
+    name: 'DealerAccountConsumption',
+    component: DealerAccountConsumption,
   },
 ];

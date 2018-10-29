@@ -113,10 +113,10 @@ export default {
   <AppList
     ref="list"
     :list.sync="list"
-    create-label="导入模板下载"
+    :create-label ="checkPermission('import')?'导入模板下载':null"
+    :skip-label ="checkPermission('import')?'导入excel':null"
     api="/member_center/student"
     title="学生管理"
-    skip-label="导入excel"
     @create="onCreate"
     @skipPage="exportExcel"
   >
