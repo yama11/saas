@@ -116,7 +116,7 @@ export default{
     returnAudit() {
       this.$http.patch(`/finance/draw_money/success/${this.$route.params.id}`, { certificate: this.data.certificate })
         .then(this.cancelForm)
-        .cantch((err) => {
+        .catch((err) => {
           this.$message.error(err.message);
         });
     },
@@ -124,7 +124,7 @@ export default{
     returnCancel() {
       this.$http.patch(`/finance/draw_money/fail/${this.$route.params.id}`)
         .then(this.cancelForm)
-        .cantch((err) => {
+        .catch((err) => {
           this.$message.error(err.message);
         });
     },
