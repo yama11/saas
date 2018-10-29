@@ -230,6 +230,11 @@ export default {
             permission: 'client.advertising',
             index: '/advertising-list',
           },
+          {
+            name: '系统消息',
+            permission: 'client.notifications',
+            index: '/notifications-list',
+          },
         ],
       },
     ],
