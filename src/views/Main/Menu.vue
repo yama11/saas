@@ -221,6 +221,17 @@ export default {
           },
         ],
       },
+      {
+        name: '家长端管理',
+        permission: 'client',
+        children: [
+          {
+            name: '广告管理',
+            permission: 'client.advertising',
+            index: '/advertising-list',
+          },
+        ],
+      },
     ],
   }),
 
@@ -248,6 +259,7 @@ export default {
     onSelectMenu(index) {
       const specialList = [
         '/subject-list',
+        '/advertising-list',
       ];
 
       const path = specialList.includes(index)

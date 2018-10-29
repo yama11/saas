@@ -30,6 +30,7 @@ import Drawmoney from '@/views/Drawmoney';
 import Dealeraccount from '@/views/Dealeraccount';
 import Departmentaccount from '@/views/Departmentaccount';
 import Partner from '@/views/Partner';
+import Advertising from '@/views/Advertising';
 
 
 const routes = [
@@ -61,6 +62,7 @@ const routes = [
   ...Dealeraccount,
   ...Departmentaccount,
   ...Partner,
+  ...Advertising,
 ];
 
 export default routes;
