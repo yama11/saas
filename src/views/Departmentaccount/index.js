@@ -2,6 +2,7 @@ import DepartmentList from './index.vue';
 import DepartmentDetails from './Details';
 import DepartmentDispose from './Dispose';
 import DepartmentForm from './Form';
+import DepartmentConsumption from './Consumption';
 
 
 export default [
@@ -28,6 +29,13 @@ export default [
     path: 'department-deal/:id',
     name: 'DepartmentDispose',
     component: DepartmentDispose,
+  },
+
+  // 机构结算  - 课耗明细
+  {
+    path: 'department-consumption',
+    name: 'DepartmentConsumption',
+    component: DepartmentConsumption,
   },
 
 ];

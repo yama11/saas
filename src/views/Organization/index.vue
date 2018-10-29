@@ -140,7 +140,7 @@ export default {
         />
         <el-table-column
           label="操作"
-          width="280px"
+          width="320px"
         >
           <template slot-scope="scope">
             <el-button
