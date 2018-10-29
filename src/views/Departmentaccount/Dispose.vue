@@ -25,6 +25,9 @@ export default{
       from: null,
 
       url: '/finance/department/upload',
+
+      payment_method: [],
+
     };
   },
 
@@ -91,6 +94,7 @@ export default{
 
   created() {
     this.getDepartmentInfo();
+    this.getFormBefore();
   },
 
   methods: {
@@ -106,6 +110,13 @@ export default{
         });
     },
 
+    getFormBefore() {
+      this.$http.get('/finance/dealer/index_before')
+        .then((res) => {
+          this.payment_method = res.payment_method;
+        });
+    },
+
     cancelForm() {
       if (this.from.matched.length) {
         return this.$router.back();
@@ -116,9 +127,9 @@ export default{
     },
 
     returnAudit() {
-      this.$http.patch(`/finance/department/accounted/${this.$route.params.id}`, { certify: this.data.certify })
+      this.$http.patch(`/finance/department/accounted/${this.$route.params.id}`, { certify: this.data.certify, payment_method: this.data.payment_method_name })
         .then(this.cancelForm)
-        .cantch((err) => {
+        .catch((err) => {
           this.$message.error(err.message);
         });
     },
@@ -176,6 +187,21 @@ export default{
         />
       </section>
       <div
+        class="department-deal__payment">
+        <span>
+          付款方式
+        </span>
+        :
+        <el-radio
+          v-for="level in payment_method"
+          v-model="data.payment_method_name"
+          :label="level.value"
+          :key="level.value">
+          {{ level.name }}
+        </el-radio>
+      </div>
+      <div
+        v-if="data.payment_method_name"
         class="department-deal__voucher">
         <span>打款凭证</span>
         &nbsp;:&nbsp;&nbsp;
@@ -273,5 +299,9 @@ export default{
     height: 190px;
     display: block;
   }
+  .department-deal__payment{
+  margin-left: 60px;
+  margin-bottom: 30px;
+}
 </style>
 

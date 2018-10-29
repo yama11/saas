@@ -37,6 +37,7 @@ export default{
         month: Month,
         status_name: statusName,
         account_time: accountTime,
+        payment_method_name: paymentMethodName,
       } = this.data;
 
       return [
@@ -59,6 +60,10 @@ export default{
         {
           label: '结算金额',
           details: decreaseMoney ? decreaseMoney.toString() : '0',
+        },
+        {
+          label: '付款方式',
+          details: paymentMethodName,
         },
         {
           label: '状态',
