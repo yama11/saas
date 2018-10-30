@@ -18,14 +18,12 @@ export default {
 
 
       order_status: [],
-
-      roleType: this.$store.state.roleType,
     };
   },
 
   computed: {
     searchArr() {
-      const column = this.roleType === 31
+      const column = this.$store.state.roleType === 31
         ? [
           { prop: 'order_sn', label: '订单编号' },
           { prop: 'merchandise_name', label: '商品名称' },
@@ -58,7 +56,7 @@ export default {
         { prop: 'order_source_name', label: '来源' },
       ];
 
-      const columnsList = this.roleType === 31
+      const columnsList = this.$store.state.roleType === 31
         ? [
           { prop: 'order_sn', label: '订单编号' },
           ...initList,
