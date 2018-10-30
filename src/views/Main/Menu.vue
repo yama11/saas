@@ -135,6 +135,11 @@ export default {
             permission: 'system.partner',
             index: '/partner-list',
           },
+          {
+            name: '操作日志',
+            permission: 'system.operation_log',
+            index: '/log-list',
+          },
         ],
       },
       {

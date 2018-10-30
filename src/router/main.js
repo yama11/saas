@@ -21,6 +21,7 @@ import Change from '@/views/Change';
 import Quit from '@/views/Quit';
 import Freeze from '@/views/Freeze';
 import Liveroom from '@/views/Liveroom';
+import Log from '@/views/Log';
 import Package from '@/views/Package';
 import Dealer from '@/views/Dealer';
 import School from '@/views/School';
@@ -57,6 +58,7 @@ const routes = [
   ...Quit,
   ...Freeze,
   ...Liveroom,
+  ...Log,
   ...Package,
   ...Dealer,
   ...School,
