@@ -46,14 +46,12 @@ export default {
 
       categories: [],
 
-      roleType: this.$store.state.roleType,
-
     };
   },
 
   computed: {
     searchArr() {
-      const column = this.roleType === 32 ? [
+      const column = this.$store.state.roleType === 32 ? [
         { prop: 'curriculum_name', label: '课程名称' },
         { prop: 'code', label: '班级编码' },
         { prop: 'name', label: '班级名称' },
@@ -63,7 +61,7 @@ export default {
         { prop: 'name', label: '班级名称' },
       ];
 
-      const searchList = this.roleType === 32 ? [
+      const searchList = this.$store.state.roleType === 32 ? [
         { selectValue: this.status, componentType: 'AppSearchStatus', searchType: 'class_status', placeholder: '请选择状态' },
         { selectValue: this.categories,
           componentType: 'AppSearchCascader',

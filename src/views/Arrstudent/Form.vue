@@ -31,7 +31,6 @@ export default{
       // 定义星期
       toDay: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
 
-      roleType: this.$store.state.roleType,
     };
   },
 
@@ -176,7 +175,7 @@ export default{
           </span>
         </div>
         <div
-          v-if="roleType === 31"
+          v-if="this.$store.state.roleType !== 31"
         >
           <span>家长电话</span>
           :

@@ -19,15 +19,13 @@ export default {
 
       change_status: [],
 
-      roleType: this.$store.state.roleType,
-
     };
   },
 
   computed: {
 
     searchArr() {
-      const column = this.roleType === 32 ? [
+      const column = this.$store.state.roleType === 32 ? [
         { prop: 'student_name', label: '学生姓名' },
         { prop: 'curriculum_code', label: '课程编码' },
         { prop: 'department_name', label: '培训机构' },
@@ -51,7 +49,7 @@ export default {
     },
 
     columns() {
-      const RoleType = this.roleType === 32 ?
+      const RoleType = this.$store.state.roleType === 32 ?
         [
           { prop: 'student_name', label: '学生姓名' },
           { prop: 'department_name', label: '培训机构' },

@@ -54,6 +54,10 @@ export default {
     },
   },
 
+  created() {
+    this.indexBefore();
+  },
+
   methods: {
 
     checkPermission(key, text) {
@@ -62,6 +66,17 @@ export default {
 
     Permission(key, text) {
       return this.$permissions(`finance.class_hour_record.${key}`, text);
+    },
+
+    indexBefore() {
+      this.$http.get('/finance/dealer/index_before')
+        .then((res) => {
+          this.payment_method = res.payment_method;
+          this.status = res.status;
+        })
+        .catch((error) => {
+          this.$message.error(error.message);
+        });
     },
 
     departmentInfo(id) {

@@ -50,8 +50,6 @@ export default {
 
       categories: [],
 
-      roleType: this.$store.state.roleType,
-
     };
   },
 
@@ -83,7 +81,7 @@ export default {
     },
 
     columns() {
-      const RoleType = this.roleType === 31 ?
+      const RoleType = this.$store.state.roleType === 31 ?
         [
           { prop: 'code', label: '班级编码' },
           { prop: 'curriculum_name', label: '课程名称' },

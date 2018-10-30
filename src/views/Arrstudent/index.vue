@@ -59,7 +59,6 @@ export default {
         ],
       },
 
-      roleType: this.$store.state.roleType,
 
     };
   },
@@ -71,7 +70,7 @@ export default {
     },
 
     columns() {
-      const RoleType = this.roleType === 31 ? [
+      const RoleType = this.$store.state.roleType === 31 ? [
         { prop: 'student_name', label: '学生姓名' },
         { prop: 'curriculum_name', label: '约课课程' },
         { prop: 'course_number', label: '课时数' },
@@ -93,7 +92,7 @@ export default {
     },
 
     searchArr() {
-      const column = this.roleType === 31 ? [
+      const column = this.$store.state.roleType === 31 ? [
         { prop: 'student_name', label: '学生姓名' },
         { prop: 'order_number', label: '订单编号' },
         { prop: 'curriculum_name', label: '课程名称' },
