@@ -134,10 +134,20 @@ export default {
     },
 
     getClassList(id) {
-      let data = `equal[curriculum_id]=${this.curriculumId}`;
+      this.formData.classId = null;
 
       if (id) {
-        data += `&equal[department_id]=${id}`;
+        this.formData.schemeId = null;
+      }
+
+      let data = `equal[curriculum_id]=${this.curriculumId}`;
+
+      if (this.formData.departmentId) {
+        data += `&equal[department_id]=${this.formData.departmentId}`;
+      }
+
+      if (this.formData.schemeId) {
+        data += `&equal[scheme_id]=${this.formData.schemeId}`;
       }
 
       this.$http.get(`/order/batch/class?${data}`)
@@ -188,6 +198,8 @@ export default {
 
       const calendarData = this.schemeList
         .find(item => item.id === id);
+
+      this.getClassList();
 
       if (!calendarData) return;
 
