@@ -16,6 +16,13 @@ export default [
     component: InterlocutionForm,
   },
 
+  // 帮助中心查看
+  {
+    path: 'interlocution-look/:id',
+    name: 'InterlocutionLook',
+    component: InterlocutionForm,
+  },
+
   // 帮助中心编辑
   {
     path: 'interlocution-edit/:id',

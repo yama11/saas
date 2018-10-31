@@ -35,6 +35,10 @@ export default {
       this.$router.push(`/interlocution-edit/${id}`);
     },
 
+    lookInfo(id) {
+      this.$router.push(`/interlocution-look/${id}_${id}`);
+    },
+
     deleteInfo(id) {
       this.$_listMixin_alertDeleteItem(
         id,
@@ -86,9 +90,17 @@ export default {
 
         <el-table-column
           label="操作"
-          width="150px"
+          width="220px"
         >
           <template slot-scope="scope">
+
+            <el-button
+              v-if="checkPermission('edit')"
+              size="small"
+              @click="lookInfo(scope.row.id)"
+            >
+              查看
+            </el-button>
 
             <el-button
               v-if="checkPermission('update')"

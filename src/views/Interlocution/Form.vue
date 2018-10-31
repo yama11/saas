@@ -14,7 +14,13 @@ export default {
 
   data() {
     return {
-      id: this.$route.params.id,
+      id: this.$route.params.id
+        ? this.$route.params.id.split('_')[0]
+        : undefined,
+
+      lookId: this.$route.params.id
+        ? this.$route.params.id.split('_')[1]
+        : undefined,
 
       dataForm: {
         title: '',
@@ -33,13 +39,15 @@ export default {
       },
 
       interlocutionType: [],
-
-      isDisable: false,
     };
   },
 
   computed: {
     noticeTitle() {
+      if (this.lookId) {
+        return '查看问题';
+      }
+
       if (this.id) {
         return '编辑问题';
       }
@@ -87,6 +95,18 @@ export default {
           this.$message.error(errorMessage[0]);
         });
     },
+
+    backPage() {
+      if (this.from.matched.length) {
+        return this.$router.back();
+      }
+
+      const prefix = this.$route.path.match(/^\/\w+-/)[0];
+
+      const location = (prefix && prefix.concat('list')) || '/';
+
+      return this.$router.push(location);
+    },
   },
 };
 </script>
@@ -111,6 +131,7 @@ export default {
       <el-input
         v-model="dataForm.title"
         :maxlength="20"
+        :disabled="!!lookId"
         type="text"
         placeholder="请输入问题标题"
         class="notification-form__text"/>
@@ -122,6 +143,7 @@ export default {
     >
       <el-select
         v-model="dataForm.interlocution_type"
+        :disabled="!!lookId"
         placeholder="请选择问题类型">
         <el-option
           v-for="item in interlocutionType"
@@ -138,9 +160,20 @@ export default {
     >
       <AppTextArea
         v-model="dataForm.answer"
-        :is-disable="isDisable"/>
+        :is-disable="!!lookId"/>
 
     </el-form-item>
+
+    <div
+      v-if="lookId"
+      slot="footer"
+      class="notification-form__footer">
+      <el-button
+        type="primary"
+        @click="backPage">
+        返回
+      </el-button>
+    </div>
 
   </AppFormPage>
 </template>
@@ -148,5 +181,10 @@ export default {
 <style lang="postcss">
 .notification-form__text{
   width: 400px;
+}
+
+.notification-form__footer button{
+  display: block;
+  margin: 0 auto;
 }
 </style>
