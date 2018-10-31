@@ -95,37 +95,37 @@ export default {
 </script>
 
 <template lang="html">
-  <div class="editorText">
+  <div class="app-text-area">
     <div
       ref="toolbar"
-      class="toolbar"/>
+      class="app-text-area__tool"/>
 
     <div
       ref="editorText"
-      class="text"/>
+      class="app-text-area__text"/>
   </div>
 </template>
 
 <style lang="postcss">
-.editorText {
+.app-text-area {
   width: 100%;
   margin: 0 auto;
 }
 
-.editorText .w-e-text-container{
+.app-text-area .w-e-text-container{
   z-index: 0 !important;
 }
 
-.editorText .w-e-toolbar{
+.app-text-area .w-e-toolbar{
   position: relative;
   z-index: 1;
 }
 
-.toolbar {
+.app-text-area__tool {
   border: 1px solid #ccc;
 }
 
-.text {
+.app-text-area__text {
   border: 1px solid #ccc;
   height: 500px;
 }
