@@ -116,6 +116,19 @@ export default {
 </template>
 
 <style lang="postcss">
+.interlocution-list__image{
+  width: auto;
+  overflow: hidden;
+  height: 50px;
+}
+
+.interlocution-list__image *{
+  width: auto;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .interlocution-list__image img{
   width: 20px;
   height: 20px;
