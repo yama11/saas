@@ -75,7 +75,7 @@ export default {
           label="问题解答">
           <template slot-scope="scope">
             <div
-              class="interlocution-list__image"
+              class="interlocution-list__text"
               v-html="scope.row.answer"/>
           </template>
         </el-table-column>
@@ -116,20 +116,13 @@ export default {
 </template>
 
 <style lang="postcss">
-.interlocution-list__image{
+.interlocution-list__text{
   width: auto;
   overflow: hidden;
   height: 50px;
 }
 
-.interlocution-list__image *{
-  width: auto;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.interlocution-list__image img{
+.interlocution-list__text img{
   width: 20px;
   height: 20px;
 }
