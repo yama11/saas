@@ -54,11 +54,11 @@ export default {
     },
 
     // eslint-disable-next-line
-    getClassHistory(id, schemeId, statusName) {
+    getClassHistory(id, classId, statusName) {
       if (!statusName) {
         return this.$message.error('班级未开课!');
       }
-      this.$router.push(`/student-history/${id}_${schemeId}`);
+      this.$router.push(`/student-history/${id}_${classId}`);
     },
 
   },
@@ -108,7 +108,7 @@ export default {
             <el-button
               v-if="checkPermission('schedule')"
               size="small"
-              @click="getClassHistory(id,scope.row.scheme_id,scope.row.class_status_name)"
+              @click="getClassHistory(id,scope.row.class_id,scope.row.class_status_name)"
             >查看上课历史</el-button>
           </template>
         </el-table-column>
