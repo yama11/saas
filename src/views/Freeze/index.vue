@@ -82,6 +82,8 @@ export default {
 
       unfreezeId: null,
 
+      cancelId: null,
+
     };
   },
 
@@ -223,7 +225,8 @@ export default {
     },
 
     submitUnfreeze(id) {
-      this.$http.post(`/freeze/cancel/${id}`)
+      this.cancelId = parseFloat(id);
+      this.$http.post(`/freeze/cancel/${this.cancelId}`)
         .then(() => this.$refs.list.getList())
         .catch((error) => {
           const errorMessage = errorHandler(error);
