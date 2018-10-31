@@ -80,6 +80,8 @@ export default {
         refund_money: null,
       },
 
+      unfreezeId: null,
+
     };
   },
 
@@ -190,18 +192,8 @@ export default {
     },
 
     unfreeze(id) {
-      this.unvisible = false;
-      this.unformData = {};
-      this.$http.post(`/freeze/cancel/${id}`)
-        .then((res) => {
-          this.unformData = { ...res };
-          this.unvisible = true;
-        })
-        .catch((error) => {
-          const errorMessage = errorHandler(error);
-
-          this.$message.error(errorMessage[0]);
-        });
+      this.unfreezeId = id;
+      this.unvisible = true;
     },
 
     freezeInfo(id) {
@@ -322,13 +314,12 @@ export default {
       />
       <AppFormDialog
         :visible.sync="unvisible"
-        :model="unformData"
         url="/freeze"
         label-width="5em"
         object="解冻"
         width="500px"
         class="freeze-popup"
-        @on-submit="submitUnfreeze(unformData.hour_id)"
+        @on-submit="submitUnfreeze(unfreezeId)"
       >
         <span
           class="freeze-popup__span"
