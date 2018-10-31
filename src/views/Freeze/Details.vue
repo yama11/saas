@@ -4,7 +4,6 @@
  *
  * @author yehaifeng
  */
-import errorHandler from '@/components/AppFormAlert/errorHandler';
 import { form } from '@/mixins';
 import InfoNote from '../components/InfoNote';
 
@@ -133,16 +132,6 @@ export default{
 
       return this.$router.push(location);
     },
-
-    disreguardCancel() {
-      this.$http.post(`/freeze/cancel/${this.$route.params.id}`)
-        .then(this.cancelForm)
-        .catch((error) => {
-          const errorMessage = errorHandler(error);
-
-          this.$message.error(errorMessage[0]);
-        });
-    },
   },
 };
 </script>
@@ -189,12 +178,6 @@ export default{
           @click="disreguardRefund"
         >
           确定
-        </el-button>
-        <el-button
-          v-if="data.freeze_status ===2"
-          @click="disreguardCancel"
-        >
-          取消
         </el-button>
       </div>
 
