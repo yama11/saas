@@ -192,7 +192,7 @@ export default {
     unfreeze(id) {
       this.unvisible = false;
       this.unformData = {};
-      this.$http.post('/freeze/create', { id })
+      this.$http.post(`/freeze/cancel/${id}`)
         .then((res) => {
           this.unformData = { ...res };
           this.unvisible = true;
