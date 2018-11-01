@@ -6,18 +6,16 @@
  */
 import errorHandler from '@/components/AppFormAlert/errorHandler';
 import BootList from './Boot';
-import BootAdvertising from './BootAdvertising';
-import AlertList from './Alert';
-import BannerList from './Banner';
+import OtherAdvert from './OtherAdvert';
+import AdvertForm from './Form';
 
 export default {
   name: 'AdvertisingList',
 
   components: {
     BootList,
-    BootAdvertising,
-    AlertList,
-    BannerList,
+    OtherAdvert,
+    AdvertForm,
   },
 
   data() {
@@ -27,6 +25,23 @@ export default {
       advertisingList: [],
 
       showList: null,
+
+      visible: false,
+
+      formData: {
+        title: '',
+        link: '',
+        image: '',
+      },
+
+      imageSize: {
+        width: 375,
+        height: 667,
+      },
+
+      id: null,
+
+      loading: false,
     };
   },
 
@@ -55,17 +70,43 @@ export default {
       this.showList = value;
 
       this.getList(this.showList);
+
+      if (value === 2) {
+        this.imageSize = {
+          width: 375,
+          height: 667,
+        };
+
+        return;
+      }
+
+      if (value === 3) {
+        this.imageSize = {
+          width: 277,
+          height: 319,
+        };
+
+        return;
+      }
+
+      this.imageSize = {
+        width: 345,
+        height: 179,
+      };
     },
 
     getList(value) {
-      this.advertisingList = [];
+      this.loading = true;
 
       this.$http.get(`/advertising?equal[advertising_type]=${value}`)
         .then((res) => {
-          this.advertisingList = res.data;
+          this.advertisingList = res;
         })
         .catch((error) => {
           this.alertError(error);
+        })
+        .finally(() => {
+          this.loading = false;
         });
     },
 
@@ -73,6 +114,85 @@ export default {
       const errorMessage = errorHandler(error);
 
       this.$message.error(errorMessage[0]);
+    },
+
+    updateData(image, id) {
+      const data = {
+        title: '',
+        advertising_type: 1,
+        image,
+        link: '',
+      };
+
+      const method = id ? 'put' : 'post';
+      const url = id ? `/advertising/${id}` : '/advertising';
+
+      this.$http[method](url, data)
+        .then(() => {
+          this.getList(1);
+        })
+        .catch((error) => {
+          this.alertError(error);
+        });
+    },
+
+    updateAdvertItem(data) {
+      this.createAdvert(data);
+    },
+
+    createAdvert(data) {
+      this.visible = true;
+
+      if (!data) {
+        this.formData = {
+          title: '',
+          link: '',
+          image: '',
+        };
+
+        return;
+      }
+
+      this.id = data.id;
+
+      this.formData = data;
+    },
+
+    closeForm() {
+      this.visible = false;
+    },
+
+    updateAdvert(value) {
+      this.getList(value);
+
+      this.id = null;
+    },
+
+    deleteAdvertItem(id) {
+      this.$confirm(
+        '确定删除该广告？',
+        '确认删除',
+        {
+          showCancelButton: true,
+          type: 'danger',
+          confirmButtonText: '刪除',
+          confirmButtonClass: 'el-button--danger',
+        })
+        .then(() => {
+          this.sureDelete(id);
+        })
+        .catch(() => {});
+    },
+
+    sureDelete(id) {
+      this.$http.delete(`/advertising/${id}`)
+        .then(() => {
+          this.getList(this.showList);
+          this.id = null;
+        })
+        .catch((error) => {
+          this.alertError(error);
+        });
     },
   },
 };
@@ -99,23 +219,32 @@ export default {
       </el-button>
     </div>
 
-    <div class="advertising-list__content">
+    <div
+      v-loading="loading"
+      class="advertising-list__content">
       <BootList
         v-if="showList === 1"
-        :advertising-list="advertisingList"/>
+        :advertising-list="advertisingList"
+        @updateImg="updateData"/>
 
-      <BootAdvertising
-        v-if="showList === 2"
-        :advertising-list="advertisingList"/>
-
-      <AlertList
-        v-if="showList === 3"
-        :advertising-list="advertisingList"/>
-
-      <BannerList
-        v-if="showList === 4"
-        :advertising-list="advertisingList"/>
+      <OtherAdvert
+        v-else
+        :advertising-list="advertisingList"
+        :show-list="showList"
+        @advertEvent="createAdvert"
+        @updateEvent="updateAdvertItem"
+        @deleteEvent="deleteAdvertItem"/>
     </div>
+
+    <AdvertForm
+      v-if="visible"
+      :show-visible="visible"
+      :form-data="formData"
+      :id="id"
+      :image-size="imageSize"
+      :type="showList"
+      @close="closeForm"
+      @updateList="updateAdvert"/>
   </div>
 </template>
 
