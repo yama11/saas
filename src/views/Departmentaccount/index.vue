@@ -42,6 +42,8 @@ export default {
     searchArr() {
       const column = [
         { prop: 'dealer_name', label: '区域运营商' },
+        { prop: 'year', label: '结算年份' },
+        { prop: 'month', label: '结算月份' },
       ];
 
       const searchList = [
