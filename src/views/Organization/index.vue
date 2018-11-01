@@ -5,9 +5,14 @@
  * @author yehaifeng
  */
 import list from '@/mixins/list';
+import organizationEdition from './Edition';
 
 export default {
   name: 'Organization',
+
+  components: {
+    organizationEdition,
+  },
 
   mixins: [list],
 
@@ -38,23 +43,32 @@ export default {
       ],
       departments: [],
 
-      dialog: false,
-
       title: '',
 
-      formData: {},
+      formData: {
+        platform_percentage: null,
+        partner_percentage: null,
+        department_percentage: null,
+        dealer_percentage: null,
+        department_id: null,
+        platform_id: null,
+        partner_id: null,
+        dealer_id: null,
+        platform_name: '',
+        partner_name: '',
+        dealer_name: '',
+        department_name: '',
+      },
 
       list: {},
 
-      roleType: this.$store.state.roleType,
-
-      divide: false,
+      visible: false,
 
     };
   },
   computed: {
     searchArr() {
-      const column = this.roleType === 31 ? [
+      const column = this.$store.state.roleType === 31 ? [
         { prop: 'name', label: '机构名称' },
         { prop: 'number', label: '机构编码' },
         { prop: 'account', label: '账号' },
@@ -102,13 +116,40 @@ export default {
       this.$_listMixin_alertDeleteItem(id, this.list.data, '机构', '/department');
     },
 
-    divideDepartment() {
-      this.divide = true;
+    divideDepartment(id) {
+      this.formData = {
+        platform_percentage: null,
+        partner_percentage: null,
+        department_percentage: null,
+        dealer_percentage: null,
+        department_id: null,
+        platform_id: null,
+        partner_id: null,
+        dealer_id: null,
+        platform_name: '',
+        partner_name: '',
+        dealer_name: '',
+        department_name: '',
+      };
+      this.visible = true;
+      this.$http.get(`/department/proportion/${id}`)
+        .then((res) => {
+          this.formData = { ...res };
+          this.formData.id = res.department_id;
+          this.formData.platform_percentage = res.platform_percentage;
+          this.formData.partner_percentage = res.partner_percentage;
+          this.formData.department_percentage = res.department_percentage;
+          this.formData.dealer_percentage = res.dealer_percentage;
+        })
+        .catch(({ message }) => {
+          this.$message.error(message);
+        });
     },
 
-    submitEdition(submit) {
-      submit().then(() => this.$refs.list.getList());
+    submitEdition() {
+      this.$refs.list.getList();
     },
+
   },
 };
 </script>
@@ -149,6 +190,7 @@ export default {
               @click="managerTeacher(scope.row.id)"
             >辅师管理</el-button>
             <el-button
+              v-if="checkPermission('proportion_show')"
               size="small"
               @click="divideDepartment(scope.row.id)"
             >分成</el-button>
@@ -166,78 +208,18 @@ export default {
           </template>
         </el-table-column>
       </el-table>
-      <AppFormDialog
-        :visible.sync="divide"
-        url="/freeze"
-        label-width="5em"
-        object="分成比例"
-        width="500px"
-        @on-submit="submitEdition"
-      >
-        <div class="department-popup">
-          <div class="department_title">总部</div>
-          <div class="department_content">麦克斯韦</div>
-          <div class="department_data">
-            <el-input
-              maxlength="10"
-              placeholder="请输入"
-            />&nbsp;%
-          </div>
-        </div>
-        <div class="department-popup">
-          <div class="department_title">城市合伙人</div>
-          <div class="department_content">厦门城市合伙人</div>
-          <div class="department_data">
-            <el-input
-              maxlength="10"
-              placeholder="请输入"
-            />&nbsp;%
-          </div>
-        </div>
-        <div class="department-popup">
-          <div class="department_title">区域运营商</div>
-          <div class="department_content">思明区运营商</div>
-          <div class="department_data">
-            <el-input
-              maxlength="10"
-              placeholder="请输入"
-            />&nbsp;%
-          </div>
-        </div>
-        <div class="department-popup">
-          <div class="department_title">机构</div>
-          <div class="department_content">心超越枋湖校区</div>
-          <div class="department_data">
-            <el-input
-              maxlength="10"
-              placeholder="请输入"
-            />&nbsp;%
-          </div>
-        </div>
-      </AppFormDialog>
+      <organizationEdition
+        :visible.sync="visible"
+        :id="formData.id"
+        :form-data="formData"
+        width="458px"
+        @getData="submitEdition"
+      />
     </template>
   </AppList>
 
 </template>
 <style>
-.department-popup{
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-between;
-  line-height: 40px;
-  margin-bottom: 15px;
-}
-.department-popup .el-input{
-  width: 80%;
-}
-.department_title{
-  width: 30%
-}
-.department_content{
-  width: 35%
-}
-.department_data{
-  width: 20%
-}
+
 </style>
 

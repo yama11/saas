@@ -225,7 +225,8 @@ export default {
     },
 
     submitUnfreeze(id) {
-      this.cancelId = parseFloat(id);
+      // eslint-disable-next-line
+      this.cancelId = parseInt(id);
       this.$http.post(`/freeze/cancel/${this.cancelId}`)
         .then(() => this.$refs.list.getList())
         .catch((error) => {

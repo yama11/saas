@@ -5,8 +5,10 @@
  *
  * @author yehaifeng
  */
+import errorHandler from '@/components/AppFormAlert/errorHandler';
 import form from '@/mixins/form';
 import { BaiduMap } from 'vue-baidu-map';
+import organizationEdition from './Edition';
 
 export default {
 
@@ -14,6 +16,7 @@ export default {
 
   components: {
     BaiduMap,
+    organizationEdition,
   },
 
   mixins: [form],
@@ -38,7 +41,6 @@ export default {
         name: [
           this.$rules.required('机构名称'),
         ],
-
         number: [
           this.$rules.required('机构编码'),
         ],
@@ -63,6 +65,29 @@ export default {
           this.$rules.required('详细地址'),
         ],
       },
+
+      visible: false,
+
+      found: true,
+
+      formEdition: {
+        platform_percentage: null,
+        partner_percentage: null,
+        department_percentage: null,
+        dealer_percentage: null,
+        department_id: null,
+        platform_id: null,
+        partner_id: null,
+        dealer_id: null,
+        platform_name: '',
+        partner_name: '',
+        dealer_name: '',
+        department_name: '',
+      },
+
+      departmentId: null,
+
+      list: {},
 
     };
   },
@@ -110,22 +135,79 @@ export default {
       this.$http.get(`/department/${id}`)
         .then((res) => {
           this.formDate = { ...res };
+        })
+        .catch(({ message }) => {
+          this.$message.error(message);
         });
     },
 
-    submitEdition(submit) {
-      submit();
+    submitEdition() {
+      if (this.id) {
+        this.$http.put(`/department/${this.id}`, this.formDate)
+          .then(() => {
+            this.cancelForm();
+          })
+          .catch((error) => {
+            const errorMessage = errorHandler(error);
+
+            this.$message.error(errorMessage[0]);
+          });
+        return;
+      }
+      this.$http.post('/department', this.formDate)
+        .then((res) => {
+          this.departmentId = res.id;
+          this.divideDepartment();
+        })
+        .catch((error) => {
+          const errorMessage = errorHandler(error);
+
+          this.$message.error(errorMessage[0]);
+
+          this.cancelForm();
+        });
+    },
+
+    divideDepartment() {
+      this.formEdition = {
+        platform_percentage: null,
+        partner_percentage: null,
+        department_percentage: null,
+        dealer_percentage: null,
+        department_id: null,
+        platform_id: null,
+        partner_id: null,
+        dealer_id: null,
+        platform_name: '',
+        partner_name: '',
+        dealer_name: '',
+        department_name: '',
+      };
+      this.$http.get(`/department/proportion/${this.departmentId}`)
+        .then((res) => {
+          this.formEdition = { ...res };
+          this.formEdition.id = res.department_id;
+          this.visible = true;
+        })
+        .catch(({ message }) => {
+          this.$message.error(message);
+        });
     },
 
     cancelForm() {
-      this.$refs.list.getList();
+      if (this.from.matched.length) {
+        return this.$router.back();
+      }
+      const prefix = this.$route.path.match(/^\/\w+-/)[0];
+      const location = (prefix && prefix.concat('list')) || '/';
+      return this.$router.push(location);
     },
+
   },
 };
 </script>
 <template>
   <AppFormPage
-    ref="formDate"
     :model="formDate"
     :from="from"
     :rules="rules"
@@ -135,6 +217,7 @@ export default {
     url="/department"
     @on-submit="submitEdition"
     @on-cancel="cancelForm"
+
   >
     <div
       class="organization-form"
@@ -259,6 +342,14 @@ export default {
         </el-form-item>
       </div>
     </div>
+    <organizationEdition
+      :visible.sync="visible"
+      :id="formEdition.id"
+      :form-data="formEdition"
+      :found="found"
+      width="458px"
+      @getData="cancelForm"
+    />
   </AppFormPage>
 </template>
 <style lang="postcss">
