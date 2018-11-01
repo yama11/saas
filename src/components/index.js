@@ -11,6 +11,7 @@ import AppCropUploader from './AppCropUploader';
 import AppUploader from './AppUploader';
 import AppUploadScale from './AppUploadScale';
 import AppTextArea from './AppTextArea';
+import AppUploadSize from './AppUploadSize';
 
 const components = {
   AppCheckBox,
@@ -26,6 +27,7 @@ const components = {
   AppUploader,
   AppUploadScale,
   AppTextArea,
+  AppUploadSize,
 };
 
 export default (Vue) => {
