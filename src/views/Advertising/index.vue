@@ -50,6 +50,10 @@ export default {
   },
 
   methods: {
+    checkAdvert(key, text) {
+      return this.$permissions(`client.advertising.${key}`, text);
+    },
+
     getIndexBefore() {
       this.$http.get('/advertising/index_before')
         .then((res) => {
@@ -57,7 +61,6 @@ export default {
             this.advertisingTypes = res.advertising_types;
 
             this.showList = res.advertising_types[0].value;
-
             this.getList(this.showList);
           }
         })
@@ -206,7 +209,9 @@ export default {
 
     <hr>
 
-    <div class="advertising-list__select">
+    <div
+      v-if="checkAdvert('index')"
+      class="advertising-list__select">
       <el-button
         v-for="(btn,index) in advertisingTypes"
         :key="index"
@@ -221,6 +226,7 @@ export default {
 
     <div
       v-loading="loading"
+      v-if="checkAdvert('index')"
       class="advertising-list__content">
       <BootList
         v-if="showList === 1"

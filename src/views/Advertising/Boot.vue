@@ -40,9 +40,31 @@ export default {
         ? this.advertisingList[0].id
         : null;
     },
+
+    isCreateOrUpdate() {
+      const length = this.advertisingList.length;
+      const isCreate = this.checkAdvert('store');
+      const isUpdate = this.checkAdvert('update');
+
+      let isDiable = false;
+
+      if (length === 0 && isCreate) {
+        isDiable = true;
+      }
+
+      if (length > 0 && isUpdate) {
+        isDiable = true;
+      }
+
+      return isDiable;
+    },
   },
 
   methods: {
+    checkAdvert(key, text) {
+      return this.$permissions(`client.advertising.${key}`, text);
+    },
+
     getImgUrl(url) {
       this.$emit('updateImg', url, this.imgId);
     },
@@ -55,15 +77,23 @@ export default {
     class="boot-list">
 
     <AppUploadSize
+      v-if="isCreateOrUpdate"
       v-model="imgUrl"
       :style-size="styleSize"
       @sendImgUrl="getImgUrl"/>
 
+    <div
+      v-else
+      :style="styleSize"
+      class="boot-list__block">
+      <img :src="imgUrl">
+    </div>
   </div>
 </template>
 
 <style lang="postcss">
-.boot-list{
-
+.boot-list__block img{
+  width: 100%;
+  height: 100%;
 }
 </style>

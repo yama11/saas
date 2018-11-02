@@ -50,6 +50,10 @@ export default {
   },
 
   methods: {
+    checkAdvert(key, text) {
+      return this.$permissions(`client.advertising.${key}`, text);
+    },
+
     addAdvert() {
       this.$emit('advertEvent');
     },
@@ -76,6 +80,7 @@ export default {
       @delete="deleteAdvert"/>
 
     <AddButton
+      v-if="checkAdvert('store')"
       :style-size="styleSize"
       @addItem="addAdvert"/>
   </div>

@@ -50,6 +50,10 @@ export default {
   },
 
   methods: {
+    checkAdvert(key, text) {
+      return this.$permissions(`client.advertising.${key}`, text);
+    },
+
     getLinkVideo(link) {
       if (link) {
         window.open(link);
@@ -86,12 +90,14 @@ export default {
 
       <div class="advert-item__action">
         <i
+          v-if="checkAdvert('update')"
           class="el-icon-edit"
           @click="updateEvent(dataForm)">
           编辑
         </i>
 
         <i
+          v-if="checkAdvert('delete')"
           class="el-icon-delete"
           @click="deleteEvent(dataForm.id)">
           删除
