@@ -460,9 +460,10 @@ export default {
       prop="cover"
     >
 
-      <AppUploader
+      <AppUploadScale
         v-if="!lookId"
         v-model="dataForm.cover"
+        class="product-form-uploader__img"
         @on-success="getCoverUrl"
       />
 
@@ -715,6 +716,16 @@ export default {
   border: 1px solid gainsboro;
 }
 
+.product-form-uploader__img{
+  position:relative;
+  top: 16px;
+}
+
+.product-form-uploader__img img{
+  width: 120px;
+  height: 120px;
+}
+
 .product-form-uploader__display {
   width: 100px;
   height: 100px;
@@ -722,8 +733,8 @@ export default {
 }
 
 .product-form-uploader__displayImg{
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   display: block;
   position:relative;
   top: 16px;
