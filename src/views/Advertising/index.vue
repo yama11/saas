@@ -74,7 +74,7 @@ export default {
 
       this.getList(this.showList);
 
-      if (value === 2) {
+      if (value === 1 || value === 2) {
         this.imageSize = {
           width: 563,
           height: 1001,
