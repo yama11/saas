@@ -42,8 +42,6 @@ export default {
       info: '',
     },
 
-    isClear: false,
-
     rules: {
       name: [
         { required: true, message: '请填写学科名称' },
@@ -281,7 +279,7 @@ export default {
       >
         <editor-bar
           v-model="formData.describe"
-          :is-clear="isClear"/>
+        />
 
       </el-form-item>
     </AppFormDialog>
