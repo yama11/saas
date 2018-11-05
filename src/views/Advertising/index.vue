@@ -228,13 +228,8 @@ export default {
       v-loading="loading"
       v-if="checkAdvert('index')"
       class="advertising-list__content">
-      <BootList
-        v-if="showList === 1"
-        :advertising-list="advertisingList"
-        @updateImg="updateData"/>
 
       <OtherAdvert
-        v-else
         :advertising-list="advertisingList"
         :show-list="showList"
         @advertEvent="createAdvert"
