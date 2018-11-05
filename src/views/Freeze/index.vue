@@ -270,31 +270,31 @@ export default {
           label="操作"
           width="300px"
         >
-          <template slot-scope="scope">
+          <template slot-scope="{row}">
             <el-button
-              v-if="scope.row.operation.show && checkPermission('show')"
+              v-if="row.operation.show"
               size="small"
               @click="freezeInfo(scope.row.id)"
             >查看</el-button>
             <el-button
-              v-if="scope.row.operation.change"
+              v-if="row.operation.change"
               size="small"
-              @click="changeClass(scope.row,scope.row.hour_id)"
+              @click="changeClass(row,row.hour_id)"
             >转班</el-button>
             <el-button
-              v-if="scope.row.operation.quit "
+              v-if="row.operation.quit "
               size="small"
-              @click="quitDeal(scope.row.hour_id)"
+              @click="quitDeal(row.hour_id)"
             >退班</el-button>
             <el-button
-              v-if="scope.row.operation.thaw &&checkPermission('cancel')"
+              v-if="row.operation.thaw"
               size="small"
-              @click="unfreeze(scope.row.id)"
+              @click="unfreeze(row.id)"
             >解冻</el-button>
             <el-button
-              v-if="scope.row.operation.deal &&checkPermission('deal')"
+              v-if="row.operation.deals"
               size="small"
-              @click="freezeDeal(scope.row.id)"
+              @click="freezeDeal(row.id)"
             >挂起处理</el-button>
 
           </template>
