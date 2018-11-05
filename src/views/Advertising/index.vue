@@ -35,8 +35,8 @@ export default {
       },
 
       imageSize: {
-        width: 375,
-        height: 667,
+        width: 563,
+        height: 1001,
       },
 
       id: null,
@@ -76,8 +76,8 @@ export default {
 
       if (value === 2) {
         this.imageSize = {
-          width: 375,
-          height: 667,
+          width: 563,
+          height: 1001,
         };
 
         return;
@@ -85,16 +85,16 @@ export default {
 
       if (value === 3) {
         this.imageSize = {
-          width: 277,
-          height: 319,
+          width: 705,
+          height: 956,
         };
 
         return;
       }
 
       this.imageSize = {
-        width: 345,
-        height: 179,
+        width: 1035,
+        height: 537,
       };
     },
 

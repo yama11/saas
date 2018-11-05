@@ -22,8 +22,8 @@ export default {
     imageSize: {
       type: Object,
       default: () => ({
-        width: 375,
-        height: 667,
+        width: 563,
+        height: 1001,
       }),
     },
 
