@@ -14,7 +14,7 @@ export default {
       curriculumId: this.$route.params.id.split('_')[1],
 
       columns: [
-        { prop: 'name', label: '课程名称' },
+        { prop: 'name', label: '课件名称' },
         { label: '上课时间',
           formatter: row => `
             ${row.date} ${row.start_time}-${row.end_time}
@@ -35,7 +35,7 @@ export default {
   computed: {
     searchArr() {
       const column = [
-        { prop: 'name', label: '课程名称' },
+        { prop: 'name', label: '课件名称' },
       ];
 
       const searchList = [
@@ -48,12 +48,11 @@ export default {
   },
 
   methods: {
+
     checkPermission(key, text) {
       return this.$permissions(`member_center.student.${key}`, text);
     },
-    getPerformance(id) {
-      this.$router.push(`/student-performance/${this.studentId}_${id}`);
-    },
+
   },
 };
 </script>
@@ -83,18 +82,6 @@ export default {
           :formatter="column.formatter"
           :width="column.width ? column.width : undefined"
         />
-        <el-table-column
-          label="操作"
-          width="180px"
-        >
-          <template slot-scope="scope">
-            <el-button
-              v-if="checkPermission('report')"
-              size="small"
-              @click="getPerformance(scope.row.id)"
-            >学习报告</el-button>
-          </template>
-        </el-table-column>
       </el-table>
     </template>
   </AppList>
