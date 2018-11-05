@@ -34,6 +34,12 @@ export default {
         height: '200px',
       }),
     },
+
+    // 暂时测试用，尺寸不检验
+    isOpenSize: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   data() {
@@ -78,6 +84,12 @@ export default {
         this.$message.error('上传图片大小过大!');
 
         inputs.value = '';
+
+        return;
+      }
+
+      if (!this.isOpenSize) {
+        this.getImgData(file);
 
         return;
       }
