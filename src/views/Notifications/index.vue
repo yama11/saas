@@ -120,7 +120,7 @@ export default {
     },
 
     isShowRecall(status, times) {
-      if (status !== 1) return true;
+      if (status !== 1) return false;
 
       const nowTime = new Date().getTime();
       const pushTime = new Date(times).getTime();
@@ -175,8 +175,7 @@ export default {
 
             <el-button
               v-if="checkPermission('update')
-                && scope.row.msg_status !== 1
-              && scope.row.msg_status !== 2"
+              && scope.row.msg_status === 0"
               size="small"
               type="primary"
               @click="updateInfo(scope.row.id)"
@@ -185,7 +184,8 @@ export default {
             </el-button>
 
             <el-button
-              v-if="checkPermission('destory')"
+              v-if="checkPermission('destory')
+              && scope.row.msg_status === 0"
               size="small"
               type="danger"
               @click="deleteInfo(scope.row.id)"
@@ -195,8 +195,7 @@ export default {
 
             <el-button
               v-if="checkPermission('recall')
-                && isShowRecall(scope.row.msg_status,scope.row.push_time)
-              && scope.row.msg_status !== 2"
+              && isShowRecall(scope.row.msg_status,scope.row.push_time)"
               size="small"
               @click="recallInfo(scope.row.id)"
             >
