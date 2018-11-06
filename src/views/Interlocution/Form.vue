@@ -36,6 +36,10 @@ export default {
         interlocution_type: [
           this.$rules.required('问题类型', 'number'),
         ],
+
+        answer: [
+          this.$rules.required('问题解答'),
+        ],
       },
 
       interlocutionType: [],
@@ -86,10 +90,10 @@ export default {
 
     submitForm(submit) {
       submit()
-        .then(() => {
-
-        })
+        .then()
         .catch((error) => {
+          if (!error) return;
+
           const errorMessage = errorHandler(error);
 
           this.$message.error(errorMessage[0]);
