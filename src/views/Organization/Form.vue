@@ -163,8 +163,6 @@ export default {
           const errorMessage = errorHandler(error);
 
           this.$message.error(errorMessage[0]);
-
-          this.cancelForm();
         });
     },
 

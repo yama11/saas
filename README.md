@@ -41,9 +41,9 @@ vue + vue-router + vuex + element-ui
         |-- components          // 公用组件
         |-- Subject             // 课程中心 -> 学科管理   -   霍金朝
         |-- courseware          // 课程中心 -> 课时内容   -   霍金朝
-        |-- Subject             // 系统维护 -> 角色管理   -   霍金朝
-        |-- courseware          // 系统维护 -> 用户管理   -   霍金朝
-        |-- courseware          // 系统维护 -> 直播间管理  -   霍金朝
+        |-- Role                // 系统维护 -> 角色管理   -   霍金朝
+        |-- User                // 系统维护 -> 用户管理   -   霍金朝
+        |-- Liveroom            // 系统维护 -> 直播间管理  -   霍金朝
         |-- Dealer              // 系统维护 -> 区域运营商管理  -   叶海峰
         |-- Organization        // 系统维护 -> 机构管理   -   叶海峰
         |-- Package             // 系统维护 -> 版本管理   -   叶海峰
