@@ -19,7 +19,7 @@
           v-for="column in type"
           :key="column.prop"
           :label="column.label"
-          :value="column.prop.replace('.', '_')"
+          :value="column.prop.split('.').join('_')"
         />
       </el-select>
     </el-input>
