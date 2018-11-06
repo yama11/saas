@@ -274,7 +274,7 @@ export default {
             <el-button
               v-if="row.operation.show"
               size="small"
-              @click="freezeInfo(scope.row.id)"
+              @click="freezeInfo(row.id)"
             >查看</el-button>
             <el-button
               v-if="row.operation.change"
