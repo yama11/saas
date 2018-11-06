@@ -131,7 +131,7 @@ export default {
 .interlocution-list__text{
   width: auto;
   overflow: hidden;
-  height: 50px;
+  height: 40px;
 }
 
 .interlocution-list__text img{
