@@ -213,9 +213,6 @@ export default {
     :object="id ?'编辑机构':'添加机构'"
     label-width="9em"
     url="/department"
-    @on-submit="submitEdition"
-    @on-cancel="cancelForm"
-
   >
     <div
       class="organization-form"
@@ -339,6 +336,19 @@ export default {
           </div>
         </el-form-item>
       </div>
+    </div>
+    <div slot="footer">
+      <el-button
+        type="primary"
+        @click="submitEdition"
+      >
+        提交
+      </el-button>
+      <el-button
+        @click="cancelForm"
+      >
+        取消
+      </el-button>
     </div>
     <organizationEdition
       :visible.sync="visible"
