@@ -50,6 +50,9 @@ export default {
       introduce: [
         { required: true, message: '请填写简介' },
       ],
+      cover: [
+        { required: true, message: '请添加图片' },
+      ],
     },
 
     treeProps: {
