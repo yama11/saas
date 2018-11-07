@@ -120,7 +120,7 @@ export default {
     :create-label ="checkPermission('index')?'结算单':null"
     :skip-label ="Permission('index')?'课耗明细':null"
     :excel-label ="checkPermission('export')?'导出excel':null"
-    title="区域运营商结算"
+    title="区域运营商结算单"
     api="/finance/dealer/index"
     @create="onCreate"
     @skipPage="onSkip"

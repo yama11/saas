@@ -94,11 +94,11 @@ export default {
     },
 
     onCreate() {
-      this.$router.push('/department-list');
+      this.$router.push('/department-list?page=1&per_page=10');
     },
 
     onSkip() {
-      this.$router.push('/department-consumption');
+      this.$router.push('/department-consumption?page=1&per_page=10');
     },
 
     onExcel() {
@@ -122,7 +122,7 @@ export default {
     :create-label ="checkPermission('index')?'结算单':null"
     :skip-label ="Permission('index')?'课耗明细':null"
     :excel-label ="checkPermission('export')?'导出excel':null"
-    title="机构结算"
+    title="机构结算单"
     api="/finance/department/index"
     @create="onCreate"
     @skipPage="onSkip"
