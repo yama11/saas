@@ -218,12 +218,13 @@ export default{
 
 }
 .quit-details__classtime{
+   width: 50%;
   padding-left: 4em;
   padding-bottom:30px;
 }
 .quit-details__classtime__span{
   display: block;
-  width: 40%;
+  width: 60%;
   height: 225px;
   overflow-y: scroll;
   margin-left: 60px;

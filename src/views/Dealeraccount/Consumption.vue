@@ -53,11 +53,11 @@ export default {
     },
 
     onCreate() {
-      this.$router.push('/account-list');
+      this.$router.push('/account-list?page=1&per_page=10');
     },
 
     onSkip() {
-      this.$router.push('/account-consumption');
+      this.$router.push('/account-consumption?page=1&per_page=10');
     },
 
     onExcel() {

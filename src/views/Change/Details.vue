@@ -298,6 +298,7 @@ export default{
 }
 .change-info__time__span{
   display: block;
+  width: 60%;
   height: 225px;
   overflow-y: scroll;
   margin-left: 60px;
