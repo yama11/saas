@@ -87,7 +87,7 @@ export default {
             })
             .then(() => {
               if (tableHref) {
-                this.$_listMixin_getList(uri, this.$route.query, tableHref);
+                this.$_listMixin_getData(uri, tableHref);
               }
             });
         })
@@ -103,7 +103,23 @@ export default {
         });
     },
 
-    $_listMixin_getList(uri, query = this.$route.query, tableHref) {
+    $_listMixin_getData(uri, tableHref) {
+      this.$_listMixin_getList(uri)
+        .then((res) => {
+          const curPage = res.current_page - 1;
+          const length = res.data.length === 0;
+
+          if (length) {
+            this.$_listMixin_changeIndex(curPage);
+
+            return;
+          }
+
+          tableHref.getList();
+        });
+    },
+
+    $_listMixin_getList(uri, query = this.$route.query) {
       this.loading = true;
 
       const search = Object.keys(query)
@@ -114,17 +130,10 @@ export default {
         }, '');
 
       return this.$http.get(`${uri}${search}`)
-        .then((res) => {
+        .then((data) => {
           this.loading = false;
 
-          const curPage = res.current_page - 1;
-          const length = res.data.length === 0;
-
-          if (length && tableHref) {
-            return this.$_listMixin_changeIndex(curPage);
-          }
-
-          return res;
+          return data;
         })
         .catch((error) => {
           this.loading = false;
