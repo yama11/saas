@@ -29,9 +29,7 @@ export default {
       ],
 
       list: {
-        class: {},
         schedule: { data: [] },
-        star_total: 0,
       },
     };
   },
@@ -79,7 +77,7 @@ export default {
       <span style="margin-left:10px;">总星星: {{ list.star_number }}</span>
       <span style="margin-left:10px;">班级名称: {{ list.class.name }}</span>
       <span style="margin-left:10px;">辅师: {{ list.class.audience_name }}</span>
-      <el-table :data="list.schedule.data">
+      <el-table :data="list.data">
         <el-table-column
           v-for="column in columns"
           :key="column.prop"
