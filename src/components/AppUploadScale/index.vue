@@ -22,6 +22,12 @@ export default {
     };
   },
 
+  computed: {
+    style() {
+      return this.value ? '' : { border: '1px solid gainsboro' };
+    },
+  },
+
   methods: {
     uploadImg() {
       this.$refs.inputImg.click();
@@ -191,6 +197,7 @@ export default {
       @change="changeImg">
 
     <div
+      :style="style"
       class="app-upload-scale__block"
       @click="uploadImg">
       <img
@@ -208,7 +215,6 @@ export default {
   cursor: pointer;
   width: 100px;
   height: 100px;
-  border: 1px solid gainsboro;
 }
 
 </style>
