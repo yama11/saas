@@ -84,6 +84,7 @@ export default {
               confirmButtonText: '我知道了',
               type: 'success',
               confirmButtonClass: 'success',
+              showClose: false,
             })
             .then(() => {
               if (tableHref) {
@@ -99,6 +100,7 @@ export default {
               confirmButtonText: '我知道了',
               type: 'warning',
               confirmButtonClass: 'el-button--danger',
+              showClose: false,
             });
         });
     },
