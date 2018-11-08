@@ -29,7 +29,10 @@ export default {
       ],
 
       list: {
-        schedule: { data: [] },
+        class: {
+          audience_name: '',
+          name: '',
+        },
       },
     };
   },
