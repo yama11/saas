@@ -155,6 +155,7 @@ export default {
     :create-label="checkPermission('store') ? '添加视频' : null"
     api="/video"
     title="视频配置"
+    class="video-list"
     @create="createVideo"
   >
 
@@ -209,6 +210,7 @@ export default {
           label="封面图">
           <AppUploadScale
             v-model="formData.cover_image"
+            class="video-list__cover"
             @on-success="getCoverUrl"/>
         </el-form-item>
 
@@ -228,5 +230,8 @@ export default {
 </template>
 
 <style lang="postcss">
-
+.video-list__cover img{
+  width: 150px;
+  height: 150px;
+}
 </style>
