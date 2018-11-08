@@ -146,7 +146,7 @@ export default{
         </div>
       </div>
     </el-form-item>
-    <span class="department_span">分成比例涉及到结算金额，请认真填写。分成比例累加一定为100%</span>
+    <span class="department_span">分成比例涉及到结算金额，请认真填写。分成比例累加上限100%</span>
   </AppFormDialog>
 </template>
 
