@@ -106,6 +106,10 @@ export default {
 </template>
 
 <style lang="postcss">
+.opinion-info{
+  position: relative;
+}
+
 .opinion-info__title{
   font-size: 1rem;
 }
@@ -120,8 +124,9 @@ export default {
   height: 150px;
 }
 
-.opinion-info__footer button{
-  display: block;
-  margin: 0 auto;
+.opinion-info__footer{
+  position: absolute;
+  bottom: 5px;
+  left: calc((100% - 70px) / 2);
 }
 </style>
