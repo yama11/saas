@@ -4,9 +4,12 @@
  *
  * @author suyanping
  */
+import { form } from '@/mixins';
 
 export default {
   name: 'NotificationInfo',
+
+  mixins: [form],
 
   data() {
     return {
@@ -34,6 +37,18 @@ export default {
             push_time: res.push_time,
           };
         });
+    },
+
+    backPage() {
+      if (this.from.matched.length) {
+        return this.$router.back();
+      }
+
+      const prefix = this.$route.path.match(/^\/\w+-/)[0];
+
+      const location = (prefix && prefix.concat('list')) || '/';
+
+      return this.$router.push(location);
     },
   },
 };
@@ -86,6 +101,15 @@ export default {
       </el-form-item>
 
     </el-form>
+
+    <div
+      class="notification-info__footer">
+      <el-button
+        type="primary"
+        @click="backPage">
+        返回
+      </el-button>
+    </div>
   </div>
 </template>
 
@@ -97,5 +121,10 @@ export default {
 
 .notification-info__textarea{
   width: 600px;
+}
+
+.notification-info__footer button{
+  display: block;
+  margin: 0 auto;
 }
 </style>
