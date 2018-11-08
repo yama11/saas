@@ -4,8 +4,12 @@
  *
  * @author yehaifneg
 */
+import list from '@/mixins/list';
+
 export default {
   name: 'StudentHistory',
+
+  mixins: [list],
 
   data() {
     return {
@@ -56,8 +60,10 @@ export default {
   },
 };
 </script>
+
 <template>
   <AppList
+    ref="list"
     :list.sync="list"
     :api="'/member_center/student/schedule/'+studentId+'/'+curriculumId"
     title="上课历史"
