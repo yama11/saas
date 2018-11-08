@@ -56,6 +56,8 @@ export default {
     createVideo() {
       this.visible = true;
 
+      this.videoId = null;
+
       this.formData = {
         title: '',
         description: '',
