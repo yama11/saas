@@ -60,10 +60,9 @@ export default {
         this.$router.push(`/draw-info/${value.instance_id}`);
       }
       if (value.account_type === 3 || value.account_type === 4) {
-        this.$router.push(`/order/${value.instance_id}`);
+        this.$router.push(`/order-info/${value.instance_id}`);
       }
     },
-
   },
 };
 </script>
