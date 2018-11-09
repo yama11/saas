@@ -6,7 +6,7 @@ const apiMap = {
     'https://final-admin-api.caihonggou.com',
   'final-admin-vue.caihonggou.com':
     'https://final-admin-api.caihonggou.com',
-  'final-admin.aikaola.com':
+  'final-admin.imkid.com.cn':
     'https://final-admin-api.aikaola.com',
 };
 
@@ -22,6 +22,9 @@ export default new Http({
   baseURI,
   baseHeaders: {
     Authorization: `Bearer ${token.get()}`,
+  },
+  baseInit: {
+    mode: 'cors',
   },
   errorAOP,
 });
