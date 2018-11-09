@@ -104,7 +104,7 @@ export default{
         },
         {
           label: '总课时',
-          details: hourTotal,
+          details: hourTotal ? hourTotal.toString() : '',
         },
         {
           label: '实付金额',
@@ -112,7 +112,7 @@ export default{
         },
         {
           label: '已耗课时',
-          details: hourFinish,
+          details: hourFinish ? hourFinish.toString() : '',
         },
         {
           label: '原订单优惠金额',
@@ -120,7 +120,7 @@ export default{
         },
         {
           label: '退班课时',
-          details: hourRemain,
+          details: hourRemain ? hourRemain.toString() : '',
         },
         {
           label: '退费金额',
