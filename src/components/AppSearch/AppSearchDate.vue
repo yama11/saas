@@ -17,24 +17,24 @@
       </el-select>
       <el-date-picker
         v-model="dateValue"
-        style="width: 290px;margin-left:1em;"
-        type="daterange"
+        style="width: 350px;margin-left:1em;"
+        type="datetimerange"
         range-separator="-"
         size="small"
         start-placeholder="选择日期"
         end-placeholder="选择日期"
-        value-format="yyyy-MM-dd"/>
+        value-format="yyyy-MM-dd HH:mm:ss"/>
     </div>
     <div v-else>
       <el-date-picker
         v-model="timeValue"
-        style="width: 290px;margin-left:1em;"
-        type="daterange"
+        style="width: 350px;margin-left:1em;"
+        type="datetimerange"
         range-separator="-"
         size="small"
         start-placeholder="选择日期"
         end-placeholder="选择日期"
-        value-format="yyyy-MM-dd"/>
+        value-format="yyyy-MM-dd HH:mm:ss"/>
     </div>
   </div>
 </template>

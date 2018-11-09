@@ -122,13 +122,26 @@ export default {
         if (!isObj) {
           const urlData = item.split(':');
 
-          acc[urlData[0]] = urlData[1];
+          const value = this.getValue(urlData);
+
+          acc[urlData[0]] = value;
         }
 
         return acc;
       }), { ...query });
 
       this.$router.push({ query: data });
+    },
+
+    getValue(data) {
+      return data.reduce(((acc, item, index) => {
+        if (index > 1) {
+          // eslint-disable-next-line
+          acc = `${acc}:${item}`;
+        }
+
+        return acc;
+      }), data[1]);
     },
   },
 };
