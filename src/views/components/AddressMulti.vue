@@ -18,6 +18,12 @@ export default {
       type: Array,
       default: () => [],
     },
+
+    // 是否3级联动地区
+    isLinkage: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   data() {
@@ -29,6 +35,12 @@ export default {
       pro_city: [],
 
       pro_name: '',
+
+      cityId: null,
+
+      city_area: [],
+
+      city_name: '',
     };
   },
 
@@ -50,6 +62,10 @@ export default {
         this.pro_city = [];
 
         this.proId = null;
+
+        this.city_area = [];
+
+        this.cityId = null;
       }
     });
   },
@@ -63,6 +79,12 @@ export default {
 
       this.pro_name = '';
 
+      this.city_area = [];
+
+      this.city_name = '';
+
+      this.cityId = null;
+
       if (!city) return;
 
       this.pro_city = city;
@@ -70,7 +92,9 @@ export default {
       this.pro_name = name;
     },
 
-    getAreas(value, name) {
+    cityChange(children, value, name) {
+      if (children && this.isLinkage) return;
+
       const isCityIndex = this.division
         .findIndex(item => item === value);
 
@@ -145,6 +169,51 @@ export default {
       this.getAddress();
     },
 
+    getAreas(area, value, name) {
+      if (!this.isLinkage) return;
+
+      this.city_area = [];
+
+      this.city_name = '';
+
+      this.cityId = value;
+
+      if (!area) return;
+
+      this.city_area = area;
+
+      this.city_name = name;
+    },
+
+    areaChange(value, name) {
+      const isAreaIndex = this.division
+        .findIndex(item => item === value);
+
+      const isExist = this.addressTags
+        .find(item => item.value === value);
+
+      if (isExist && isExist.count > 0) return;
+
+      if (isAreaIndex === -1) {
+        this.division.push(value);
+
+        this.addressTags.push({
+          name: this.pro_name + this.city_name + name,
+          value,
+        });
+
+        this.getAddress();
+
+        return;
+      }
+
+      this.division.splice(isAreaIndex, 1);
+
+      this.addressTags.splice(isAreaIndex, 1);
+
+      this.getAddress();
+    },
+
   },
 };
 </script>
@@ -186,9 +255,25 @@ export default {
           v-for="city in pro_city"
           :key="city.value"
           class="address-multi-selected"
-          @click.stop="getAreas(city.value,city.label)">
+          @click.stop="cityChange(city.children,city.value,city.label)"
+          @mousemove="getAreas(city.children,city.value,city.label)">
           {{ city.label }}
           <span v-if="division.includes(city.value)">
+            <i class="el-icon-check"/>
+          </span>
+        </div>
+      </div>
+
+      <div
+        v-if="city_area.length > 0"
+        class="address-multi-select__area">
+        <div
+          v-for="area in city_area"
+          :key="area.value"
+          class="address-multi-selected"
+          @click.stop="areaChange(area.value,area.label)">
+          {{ area.label }}
+          <span v-if="division.includes(area.value)">
             <i class="el-icon-check"/>
           </span>
         </div>
@@ -202,6 +287,7 @@ export default {
 .address-multi{
   width: 400px;
 }
+
 .address-multi__show{
   width: 400px;
   min-height: 40px;
@@ -211,14 +297,19 @@ export default {
     margin-left: 5px;
   }
 }
+
 .address-multi__select{
   position: relative;
   display: none;
 }
+
 .address-multi-select__back{
   background: ghostwhite;
 }
-.address-multi-select__pro,.address-multi-select__city{
+
+.address-multi-select__pro,
+.address-multi-select__city,
+.address-multi-select__area{
   cursor: pointer;
   position: absolute;
   z-index: 1000;
@@ -231,9 +322,11 @@ export default {
   width: 150px;
   border: 1px solid #D2D2D2;
 }
+
 .address-multi-select__pro div:hover{
   background: ghostwhite;
 }
+
 .address-multi-select__city{
   left: 150px;
   width: 250px;
@@ -242,7 +335,18 @@ export default {
     right: 10px;
   }
 }
-.address-multi-select__city div:hover{
+
+.address-multi-select__city div:hover,
+.address-multi-select__area div:hover{
   background: ghostwhite;
+}
+
+.address-multi-select__area{
+  left: 400px;
+  width: 250px;
+  & span{
+    position: absolute;
+    right: 10px;
+  }
 }
 </style>
