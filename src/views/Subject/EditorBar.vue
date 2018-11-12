@@ -28,8 +28,13 @@ export default {
 
   data() {
     return {
+
       editor: null,
+
       info: null,
+
+      formData: {},
+
     };
   },
 
@@ -52,8 +57,6 @@ export default {
   methods: {
     seteditor() {
       this.editor = new E(this.$refs.toolbar, this.$refs.editor);
-
-      this.editor.customConfig.uploadImgShowBase64 = true; // base 64 存储图片
       this.editor.customConfig.uploadImgMaxSize = 2 * 1024 * 1024; // 将图片大小限制为 2M
       this.editor.customConfig.uploadImgTimeout = 3 * 60 * 1000; // 设置超时时间
 
@@ -81,6 +84,25 @@ export default {
         'redo', // 重复
       ];
 
+      this.editor.customConfig.customUploadImg = (files) => {
+        const file = files[0];
+        this.formData = new FormData();
+
+        this.formData.append('chunk', '0');// 断点传输
+        this.formData.append('chunks', '1');
+
+        this.formData.append('file', file, file.name);
+
+        const fileType = file.type.split('/')[1];
+
+        // 先从自己的服务端拿到token
+        this.$http.get(`/upload/token/${fileType}`)
+          .then((res) => {
+            this.formData.append('token', res.token);
+            this.formData.append('key', res.key);
+            this.uploading(this.formData);
+          });
+      };
       this.editor.customConfig.onchange = (html) => {
         this.info = html;
         this.$emit('change', this.info);
@@ -88,6 +110,22 @@ export default {
 
       // 创建富文本编辑器
       this.editor.create();
+    },
+
+    uploading(param) {
+      const addr = 'https://oa-statics.caihonggou.com/';
+
+      this.$http.post('https://upload.qiniup.com/', param)
+        .then((res) => {
+          const url = addr + res.key;
+          this.editor.cmd.do('insertHtml', `<img src="${url}" style="max-width:100%;"/>`);
+        })
+        .catch(({ message }) => {
+          this.$message({
+            type: 'error',
+            message,
+          });
+        });
     },
   },
 };
