@@ -329,6 +329,8 @@ export default {
 
 <style lang="postcss">
 .main-menu {
+  display: flex;
+  flex-direction: column;
   position: fixed;
   margin-right: 2em;
   top: 0;
@@ -353,6 +355,14 @@ export default {
   padding: 1em 0;
   border-bottom: 1px solid #e6e6e6;
   font-size: 1.25rem;
+}
+
+.main-menu .el-menu {
+  overflow-y: auto;
+}
+
+.main-menu .el-menu--inline {
+  overflow-x: hidden;
 }
 
 .main-menu .el-submenu__title {
