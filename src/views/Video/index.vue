@@ -232,6 +232,11 @@ export default {
 </template>
 
 <style lang="postcss">
+.video-list .list-body {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .video-list__cover img{
   width: 150px;
   height: 150px;
