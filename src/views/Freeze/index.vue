@@ -292,7 +292,7 @@ export default {
               @click="unfreeze(row.id)"
             >解冻</el-button>
             <el-button
-              v-if="row.operation.deals"
+              v-if="row.operation.deal"
               size="small"
               @click="freezeDeal(row.id)"
             >挂起处理</el-button>
