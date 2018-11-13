@@ -357,11 +357,9 @@ export default {
   font-size: 1.25rem;
 }
 
-.main-menu .el-menu {
+.main-menu > .el-menu {
+  flex: auto;
   overflow-y: auto;
-}
-
-.main-menu .el-menu--inline {
   overflow-x: hidden;
 }
 
