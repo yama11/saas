@@ -99,12 +99,12 @@ export default {
     },
 
     search() {
-      const { page, per_page } = this.$route.query;
+      const { per_page } = this.$route.query;
 
       const searchArr = this.initArrData.filter(item => item);
 
       const query = {
-        page,
+        page: 1,
         per_page,
       };
 
