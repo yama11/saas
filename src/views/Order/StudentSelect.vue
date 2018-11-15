@@ -81,23 +81,16 @@ export default {
   },
 
   methods: {
-    getStudentList() {
+    getStudentList(page) {
       this.loading = true;
 
+      this.searchObj = {
+        page: page ? 1 : this.searchObj.page,
+        per_page: this.searchObj.per_page,
+      };
+
       if (this.selectValue) {
-        this.searchObj = {
-          page: 1,
-          per_page: this.searchObj.per_page,
-        };
-
         this.searchObj[`like[${this.selectValue}]`] = this.inputValue;
-      }
-
-      if (!this.selectValue) {
-        this.searchObj = {
-          page: this.searchObj.page,
-          per_page: this.searchObj.per_page,
-        };
       }
 
       const query = Object.keys(this.searchObj)
@@ -198,7 +191,7 @@ export default {
         class="student-select__input"
         placeholder="请输入关键字进行搜索"
         size="small"
-        @keyup.enter.native="getStudentList"
+        @keyup.enter.native="getStudentList('changePage')"
       >
         <el-select
           slot="prepend"
@@ -220,7 +213,7 @@ export default {
         icon="el-icon-search"
         size="small"
         class="student-select__button"
-        @click="getStudentList"
+        @click="getStudentList('changePage')"
       />
     </div>
 
