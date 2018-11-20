@@ -402,7 +402,7 @@ export default {
         .findIndex(item => !item.sell_price);
 
       if (priceIndex !== -1) {
-        return;
+        this.$message.error('课程售价不能为空');
       }
 
       if (this.dataForm.shelve_time && !isUpdateTime) {
