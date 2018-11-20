@@ -359,6 +359,7 @@ export default {
         :disabled="lookId">
         <el-radio
           v-for="item in formBefore.couponType"
+          v-if="item.value === 1 || item.value === 2"
           :key="item.value"
           :label="item.value"
           @change="resetFormType('discountForm',item.value)">
@@ -430,29 +431,6 @@ export default {
         placeholder="请输入该券购买金额"
         style="width:400px;"
       />
-    </el-form-item>
-
-    <el-form-item
-      label="优惠地域"
-      prop="administrative_division_code"
-    >
-
-      <div
-        v-if="lookId"
-        class="discount-form__show">
-        <el-tag
-          v-for="tag in addressTags"
-          :key="tag.value">
-          {{ tag.name }}
-        </el-tag>
-      </div>
-
-      <AddressMulti
-        v-else
-        :division="division"
-        :address-tags="addressTags"
-        @divisionCode="getDivisionCode"/>
-
     </el-form-item>
 
     <el-form-item
@@ -563,6 +541,30 @@ export default {
     </el-form-item>
 
     <el-form-item
+      label="优惠地域"
+      prop="administrative_division_code"
+    >
+
+      <div
+        v-if="lookId"
+        class="discount-form__show">
+        <el-tag
+          v-for="tag in addressTags"
+          :key="tag.value">
+          {{ tag.name }}
+        </el-tag>
+      </div>
+
+      <AddressMulti
+        v-else
+        :division="division"
+        :address-tags="addressTags"
+        :is-linkage="true"
+        @divisionCode="getDivisionCode"/>
+
+    </el-form-item>
+
+    <el-form-item
       v-if="discountForm.type !== 3"
       label="可使用商品"
       prop="Merchandise"
@@ -609,6 +611,7 @@ export default {
         :disabled="lookId">
         <el-radio
           v-for="item in formBefore.couponCanSuperposition"
+          v-if="item.value === 0"
           :key="item.value"
           :label="item.value"
           :disabled="discountForm.type === 4 && item.value === 1">
@@ -621,12 +624,9 @@ export default {
       label="使用规则"
       prop="rule_description"
     >
-      <el-input
-        :rows="6"
+      <AppTextArea
         v-model="discountForm.rule_description"
-        :disabled="lookId"
-        type="textarea"
-        placeholder="请输入内容"/>
+        :is-disable="lookId"/>
     </el-form-item>
 
     <div
