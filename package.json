@@ -18,6 +18,7 @@
     "enslaver-http": "^0.1.9",
     "normalize.css": "^8.0.0",
     "qrcode": "^1.2.0",
+    "qrcodejs2": "0.0.2",
     "vue": "^2.5.2",
     "vue-baidu-map": "^0.21.11",
     "vue-router": "^3.0.1",
