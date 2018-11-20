@@ -12,6 +12,7 @@ import AppUploader from './AppUploader';
 import AppUploadScale from './AppUploadScale';
 import AppTextArea from './AppTextArea';
 import AppUploadSize from './AppUploadSize';
+import AppQRCode from './AppQRCode';
 
 const components = {
   AppCheckBox,
@@ -28,6 +29,7 @@ const components = {
   AppUploadScale,
   AppTextArea,
   AppUploadSize,
+  AppQRCode,
 };
 
 export default (Vue) => {
