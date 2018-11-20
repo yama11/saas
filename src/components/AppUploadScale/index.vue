@@ -14,6 +14,18 @@ export default {
       type: String,
       default: '',
     },
+
+    // 显示按钮或者图片
+    isButton: {
+      type: Boolean,
+      default: false,
+    },
+
+    // 上传按钮的text
+    btnText: {
+      type: String,
+      default: '',
+    },
   },
 
   data() {
@@ -196,7 +208,15 @@ export default {
       style="display:none;"
       @change="changeImg">
 
+    <el-button
+      v-if="isButton"
+      size="small"
+      @click="uploadImg">
+      {{ btnText }}
+    </el-button>
+
     <div
+      v-else
       :style="style"
       class="app-upload-scale__block"
       @click="uploadImg">
