@@ -316,6 +316,7 @@ export default {
         width="458px"
         @on-submit="submitEdition"
       />
+      <!-- 解冻 -->
       <AppFormDialog
         :visible.sync="unvisible"
         url="/freeze"

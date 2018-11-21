@@ -62,6 +62,8 @@ export default {
 
     editTargetID: null,
 
+    initVisible: true,
+
   }),
 
   computed: {
@@ -148,14 +150,22 @@ export default {
     },
 
     editNode(id) {
-      this.formData = {};
-      this.editTargetID = id;
+      this.formData = {
+        name: '',
+        subject_id: 0,
+        parent_id: 0,
+        describe: '',
+        introduce: '',
+        cover: '',
+      };
 
-      this.dialogVisible = true;
+      this.editTargetID = id;
 
       this.$http.get(`/structure/${id}`)
         .then((res) => {
           this.formData = { ...res };
+
+          this.dialogVisible = true;
         })
         .catch(() => {
           this.formData = {
@@ -166,11 +176,17 @@ export default {
             introduce: '',
             cover: '',
           };
+
+          this.dialogVisible = true;
         });
     },
 
     getCoverUrl(url) {
       this.formData.cover = url;
+    },
+
+    changeFn(data) {
+      this.formData.describe = data;
     },
   },
 };
@@ -281,7 +297,9 @@ export default {
         class="subject-describe"
       >
         <editor-bar
-          v-model="formData.describe"
+          :value="formData.describe"
+          :init-visible="dialogVisible"
+          @change="changeFn"
         />
 
       </el-form-item>

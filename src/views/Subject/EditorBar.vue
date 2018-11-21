@@ -20,7 +20,7 @@ export default {
       type: String,
       default: '',
     },
-    isClear: {
+    initVisible: {
       type: Boolean,
       default: false,
     },
@@ -34,19 +34,14 @@ export default {
       info: null,
 
       formData: {},
-
     };
   },
 
   watch: {
-    isClear(val) {
+    initVisible(val) {
       if (val) {
-        this.editor.txt.clear();
-        this.info = null;
+        this.editor.txt.html(this.value);
       }
-    },
-    value(val) {
-      this.editor.txt.html(val);
     },
   },
 
@@ -103,14 +98,17 @@ export default {
             this.uploading(this.formData);
           });
       };
+
       this.editor.customConfig.onchange = (html) => {
-        this.info = html;
-        this.$emit('change', this.info);
+        this.$emit('change', html);
       };
 
       // 创建富文本编辑器
       this.editor.create();
+
+      this.editor.txt.html(this.value);
     },
+
 
     uploading(param) {
       const addr = 'https://oa-statics.caihonggou.com/';
@@ -131,7 +129,7 @@ export default {
 };
 </script>
 
-<template lang="html">
+<template>
   <div class="editor">
     <div
       ref="toolbar"
