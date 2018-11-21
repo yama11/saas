@@ -237,13 +237,10 @@ export default {
       const tokens = token.get();
 
       const query = (Object.keys(this.codeForm)
-        .map(key => `${key}=${this.codeForm[key]}`)
+        .map(key => `${key}=${encodeURIComponent(this.codeForm[key])}`)
         .join('&'));
 
-      // eslint-disable-next-line
-      const url = query.replace(/\#/g, '%23');
-
-      const codeUrl = `${this.$http.baseURI}/qr_code/generate?${url}&token=${tokens}`;
+      const codeUrl = `${this.$http.baseURI}/qr_code/generate?${query}&token=${tokens}`;
 
       const codeLink = document.createElement('a');
       codeLink.setAttribute('href', codeUrl);
@@ -330,15 +327,6 @@ export default {
             </el-button>
 
             <el-button
-              v-if="checkPermission('generate_qr_code')
-              && scope.row.condition === 3"
-              size="small"
-              @click="createCode(scope.row.id,scope.row.draw_url)"
-            >
-              生成发放二维码
-            </el-button>
-
-            <el-button
               v-if="checkPermission('show')"
               size="small"
               type="primary"
@@ -362,6 +350,15 @@ export default {
               @click="deleteDiscount(scope.row.id)"
             >
               删除
+            </el-button>
+
+            <el-button
+              v-if="checkPermission('generate_qr_code')
+              && scope.row.condition === 3"
+              size="small"
+              @click="createCode(scope.row.id,scope.row.draw_url)"
+            >
+              生成发放二维码
             </el-button>
           </template>
         </el-table-column>
