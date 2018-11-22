@@ -240,12 +240,7 @@ export default {
         .map(key => `${key}=${encodeURIComponent(this.codeForm[key])}`)
         .join('&'));
 
-      const codeUrl = `${this.$http.baseURI}/qr_code/generate?${query}&token=${tokens}`;
-
-      const codeLink = document.createElement('a');
-      codeLink.setAttribute('href', codeUrl);
-      codeLink.setAttribute('download', 'code.png');
-      codeLink.click();
+      window.location.href = `${this.$http.baseURI}/qr_code/generate?${query}&token=${tokens}`;
     },
 
     deleteDiscount(id) {
