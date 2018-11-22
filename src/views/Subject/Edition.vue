@@ -6,13 +6,13 @@
  */
 
 import { list } from '@/mixins';
-import EditorBar from './EditorBar';
+import AppTextArea from './../../components/AppTextArea';
 
 export default {
   name: 'SubjectEdition',
 
   components: {
-    EditorBar,
+    AppTextArea,
   },
 
   mixins: [list],
@@ -296,9 +296,10 @@ export default {
         prop="describe"
         class="subject-describe"
       >
-        <editor-bar
+        <AppTextArea
           :value="formData.describe"
           :init-visible="dialogVisible"
+          :is-disable="false"
           @change="changeFn"
         />
 

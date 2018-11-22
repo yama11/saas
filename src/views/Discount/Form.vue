@@ -135,6 +135,8 @@ export default {
 
       shopList: [],
 
+      dialogVisible: false,
+
     };
   },
 
@@ -238,6 +240,12 @@ export default {
 
               this.discountForm.coupon_applicable['App\\Models\\Merchandise'] = res.coupon_applicable['App\\Models\\Merchandise']
                 .map(item => item.applicable_id);
+
+              this.dialogVisible = true;
+            })
+            .catch(() => {
+              this.discountForm = {};
+              this.dialogVisible = true;
             });
         });
     },
@@ -319,6 +327,10 @@ export default {
       const location = (prefix && prefix.concat('list')) || '/';
 
       return this.$router.push(location);
+    },
+
+    changeFn(data) {
+      this.discountForm.rule_description = data;
     },
 
   },
@@ -625,8 +637,11 @@ export default {
       prop="rule_description"
     >
       <AppTextArea
-        v-model="discountForm.rule_description"
-        :is-disable="lookId"/>
+        :value="discountForm.rule_description"
+        :is-disable="lookId"
+        :init-visible="dialogVisible"
+        @change="changeFn"
+      />
     </el-form-item>
 
     <div
