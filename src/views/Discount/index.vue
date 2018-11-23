@@ -72,13 +72,13 @@ export default {
 
       codeForm: {
         content: '',
-        size: 48,
+        size: 100,
         color: '#000000',
         background_color: '#FFFFFF',
         merge: '',
       },
 
-      size: 48,
+      size: 100,
 
       codeVal: 'URL=',
 
@@ -195,7 +195,7 @@ export default {
 
       this.codeForm = {
         content: '',
-        size: 48,
+        size: 100,
         color: '#000000',
         background_color: '#FFFFFF',
         merge: '',
