@@ -9,7 +9,7 @@
 
 ```text
 codeForm    object    数据配置
-size        number    显示二维码的尺寸
+size        number    显示二维码的尺寸 默认为100
 codeVal     string    二维码的链接
 ```
 

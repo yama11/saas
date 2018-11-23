@@ -22,7 +22,7 @@ export default {
 
     size: {
       type: Number,
-      default: 48,
+      default: 100,
     },
 
     codeVal: {
@@ -107,7 +107,7 @@ export default {
             <span>{{ codeForm.size }}px</span>
             <el-slider
               v-model="codeForm.size"
-              :min="48"
+              :min="100"
               :max="800"
               @change="changeCode"
             />
