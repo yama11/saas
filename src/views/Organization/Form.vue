@@ -1,4 +1,5 @@
 
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=T9kb9PgCGdvSBOiHW7vMbEmU0S8gyTjK"></script>
 <script>
 /**
  * @overview 机构管理 - 添加机构
@@ -89,6 +90,8 @@ export default {
 
       list: {},
 
+      searchData: '',
+
     };
   },
   created() {
@@ -107,20 +110,31 @@ export default {
         });
     },
 
-    handler({ BMap, map }) {
+    handler() {
+      const map = new BMap.Map('alimap');
       const point = new BMap.Point(116.331398, 39.897445);
-      map.centerAndZoom(point, 12);
-      const geoc = new BMap.Geocoder();
+      map.centerAndZoom(point,12);
       function myFun(result) {
         const cityName = result.name;
         map.setCenter(cityName);
       }
       const myCity = new BMap.LocalCity();
       myCity.get(myFun);
+        const geoc = new BMap.Geocoder();
+        setTimeout(() =>{
+          geoc.getPoint(this.searchData, (point) => {
+          if (point) {
+              map.centerAndZoom(this.searchData, 16);
+              map.addOverlay(new BMap.Marker(point));
+          } else {
+              alert('您选择地址没有解析到结果!');
+          }
+          });
+        },300)
+
       map.addEventListener('click', (e) => {
-        this.formDate.longitude = e.point.lng;
-        this.formDate.latitude = e.point.lat;
-        this.mapLngLat = `${e.point.lng},${e.point.lat}`;
+        this.bd09togcj02(e.point.lng, e.point.lat);
+
         geoc.getLocation(e.point, (rs) => {
           const addComp = rs.addressComponents;
           this.address = addComp.street + addComp.streetNumber;
@@ -139,6 +153,23 @@ export default {
         .catch(({ message }) => {
           this.$message.error(message);
         });
+    },
+
+    bd09togcj02(bd_lng, bd_lat) {
+      const x_PI = (3.14159265358979324 * 3000.0) / 180.0;
+      const bd_lon = +bd_lng;
+      const bd_lot = +bd_lat;
+      const x = bd_lon - 0.0065;
+      const y = bd_lot - 0.006;
+      const z = Math.sqrt((x * x) + (y * y)) - (0.00002 * Math.sin(y * x_PI));
+      const theta = Math.atan2(y, x) - (0.000003 * Math.cos(x * x_PI));
+      const gg_lng = z * Math.cos(theta);
+      const gg_lat = z * Math.sin(theta);
+
+      this.formDate.longitude = gg_lng;
+      this.formDate.latitude = gg_lat;
+
+      this.mapLngLat = `${gg_lng},${gg_lat}`;
     },
 
     submitEdition() {
@@ -313,6 +344,19 @@ export default {
       <div
         class="organization-form__map"
       >
+        <div
+          class="organization-form__search"
+        >
+          <el-input
+            v-model="searchData"
+            placeholder="请输入搜索地址"
+          />
+          <el-button
+            icon="el-icon-search"
+            @click="handler"
+
+          />
+        </div>
         <baidu-map
           id="alimap"
           :center="center"
@@ -374,6 +418,12 @@ export default {
 }
 .organization-form__data{
   width:400px;
+}
+.organization-form__search{
+  margin-bottom: 20px;
+}
+.organization-form__search .el-input{
+  width: 40%;
 }
 .map{
   width: 650px;
