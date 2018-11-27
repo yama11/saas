@@ -371,7 +371,6 @@ export default {
         :disabled="lookId">
         <el-radio
           v-for="item in formBefore.couponType"
-          v-if="item.value === 1 || item.value === 2"
           :key="item.value"
           :label="item.value"
           @change="resetFormType('discountForm',item.value)">
