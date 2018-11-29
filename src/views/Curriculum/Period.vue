@@ -386,18 +386,22 @@ export default {
             <span>{{ currCourseName }}</span>
             <hr>
             <div
-              v-for="item in courseData.data"
-              :key="item.id"
-              class="curriculum-period-info__course"
-              @click="checkCourse(item.id)">
-              <p>{{ item.name }}</p>
-              <p>课件数：{{ item.ware_number }}</p>
-              <p>游戏数：{{ item.game_number }}</p>
-              <span
-                v-if="isCheck === item.id"
-                class="curriculum-period-info__check">
-                <i class="el-icon-check"/>
-              </span>
+              class="curriculum-period-info__block"
+              style="display:flex;flex-wrap:wrap;">
+              <div
+                v-for="item in courseData.data"
+                :key="item.id"
+                class="curriculum-period-info__course"
+                @click="checkCourse(item.id)">
+                <div class="curriculum-period-info__course__title">{{ item.name }}</div>
+                <p>课件数：{{ item.ware_number }}</p>
+                <p>游戏数：{{ item.game_number }}</p>
+                <span
+                  v-if="isCheck === item.id"
+                  class="curriculum-period-info__check">
+                  <i class="el-icon-check"/>
+                </span>
+              </div>
             </div>
 
             <footer
@@ -493,7 +497,10 @@ export default {
 .curriculum-period__info{
   width: 72%;
   margin-left: 20px;
-  &>div{
+
+}
+
+.curriculum-period-info__block>div{
     display: inline-block;
     cursor: pointer;
     text-align: center;
@@ -502,11 +509,16 @@ export default {
     background: #E1E1E1;
     margin: 20px 20px 0 0;
     position: relative;
-  }
+}
+
+.curriculum-period-info__course__title{
+  margin-top: 5px;
+  line-height: 20px;
 }
 
 .curriculum-period-info__course>p{
   margin: 0;
+  line-height: 30px;
 }
 
 .curriculum-period-footer{
