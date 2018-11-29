@@ -51,6 +51,12 @@ export default {
         password: [
           this.$rules.required('教室密码'),
         ],
+        device_sn: [
+          this.$rules.required('设备编号'),
+        ],
+        device_code: [
+          this.$rules.required('验证码'),
+        ],
       },
 
       classroomId: null,
@@ -414,6 +420,26 @@ export default {
           <el-input
             v-model="formData.password"
             placeholder="请输入教室密码"
+          />
+        </el-form-item>
+
+        <el-form-item
+          prop="device_sn"
+          label="设备编号"
+        >
+          <el-input
+            v-model="formData.device_sn"
+            placeholder="请输入设备编号"
+          />
+        </el-form-item>
+
+        <el-form-item
+          prop="device_code"
+          label="验证码"
+        >
+          <el-input
+            v-model="formData.device_code"
+            placeholder="请输入验证码"
           />
         </el-form-item>
 
