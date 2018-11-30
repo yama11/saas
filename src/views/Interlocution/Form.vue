@@ -100,6 +100,10 @@ export default {
         });
     },
 
+    changeAnswer(data) {
+      this.dataForm.answer = data;
+    },
+
     backPage() {
       if (this.from.matched.length) {
         return this.$router.back();
@@ -164,7 +168,10 @@ export default {
     >
       <AppTextArea
         v-model="dataForm.answer"
-        :is-disable="!!lookId"/>
+        :is-disable="!!lookId"
+        :init-visible="true"
+        :time-show="500"
+        @change="changeAnswer"/>
 
     </el-form-item>
 
