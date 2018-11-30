@@ -53,12 +53,6 @@ export default {
         password: [
           this.$rules.required('教室密码'),
         ],
-        device_sn: [
-          this.$rules.required('设备编号'),
-        ],
-        device_code: [
-          this.$rules.required('验证码'),
-        ],
       },
 
       classroomId: null,
