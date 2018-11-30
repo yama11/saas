@@ -33,6 +33,8 @@ export default {
         department_id: null,
         account: '',
         password: '',
+        device_sn: '',
+        device_code: '',
       },
 
       formRules: {
@@ -135,6 +137,8 @@ export default {
         department_id: null,
         account: '',
         password: '',
+        device_sn: '',
+        device_code: '',
       };
     },
 
@@ -199,6 +203,8 @@ export default {
         department_id: data.department_id,
         account: data.account,
         password: '',
+        device_sn: data.device_sn,
+        device_code: data.device_code,
       };
     },
 
