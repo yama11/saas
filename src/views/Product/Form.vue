@@ -426,6 +426,10 @@ export default {
         });
     },
 
+    changeDes(data) {
+      this.dataForm.description = data;
+    },
+
     backPage() {
       if (this.from.matched.length) {
         return this.$router.back();
@@ -530,8 +534,10 @@ export default {
 
       <AppTextArea
         v-model="dataForm.description"
-        :is-disable="lookId ? true : false"
-      />
+        :is-disable="!!lookId"
+        :init-visible="true"
+        :time-show="500"
+        @change="changeDes"/>
 
     </el-form-item>
 
