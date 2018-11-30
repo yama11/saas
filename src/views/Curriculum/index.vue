@@ -292,28 +292,28 @@ export default {
         >
           <template slot-scope="scope">
             <el-button
-              v-if="checkPermission('update')"
+              v-if="scope.row.operation.edit"
               size="small"
               @click="updateCurriculum(scope.row.id)"
             >
               编辑
             </el-button>
             <el-button
-              v-if="checkPermission('course_index')"
+              v-if="scope.row.operation.course"
               size="small"
               @click="classManage(scope.row.id)"
             >
               课时管理
             </el-button>
             <el-button
-              v-if="checkPermission('schedule_index')"
+              v-if="scope.row.operation.schedule"
               size="small"
               @click="curriculumArrangement(scope.row.id)"
             >
               排课
             </el-button>
             <el-button
-              v-if="checkPermission('delete')"
+              v-if="scope.row.operation.delete"
               size="small"
               type="danger"
               @click="deleteCurriculum(scope.row.id)"
