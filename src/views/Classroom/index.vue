@@ -228,6 +228,14 @@ export default {
         });
     },
 
+    unbindClassroom(id) {
+      this.$http.patch(`/classroom/${id}/unbind`)
+        .then(() => this.$refs.list.getList())
+        .catch(({ message }) => {
+          this.$message.error(message);
+        });
+    },
+
     getContent(subsidiary) {
       const arrWeek = [];
 
@@ -306,7 +314,7 @@ export default {
         />
         <el-table-column
           label="操作"
-          width="350px"
+          width="450px"
         >
           <template slot-scope="scope">
             <el-button
@@ -340,6 +348,10 @@ export default {
               size="small"
               @click="enabledClassroom(scope.row.id)"
             >启用</el-button>
+            <el-button
+              size="small"
+              @click="unbindClassroom(scope.row.id)"
+            >设备解绑</el-button>
           </template>
         </el-table-column>
       </el-table>
