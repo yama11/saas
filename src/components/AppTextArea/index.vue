@@ -30,6 +30,11 @@ export default {
       type: Boolean,
       default: false,
     },
+
+    timeShow: {
+      type: Number,
+      default: null,
+    },
   },
 
   data() {
@@ -49,7 +54,15 @@ export default {
   },
 
   mounted() {
-    this.seteditorText();
+    if (!this.timeShow) {
+      this.seteditorText();
+
+      return;
+    }
+
+    setTimeout(() => {
+      this.seteditorText();
+    }, this.timeShow);
   },
 
   methods: {
