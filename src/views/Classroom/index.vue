@@ -349,6 +349,7 @@ export default {
               @click="enabledClassroom(scope.row.id)"
             >启用</el-button>
             <el-button
+              v-if="scope.row.operation.unbind"
               size="small"
               @click="unbindClassroom(scope.row.id)"
             >设备解绑</el-button>
