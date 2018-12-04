@@ -53,6 +53,12 @@ export default {
         password: [
           this.$rules.required('教室密码'),
         ],
+        device_sn: [
+          this.$rules.required('序列号'),
+        ],
+        device_code: [
+          this.$rules.required('验证码'),
+        ],
       },
 
       classroomId: null,
@@ -88,6 +94,12 @@ export default {
 
       weekNames: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
 
+      isDisabled: false,
+
+      deviceVisible: false,
+
+      deviceId: null,
+
     };
   },
 
@@ -120,6 +132,8 @@ export default {
       this.visible = true;
 
       this.classroomId = null;
+
+      this.isDisabled = false;
 
       this.palces = [];
 
@@ -163,7 +177,10 @@ export default {
 
     submitEdition(submit) {
       submit()
-        .then(() => this.$refs.list.getList());
+        .then(() => {
+          this.$refs.list.getList();
+          this.isDisabled = false;
+        });
     },
 
     lookSituation(id) {
@@ -190,6 +207,8 @@ export default {
       this.classroomId = data.id;
 
       this.visible = true;
+
+      this.isDisabled = data.operation.unbind;
 
       this.formData = {
         name: data.name,
@@ -229,10 +248,27 @@ export default {
     },
 
     unbindClassroom(id) {
-      this.$http.patch(`/classroom/${id}/unbind`)
-        .then(() => this.$refs.list.getList())
+      this.deviceId = id;
+
+      this.deviceVisible = true;
+    },
+
+    sureUnbind() {
+      this.$http.patch(`/classroom/${this.deviceId}/unbind`)
+        .then(() => {
+          this.$refs.list.getList();
+
+          this.$message({
+            message: '解绑成功',
+            type: 'success',
+          });
+        })
         .catch(({ message }) => {
           this.$message.error(message);
+        })
+        .finally(() => {
+          this.deviceVisible = false;
+          this.deviceId = null;
         });
     },
 
@@ -438,11 +474,12 @@ export default {
 
         <el-form-item
           prop="device_sn"
-          label="设备编号"
+          label="序列号"
         >
           <el-input
             v-model="formData.device_sn"
-            placeholder="请输入设备编号"
+            :disabled="isDisabled"
+            placeholder="请输入序列号"
           />
         </el-form-item>
 
@@ -452,9 +489,14 @@ export default {
         >
           <el-input
             v-model="formData.device_code"
+            :disabled="isDisabled"
             placeholder="请输入验证码"
           />
         </el-form-item>
+
+        <div class="classroom-list__hint">
+          （序列号和验证码均在设备-摄像头底部）
+        </div>
 
       </AppFormDialog>
 
@@ -485,10 +527,28 @@ export default {
         </span>
       </el-dialog>
 
+      <el-dialog
+        :visible.sync="deviceVisible"
+        title="设备解绑"
+        width="600px">
+        <span>确定解绑该设备吗？</span>
+        <span
+          slot="footer"
+          class="dialog-footer">
+          <el-button @click="deviceVisible = false">取 消</el-button>
+          <el-button
+            type="primary"
+            @click="sureUnbind">确 定</el-button>
+        </span>
+      </el-dialog>
+
     </template>
   </AppList>
 </template>
 
 <style lang="postcss">
-
+.classroom-list__hint{
+  color: red;
+  margin: 10px 0 10px 80px;
+}
 </style>
