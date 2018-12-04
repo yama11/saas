@@ -50,6 +50,10 @@ export default {
     cancelForm() {
       this.$emit('update:visible', false);
     },
+
+    clearError() {
+      this.$nextTick(() => this.$refs.form.cancel());
+    },
   },
 };
 </script>
@@ -61,6 +65,7 @@ export default {
     :visible="visible"
     v-bind="$props"
     class="app-form-dialog"
+    @close="clearError"
     @update:visible="value => $emit('update:visible', value)"
   >
     <VForm
