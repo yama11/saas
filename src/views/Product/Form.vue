@@ -58,6 +58,7 @@ export default {
 
       dataForm: {
         cover: '',
+        introduction_image: '',
         name: '',
         brief: '',
         merchandise_administrative_division: [],
@@ -66,11 +67,15 @@ export default {
         original_price: null,
         unit_price: null,
         shelve_time: '',
+        merchandise_tag: [],
       },
 
       rules: {
         cover: [
-          this.$rules.required('商品封面'),
+          this.$rules.required('商品封面图'),
+        ],
+        introduction_image: [
+          this.$rules.required('商品介绍图'),
         ],
         name: [
           this.$rules.required('商品标题'),
@@ -143,6 +148,8 @@ export default {
 
       timeNum: null,
 
+      merchandiseTag: [],
+
     };
   },
 
@@ -167,10 +174,19 @@ export default {
   },
 
   created() {
-    this.getFormData();
+    this.getCreateBefore();
   },
 
   methods: {
+    getCreateBefore() {
+      this.$http.get('/merchandise/create_before')
+        .then((res) => {
+          this.merchandiseTag = res.merchandise_tag;
+
+          this.getFormData();
+        });
+    },
+
     getFormData() {
       if (!this.productId) return;
 
@@ -218,6 +234,10 @@ export default {
 
     getCoverUrl(url) {
       this.dataForm.cover = url;
+    },
+
+    getIntroductionUrl(url) {
+      this.dataForm.introduction_image = url;
     },
 
     getDivisionCode(value) {
@@ -459,24 +479,45 @@ export default {
     @on-submit="submitForm"
   >
 
-    <el-form-item
-      label="商品封面图"
-      prop="cover"
-    >
-
-      <AppUploadScale
-        v-if="!lookId"
-        v-model="dataForm.cover"
-        class="product-form-uploader__img"
-        @on-success="getCoverUrl"
-      />
-
-      <img
-        v-else
-        :src="dataForm.cover"
-        class="product-form-uploader__displayImg"
+    <div class="product-form__block">
+      <el-form-item
+        label="商品封面图"
+        prop="cover"
       >
-    </el-form-item>
+
+        <AppUploadScale
+          v-if="!lookId"
+          v-model="dataForm.cover"
+          class="product-form-uploader__img"
+          @on-success="getCoverUrl"
+        />
+
+        <img
+          v-else
+          :src="dataForm.cover"
+          class="product-form-uploader__displayImg"
+        >
+      </el-form-item>
+
+      <el-form-item
+        label="商品介绍图"
+        prop="introduction_image"
+      >
+
+        <AppUploadScale
+          v-if="!lookId"
+          v-model="dataForm.introduction_image"
+          class="product-form-uploader__img"
+          @on-success="getIntroductionUrl"
+        />
+
+        <img
+          v-else
+          :src="dataForm.introduction_image"
+          class="product-form-uploader__displayImg"
+        >
+      </el-form-item>
+    </div>
 
     <el-form-item
       label="商品标题"
@@ -528,6 +569,23 @@ export default {
     </el-form-item>
 
     <el-form-item
+      label="商品标签"
+      prop="merchandise_tag"
+    >
+
+      <el-checkbox-group v-model="dataForm.merchandise_tag">
+        <el-checkbox
+          v-for="item in merchandiseTag"
+          :label="item.value"
+          :key="item.value"
+          :disabled="!!lookId">
+          {{ item.name }}
+        </el-checkbox>
+      </el-checkbox-group>
+
+    </el-form-item>
+
+    <el-form-item
       label="商品详情"
       prop="description"
     >
@@ -536,7 +594,7 @@ export default {
         v-model="dataForm.description"
         :is-disable="!!lookId"
         :init-visible="true"
-        :time-show="500"
+        :time-show="1000"
         @change="changeDes"/>
 
     </el-form-item>
@@ -697,6 +755,16 @@ export default {
 </template>
 
 <style lang="postcss">
+.product-form__block{
+  width: 500px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.product-form__block>div{
+  width: 300px;
+}
+
 .product-form__text{
   width: 600px;
 }
