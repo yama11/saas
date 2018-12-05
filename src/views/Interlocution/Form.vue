@@ -170,7 +170,7 @@ export default {
         v-model="dataForm.answer"
         :is-disable="!!lookId"
         :init-visible="true"
-        :time-show="500"
+        :time-show="1000"
         @change="changeAnswer"/>
 
     </el-form-item>
