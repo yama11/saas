@@ -1,12 +1,8 @@
-# saas.final.vue - 麦克斯韦后台管理v2.0
+# saas.final.vue
 
 ## # 原型地址
 
 ```text
-http://ax.gy720.com/
-
-账号：caihonggou
-密码：chg5995993
 
 项目：admin2.0
 ```
